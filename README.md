@@ -12,9 +12,9 @@
 
 [![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
 [![ReadTheDocs](https://readthedocs.org/projects/ec-gen/badge/?version=latest)](https://ec-gen.readthedocs.io/en/stable/)
-[![Coveralls](https://img.shields.io/coveralls/github/<USER>/ec-gen/main.svg)](https://coveralls.io/r/<USER>/ec-gen)
+[![Coveralls](https://img.shields.io/coveralls/github/luk036/ec-gen/main.svg)](https://coveralls.io/r/luk036/ec-gen)
 
-# ec-gen
+# 🔢 ec-gen
 
 > Enumerative Combinatoric Generation
 
