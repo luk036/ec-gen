@@ -18,21 +18,24 @@ def SJT2(n: int) -> Generator:
         return
 
     gen = SJT2(n - 1)
+    up = range(n)
+    down = range(n - 1, -1, -1)
+
     for pi in gen:
-        for i in range(n - 1, -1, -1):  # downward
+        for i in down:  # downward
             yield pi[:i] + [n - 1] + pi[i:]
         pi = next(gen)
-        for i in range(n):  # upward
+        for i in up:  # upward
             yield pi[:i] + [n - 1] + pi[i:]
 
 
-def main():
-    fruits = list("🍉🍌🍇🍏")
-    print(" 0 1 2 3")
-    for lst in SJT2(4):
-        mylst = list(fruits[i] for i in lst)
-        print("".join(mylst))
-
-
-if __name__ == "__main__":
-    main()
+# def main():
+#     fruits = list("🍉🍌🍇🍏")
+#     print(" 0 1 2 3")
+#     for lst in SJT2(4):
+#         mylst = list(fruits[i] for i in lst)
+#         print("".join(mylst))
+#
+#
+# if __name__ == "__main__":
+#     main()

@@ -7,6 +7,9 @@ def SJT_gen(n: int) -> Generator:
     The function `SJT_gen` generates all permutations of length `n` using the Steinhaus-Johnson-Trotter
     algorithm.
 
+    Note:
+        The list returns to the original permutations after all swaps.
+
     :param n: The parameter `n` represents the number of elements in the permutation
     :type n: int
     :return: The function `SJT_gen` returns a generator object.
@@ -46,12 +49,14 @@ def SJT_gen(n: int) -> Generator:
         yield 0  # tricky part: return to the origin
         return
 
+    up = range(n - 1)
+    down = range(n - 2, -1, -1)
     gen = SJT_gen(n - 1)
     for x in gen:
-        for i in range(n - 2, -1, -1):  # downward
+        for i in down:  # downward
             yield i
         yield x + 1
-        for i in range(n - 1):  # upward
+        for i in up:  # upward
             yield i
         yield next(gen)  # tricky part
 
@@ -100,6 +105,25 @@ def SJT(n: int) -> Generator:
     for x in SJT_gen(n):
         yield perm
         perm[x], perm[x + 1] = perm[x + 1], perm[x]
+
+
+def PlainChanges(n):
+    """Generate the swaps for the Steinhaus-Johnson-Trotter algorithm (original method)."""
+    if n < 1:
+        return
+    up = range(n - 1)
+    down = range(n - 2, -1, -1)
+    recur = PlainChanges(n - 1)
+    try:
+        while True:
+            for x in down:
+                yield x
+            yield next(recur) + 1
+            for x in up:
+                yield x
+            yield next(recur)
+    except StopIteration:
+        pass
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 
-from ec_gen.sjt import SJT_gen
+from ec_gen.sjt import SJT_gen, PlainChanges
 from ec_gen.sjt_list import SJT2
 
 
@@ -23,6 +23,15 @@ def run_sjt_old(n):
     return cnt
 
 
+def run_plain_changes(n):
+    alphabets = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    cnt = 1
+    for x in PlainChanges(n):
+        alphabets[x], alphabets[x + 1] = alphabets[x + 1], alphabets[x]
+        cnt += 1
+    return cnt
+
+
 def test_sjt_new(benchmark):
     """[summary]
 
@@ -40,4 +49,14 @@ def test_sjt_old(benchmark):
         benchmark ([type]): [description]
     """
     cnt = benchmark(run_sjt_old, 8)
+    assert cnt == 40320
+
+
+def test_plain_changes(benchmark):
+    """[summary]
+
+    Arguments:
+        benchmark ([type]): [description]
+    """
+    cnt = benchmark(run_plain_changes, 8)
     assert cnt == 40320
