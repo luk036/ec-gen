@@ -1,7 +1,7 @@
 from math import factorial
 
-from ec_gen.ehr import Ehr_gen, Ehr
-from ec_gen.sjt import SJT_gen, SJT, PlainChanges
+from ec_gen.ehr import Ehr, Ehr_gen
+from ec_gen.sjt import SJT, PlainChanges, SJT_gen
 from ec_gen.sjt_list import SJT2
 
 

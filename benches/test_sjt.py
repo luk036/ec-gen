@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 
-from ec_gen.sjt import SJT_gen, PlainChanges
+from ec_gen.sjt import PlainChanges, SJT_gen
 from ec_gen.sjt_list import SJT2
 
 
