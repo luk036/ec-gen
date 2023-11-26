@@ -94,9 +94,11 @@ def set_partition(n: int, k: int) -> Generator:
         [0, 0, 0, 1, 0] : Move 2 from block 1 to 0
     """
     if k % 2 == 0:
-        yield from GEN0_even(n, k)
+        if k > 0 and k < n:
+            yield from GEN0_even(n, k)
     else:
-        yield from GEN0_odd(n, k)
+        if k < n:
+            yield from GEN0_odd(n, k)
 
 
 # The lists S(n,k,0) and S(n,k,1) satisfy the following properties.
@@ -120,17 +122,17 @@ def GEN0_even(n: int, k: int) -> Generator:
     elements. It is used in the context of generating even-sized subsets of a set
     :type k: int
     """
-    if k > 0 and k < n:
-        yield from GEN0_odd(n - 1, k - 1)
-        yield (n - 1, k - 1)
+    # make sure that k > 0 and k < n
+    yield from GEN0_odd(n - 1, k - 1)
+    yield (n - 1, k - 1)
+    yield from GEN1_even(n - 1, k)
+    yield (n, k - 2)
+    yield from NEG1_even(n - 1, k)
+    for i in range(k - 3, 0, -2):
+        yield (n, i)
         yield from GEN1_even(n - 1, k)
-        yield (n, k - 2)
+        yield (n, i - 1)
         yield from NEG1_even(n - 1, k)
-        for i in range(k - 3, 0, -2):
-            yield (n, i)
-            yield from GEN1_even(n - 1, k)
-            yield (n, i - 1)
-            yield from NEG1_even(n - 1, k)
 
 
 def NEG0_even(n: int, k: int) -> Generator:
@@ -146,17 +148,17 @@ def NEG0_even(n: int, k: int) -> Generator:
     elements. It is used to control the iteration and recursion in the function
     :type k: int
     """
-    if k > 0 and k < n:
-        for i in range(1, k - 2, 2):
-            yield from GEN1_even(n - 1, k)
-            yield (n, i)
-            yield from NEG1_even(n - 1, k)
-            yield (n, i + 1)
+    # make sure that k > 0 and k < n
+    for i in range(1, k - 2, 2):
         yield from GEN1_even(n - 1, k)
-        yield (n, k - 1)
+        yield (n, i)
         yield from NEG1_even(n - 1, k)
-        yield (n - 1, 0)
-        yield from NEG0_odd(n - 1, k - 1)
+        yield (n, i + 1)
+    yield from GEN1_even(n - 1, k)
+    yield (n, k - 1)
+    yield from NEG1_even(n - 1, k)
+    yield (n - 1, 0)
+    yield from NEG0_odd(n - 1, k - 1)
 
 
 def GEN1_even(n: int, k: int) -> Generator:
@@ -169,7 +171,7 @@ def GEN1_even(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 0 and k < n:
+    if k > 1 and k < n:
         yield from GEN1_odd(n - 1, k - 1)
         yield (k, k - 1)
         yield from NEG1_even(n - 1, k)
@@ -192,7 +194,7 @@ def NEG1_even(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 0 and k < n:
+    if k > 1 and k < n:
         for i in range(1, k - 2, 2):
             yield from NEG1_even(n - 1, k)
             yield (n, i)
@@ -215,7 +217,7 @@ def GEN0_odd(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 1 and k < n:
+    if k > 1:
         yield from GEN1_even(n - 1, k - 1)
         yield (k, k - 1)
         yield from NEG1_odd(n - 1, k)
@@ -250,7 +252,7 @@ def NEG0_odd(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 1 and k < n:
+    if k > 2:
         for i in range(1, k - 1, 2):
             yield from GEN1_odd(n - 1, k)
             yield (n, i)
@@ -271,7 +273,7 @@ def GEN1_odd(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 1 and k < n:
+    if k > 2 and k < n:
         yield from GEN0_even(n - 1, k - 1)
         yield (n - 1, k - 1)
         yield from GEN1_odd(n - 1, k)
@@ -292,7 +294,7 @@ def NEG1_odd(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 1 and k < n:
+    if k > 2 and k < n:
         for i in range(1, k - 1, 2):
             yield from NEG1_odd(n - 1, k)
             yield (n, i)
