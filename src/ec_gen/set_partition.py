@@ -171,7 +171,7 @@ def GEN1_even(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 1 and k < n:
+    if k < n:
         yield from GEN1_odd(n - 1, k - 1)
         yield (k, k - 1)
         yield from NEG1_even(n - 1, k)
@@ -194,7 +194,7 @@ def NEG1_even(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 1 and k < n:
+    if k < n:
         for i in range(1, k - 2, 2):
             yield from NEG1_even(n - 1, k)
             yield (n, i)
