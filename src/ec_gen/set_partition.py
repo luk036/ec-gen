@@ -35,7 +35,6 @@ from functools import lru_cache
 from typing import Generator
 
 
-@lru_cache
 def stirling2nd(n: int, k: int) -> int:
     """
     The `stirling2nd` function calculates the Stirling number of the second kind for given values of `n`
@@ -53,9 +52,23 @@ def stirling2nd(n: int, k: int) -> int:
         >>> stirling2nd(5, 2)
         15
     """
-    if k >= n or k <= 1:
-        return 1
-    return stirling2nd(n - 1, k - 1) + k * stirling2nd(n - 1, k)
+    return 1 if k >= n or k <= 1 else stirling2nd_recur(n, k)
+
+
+@lru_cache
+def stirling2nd_recur(n: int, k: int) -> int:
+    n -= 1
+    a = 1 if k == 2 else stirling2nd_recur(n, k - 1)
+    b = 1 if k == n else stirling2nd_recur(n, k)
+    return a + k * b
+
+
+# def stirling2nd_recur_a(n: int, k: int) -> int:
+#     return 1 if k == 1 else stirling2nd_recur(n, k)
+#
+#
+# def stirling2nd_recur_b(n: int, k: int) -> int:
+#     return 1 if k == n else stirling2nd_recur(n, k)
 
 
 def set_partition(n: int, k: int) -> Generator:
