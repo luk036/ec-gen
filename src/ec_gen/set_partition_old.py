@@ -120,7 +120,6 @@ def GEN0_even(n: int, k: int) -> Generator:
     elements. It is used in the context of generating even-sized subsets of a set
     :type k: int
     """
-    # make sure that k > 0 and k < n
     if k > 0 and k < n:
         yield from GEN0_odd(n - 1, k - 1)
         yield (n - 1, k - 1)
@@ -147,7 +146,6 @@ def NEG0_even(n: int, k: int) -> Generator:
     elements. It is used to control the iteration and recursion in the function
     :type k: int
     """
-    # make sure that k > 0 and k < n
     if k > 0 and k < n:
         for i in range(1, k - 2, 2):
             yield from GEN1_even(n - 1, k)

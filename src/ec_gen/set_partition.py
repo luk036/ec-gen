@@ -110,7 +110,7 @@ def set_partition(n: int, k: int) -> Generator:
         if k > 0 and k < n:
             yield from GEN0_even(n, k)
     else:
-        if k < n:
+        if k > 1 and k < n:
             yield from GEN0_odd(n, k)
 
 
@@ -135,17 +135,23 @@ def GEN0_even(n: int, k: int) -> Generator:
     elements. It is used in the context of generating even-sized subsets of a set
     :type k: int
     """
-    # make sure that k > 0 and k < n
-    yield from GEN0_odd(n - 1, k - 1)
+    if k > 2:
+        yield from GEN0_odd(n - 1, k - 1)
     yield (n - 1, k - 1)
-    yield from GEN1_even(n - 1, k)
-    yield (n, k - 2)
-    yield from NEG1_even(n - 1, k)
-    for i in range(k - 3, 0, -2):
-        yield (n, i)
+    if k < n - 1:
         yield from GEN1_even(n - 1, k)
-        yield (n, i - 1)
+        yield (n, k - 2)
         yield from NEG1_even(n - 1, k)
+        for i in range(k - 3, 0, -2):
+            yield (n, i)
+            yield from GEN1_even(n - 1, k)
+            yield (n, i - 1)
+            yield from NEG1_even(n - 1, k)
+    else:
+        yield (n, k - 2)
+        for i in range(k - 3, 0, -2):
+            yield (n, i)
+            yield (n, i - 1)
 
 
 def NEG0_even(n: int, k: int) -> Generator:
@@ -162,16 +168,23 @@ def NEG0_even(n: int, k: int) -> Generator:
     :type k: int
     """
     # make sure that k > 0 and k < n
-    for i in range(1, k - 2, 2):
+    if k < n - 1:
+        for i in range(1, k - 2, 2):
+            yield from GEN1_even(n - 1, k)
+            yield (n, i)
+            yield from NEG1_even(n - 1, k)
+            yield (n, i + 1)
         yield from GEN1_even(n - 1, k)
-        yield (n, i)
+        yield (n, k - 1)
         yield from NEG1_even(n - 1, k)
-        yield (n, i + 1)
-    yield from GEN1_even(n - 1, k)
-    yield (n, k - 1)
-    yield from NEG1_even(n - 1, k)
+    else:
+        for i in range(1, k - 2, 2):
+            yield (n, i)
+            yield (n, i + 1)
+        yield (n, k - 1)
     yield (n - 1, 0)
-    yield from NEG0_odd(n - 1, k - 1)
+    if k > 3:
+        yield from NEG0_odd(n - 1, k - 1)
 
 
 def GEN1_even(n: int, k: int) -> Generator:
@@ -184,9 +197,10 @@ def GEN1_even(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k < n:
+    if k > 3:
         yield from GEN1_odd(n - 1, k - 1)
-        yield (k, k - 1)
+    yield (k, k - 1)
+    if k < n - 1:
         yield from NEG1_even(n - 1, k)
         yield (n, k - 2)
         yield from GEN1_even(n - 1, k)
@@ -195,6 +209,11 @@ def GEN1_even(n: int, k: int) -> Generator:
             yield from NEG1_even(n - 1, k)
             yield (n, i - 1)
             yield from GEN1_even(n - 1, k)
+    else:
+        yield (n, k - 2)
+        for i in range(k - 3, 0, -2):
+            yield (n, i)
+            yield (n, i - 1)
 
 
 def NEG1_even(n: int, k: int) -> Generator:
@@ -207,7 +226,7 @@ def NEG1_even(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k < n:
+    if k < n - 1:
         for i in range(1, k - 2, 2):
             yield from NEG1_even(n - 1, k)
             yield (n, i)
@@ -216,7 +235,13 @@ def NEG1_even(n: int, k: int) -> Generator:
         yield from NEG1_even(n - 1, k)
         yield (n, k - 1)
         yield from GEN1_even(n - 1, k)
-        yield (k, 0)
+    else:
+        for i in range(1, k - 2, 2):
+            yield (n, i)
+            yield (n, i + 1)
+        yield (n, k - 1)
+    yield (k, 0)
+    if k > 3:
         yield from NEG1_odd(n - 1, k - 1)
 
 
@@ -230,15 +255,19 @@ def GEN0_odd(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 1:
-        yield from GEN1_even(n - 1, k - 1)
-        yield (k, k - 1)
+    yield from GEN1_even(n - 1, k - 1)
+    yield (k, k - 1)
+    if k < n - 1:
         yield from NEG1_odd(n - 1, k)
         for i in range(k - 2, 0, -2):
             yield (n, i)
             yield from GEN1_odd(n - 1, k)
             yield (n, i - 1)
             yield from NEG1_odd(n - 1, k)
+    else:
+        for i in range(k - 2, 0, -2):
+            yield (n, i)
+            yield (n, i - 1)
 
 
 # def GEN0_odd(n: int, k: int) -> Generator:
@@ -265,15 +294,19 @@ def NEG0_odd(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 2:
+    if k < n - 1:
         for i in range(1, k - 1, 2):
             yield from GEN1_odd(n - 1, k)
             yield (n, i)
             yield from NEG1_odd(n - 1, k)
             yield (n, i + 1)
         yield from GEN1_odd(n - 1, k)
-        yield (k, 0)
-        yield from NEG1_even(n - 1, k - 1)
+    else:
+        for i in range(1, k - 1, 2):
+            yield (n, i)
+            yield (n, i + 1)
+    yield (k, 0)
+    yield from NEG1_even(n - 1, k - 1)
 
 
 def GEN1_odd(n: int, k: int) -> Generator:
@@ -286,15 +319,19 @@ def GEN1_odd(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 2 and k < n:
-        yield from GEN0_even(n - 1, k - 1)
-        yield (n - 1, k - 1)
+    yield from GEN0_even(n - 1, k - 1)
+    yield (n - 1, k - 1)
+    if k < n - 1:
         yield from GEN1_odd(n - 1, k)
         for i in range(k - 2, 0, -2):
             yield (n, i)
             yield from NEG1_odd(n - 1, k)
             yield (n, i - 1)
             yield from GEN1_odd(n - 1, k)
+    else:
+        for i in range(k - 2, 0, -2):
+            yield (n, i)
+            yield (n, i - 1)
 
 
 def NEG1_odd(n: int, k: int) -> Generator:
@@ -307,15 +344,19 @@ def NEG1_odd(n: int, k: int) -> Generator:
     Yields:
         [type]: [description]
     """
-    if k > 2 and k < n:
+    if k < n - 1:
         for i in range(1, k - 1, 2):
             yield from NEG1_odd(n - 1, k)
             yield (n, i)
             yield from GEN1_odd(n - 1, k)
             yield (n, i + 1)
         yield from NEG1_odd(n - 1, k)
-        yield (n - 1, 0)
-        yield from NEG0_even(n - 1, k - 1)
+    else:
+        for i in range(1, k - 1, 2):
+            yield (n, i)
+            yield (n, i + 1)
+    yield (n - 1, 0)
+    yield from NEG0_even(n - 1, k - 1)
 
 
 if __name__ == "__main__":
