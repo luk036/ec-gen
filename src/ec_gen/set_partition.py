@@ -106,12 +106,12 @@ def set_partition(n: int, k: int) -> Generator:
         [0, 1, 0, 1, 0] : Move 3 from block 1 to 0
         [0, 0, 0, 1, 0] : Move 2 from block 1 to 0
     """
+    if not (k > 1 and k < n):
+        return
     if k % 2 == 0:
-        if k > 0 and k < n:
-            yield from GEN0_even(n, k)
+        yield from GEN0_even(n, k)
     else:
-        if k > 1 and k < n:
-            yield from GEN0_odd(n, k)
+        yield from GEN0_odd(n, k)
 
 
 # The lists S(n,k,0) and S(n,k,1) satisfy the following properties.
