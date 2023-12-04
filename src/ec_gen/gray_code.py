@@ -1,17 +1,17 @@
 from typing import Generator
 
 
-def BRGC_gen(n: int) -> Generator:
+def brgc_gen(n: int) -> Generator:
     """
-    The function `BRGC_gen` generates a sequence of binary reflected gray code numbers up to a given
+    The function `brgc_gen` generates a sequence of binary reflected gray code numbers up to a given
     length `n`.
 
     :param n: The parameter `n` represents the number of bits in the binary reflected gray code sequence
     :type n: int
-    :return: The function `BRGC_gen` returns a generator object.
+    :return: The function `brgc_gen` returns a generator object.
 
     Examples:
-        >>> for i in BRGC_gen(4):
+        >>> for i in brgc_gen(4):
         ...     print(f"flip {i}")
         ...
         flip 0
@@ -33,21 +33,21 @@ def BRGC_gen(n: int) -> Generator:
     if n == 1:
         yield 0
         return
-    yield from BRGC_gen(n - 1)
+    yield from brgc_gen(n - 1)
     yield n - 1
-    yield from BRGC_gen(n - 1)
+    yield from brgc_gen(n - 1)
 
 
-def BRGC(n: int) -> Generator:
+def brgc(n: int) -> Generator:
     """
-    The function `BRGC` generates a binary reflected gray code sequence of length `n`.
+    The function `brgc` generates a binary reflected gray code sequence of length `n`.
 
     :param n: The parameter `n` represents the number of bits in the binary code
     :type n: int
 
     Examples:
         >>> s = "◾◽"
-        >>> for lst in BRGC(4):
+        >>> for lst in brgc(4):
         ...     mylst = list(s[i] for i in lst)
         ...     print("".join(mylst))
         ...
@@ -70,7 +70,7 @@ def BRGC(n: int) -> Generator:
     """
     lst = list(0 for _ in range(n))
     yield lst
-    for i in BRGC_gen(n):
+    for i in brgc_gen(n):
         lst[i] = 1 - lst[i]  # flip
         yield lst
 

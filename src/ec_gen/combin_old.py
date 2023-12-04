@@ -33,20 +33,20 @@ def comb(n: int, k: int) -> int:
     return comb(n - 1, k - 1) + comb(n - 1, k)
 
 
-def EMK_gen(n: int, k: int) -> Generator:
+def emk_gen(n: int, k: int) -> Generator:
     """Generate all combinations by homogeneous revoling-door
 
-    The `EMK_gen` function generates combinations (by swapping pairs of integers) using the EMK algorithm.
+    The `emk_gen` function generates combinations (by swapping pairs of integers) using the emk algorithm.
 
     :param n: The parameter `n` represents the total number of elements in the set, and `k` represents
     the number of elements to be selected in each combination
     :type n: int
     :param k: The parameter `k` represents the number of elements to be selected in each combination
     :type k: int
-    :return: The function `EMK_gen` returns a generator object that yields pairs of integers `(x, y)`.
+    :return: The function `emk_gen` returns a generator object that yields pairs of integers `(x, y)`.
 
     Examples:
-        >>> for x, y in EMK_gen(6, 3):
+        >>> for x, y in emk_gen(6, 3):
         ...     print(f"swap {x} and {y}")
         ...
         swap 2 and 3
@@ -75,24 +75,24 @@ def EMK_gen(n: int, k: int) -> Generator:
         for i in range(n - 1):
             yield (i, i + 1)
     else:
-        yield from EMK_gen(n - 1, k)
+        yield from emk_gen(n - 1, k)
         yield (n - 2, n - 1)
-        yield from EMK_neg(n - 2, k - 1)
+        yield from emk_neg(n - 2, k - 1)
         yield (k - 2, n - 2)
-        yield from EMK_gen(n - 2, k - 2)
+        yield from emk_gen(n - 2, k - 2)
 
 
-def EMK_neg(n: int, k: int) -> Generator:
+def emk_neg(n: int, k: int) -> Generator:
     """
-    The `EMK_neg` function generates combinations (by swapping pairs of integers in reverse order)
-    using the EMK algorithm.
+    The `emk_neg` function generates combinations (by swapping pairs of integers in reverse order)
+    using the emk algorithm.
 
     :param n: The parameter `n` represents the total number of elements in the set, and `k` represents
     the number of elements to be selected in each combination
     :type n: int
     :param k: The parameter `k` represents the number of elements to be selected in each combination
     :type k: int
-    :return: The function `EMK_gen` returns a generator object that yields pairs of integers `(x, y)`.
+    :return: The function `emk_gen` returns a generator object that yields pairs of integers `(x, y)`.
     """
     if n <= k or k == 0:
         return
@@ -100,16 +100,16 @@ def EMK_neg(n: int, k: int) -> Generator:
         for i in range(n - 1, 0, -1):
             yield (i, i - 1)
     else:
-        yield from EMK_neg(n - 2, k - 2)
+        yield from emk_neg(n - 2, k - 2)
         yield (n - 2, k - 2)
-        yield from EMK_gen(n - 2, k - 1)
+        yield from emk_gen(n - 2, k - 1)
         yield (n - 1, n - 2)
-        yield from EMK_neg(n - 1, k)
+        yield from emk_neg(n - 1, k)
 
 
-def EMK(n: int, k: int, Zero=0, One=1):
+def emk(n: int, k: int, Zero=0, One=1):
     """
-    The EMK function generates combinations by swapping pairs of integers using the EMK algorithm.
+    The emk function generates combinations by swapping pairs of integers using the emk algorithm.
 
     :param n: The parameter `n` represents the total number of elements in the combination. It is an
     integer value
@@ -122,7 +122,7 @@ def EMK(n: int, k: int, Zero=0, One=1):
     to 1 (optional)
 
     Examples:
-        >>> for s in EMK(6, 3, Zero="◾", One="◽"):
+        >>> for s in emk(6, 3, Zero="◾", One="◽"):
         ...     print("".join(s))
         ...
         ◽◽◽◾◾◾
@@ -148,7 +148,7 @@ def EMK(n: int, k: int, Zero=0, One=1):
     """
     s = [One] * k + [Zero] * (n - k)
     yield s
-    for x, y in EMK_gen(n, k):
+    for x, y in emk_gen(n, k):
         s[x], s[y] = s[y], s[x]
         yield s
 

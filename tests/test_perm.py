@@ -1,76 +1,76 @@
 from math import factorial
 
-from ec_gen.ehr import Ehr, Ehr_gen
-from ec_gen.sjt import SJT, PlainChanges, SJT_gen
-from ec_gen.sjt_list import SJT2
+from ec_gen.ehr import ehr, ehr_gen
+from ec_gen.sjt import sjt, PlainChanges, sjt_gen
+from ec_gen.sjt_list import sjt2
 
 
-def test_SJT_gen_odd():
+def test_sjt_gen_odd():
     cnt = 0  # start from 0
-    for _ in SJT_gen(5):
+    for _ in sjt_gen(5):
         cnt += 1
     assert cnt == factorial(5)
 
 
-def test_SJT_gen_even():
+def test_sjt_gen_even():
     cnt = 0  # start from 0
-    for _ in SJT_gen(6):
+    for _ in sjt_gen(6):
         cnt += 1
     assert cnt == factorial(6)
 
 
-def test_SJT_odd():
+def test_sjt_odd():
     cnt = 0  # start from 0
-    for _ in SJT(5):
+    for _ in sjt(5):
         cnt += 1
     assert cnt == factorial(5)
 
 
-def test_SJT_even():
+def test_sjt_even():
     cnt = 0  # start from 0
-    for _ in SJT(6):
+    for _ in sjt(6):
         cnt += 1
     assert cnt == factorial(6)
 
 
-def test_Ehr_gen_odd():
+def test_ehr_gen_odd():
     cnt = 1
-    for _ in Ehr_gen(5):
+    for _ in ehr_gen(5):
         cnt += 1
     assert cnt == factorial(5)
 
 
-def test_Ehr_gen_even():
+def test_ehr_gen_even():
     cnt = 1
-    for _ in Ehr_gen(6):
+    for _ in ehr_gen(6):
         cnt += 1
     assert cnt == factorial(6)
 
 
-def test_Ehr_odd():
+def test_ehr_odd():
     cnt = 1
-    for _ in Ehr(5):
+    for _ in ehr(5):
         cnt += 1
     assert cnt == factorial(5)
 
 
-def test_Ehr_even():
+def test_ehr_even():
     cnt = 1
-    for _ in Ehr(6):
+    for _ in ehr(6):
         cnt += 1
     assert cnt == factorial(6)
 
 
-def test_SJT2_odd():
+def test_sjt2_odd():
     cnt = 0  # start from 0
-    for _ in SJT2(5):
+    for _ in sjt2(5):
         cnt += 1
     assert cnt == factorial(5)
 
 
-def test_SJT2_even():
+def test_sjt2_even():
     cnt = 0  # start from 0
-    for _ in SJT2(6):
+    for _ in sjt2(6):
         cnt += 1
     assert cnt == factorial(6)
 

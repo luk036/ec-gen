@@ -2,9 +2,9 @@
 from typing import Generator
 
 
-def SJT_gen(n: int) -> Generator:
+def sjt_gen(n: int) -> Generator:
     """
-    The function `SJT_gen` generates all permutations of length `n` using the Steinhaus-Johnson-Trotter
+    The function `sjt_gen` generates all permutations of length `n` using the Steinhaus-Johnson-Trotter
     algorithm.
 
     Note:
@@ -12,10 +12,10 @@ def SJT_gen(n: int) -> Generator:
 
     :param n: The parameter `n` represents the number of elements in the permutation
     :type n: int
-    :return: The function `SJT_gen` returns a generator object.
+    :return: The function `sjt_gen` returns a generator object.
 
     Examples:
-        >>> for i in SJT_gen(4):
+        >>> for i in sjt_gen(4):
         ...     print("swap {} and {}".format(i, i + 1))
         ...
         swap 2 and 3
@@ -51,7 +51,7 @@ def SJT_gen(n: int) -> Generator:
 
     up = range(n - 1)
     down = range(n - 2, -1, -1)
-    gen = SJT_gen(n - 1)
+    gen = sjt_gen(n - 1)
     for x in gen:
         for i in down:  # downward
             yield i
@@ -61,18 +61,18 @@ def SJT_gen(n: int) -> Generator:
         yield next(gen)  # tricky part
 
 
-def SJT(n: int) -> Generator:
+def sjt(n: int) -> Generator:
     """
-    The function `SJT` generates all permutations of length `n` using the Steinhaus-Johnson-Trotter
+    The function `sjt` generates all permutations of length `n` using the Steinhaus-Johnson-Trotter
     algorithm.
 
     :param n: The parameter `n` represents the number of elements in the permutation
     :type n: int
-    :return: The function `SJT` returns a generator object.
+    :return: The function `sjt` returns a generator object.
 
     Examples:
         >>> fruits = list("🍉🍌🍇🍏")
-        >>> for lst in SJT(4):
+        >>> for lst in sjt(4):
         ...     mylst = list(fruits[i] for i in lst)
         ...     print("".join(mylst))
         ...
@@ -102,7 +102,7 @@ def SJT(n: int) -> Generator:
         🍌🍉🍇🍏
     """
     perm = list(range(n))
-    for x in SJT_gen(n):
+    for x in sjt_gen(n):
         yield perm
         perm[x], perm[x + 1] = perm[x + 1], perm[x]
 
@@ -127,11 +127,7 @@ def PlainChanges(n):
 
 
 if __name__ == "__main__":
-    # import doctest
-    # doctest.testmod()
-
-    # fruits = list("🍉🍌🍇🍏")
     fruits = list("ABCD")
-    for lst in SJT(4):
+    for lst in sjt(4):
         mylst = list(fruits[i] for i in lst)
         print("".join(mylst))

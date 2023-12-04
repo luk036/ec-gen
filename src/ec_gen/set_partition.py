@@ -109,9 +109,9 @@ def set_partition(n: int, k: int) -> Generator:
     if not (k > 1 and k < n):
         return
     if k % 2 == 0:
-        yield from GEN0_even(n, k)
+        yield from gen0_even(n, k)
     else:
-        yield from GEN0_odd(n, k)
+        yield from gen0_odd(n, k)
 
 
 # The lists S(n,k,0) and S(n,k,1) satisfy the following properties.
@@ -122,10 +122,10 @@ def set_partition(n: int, k: int) -> Generator:
 # Note that first(S'(n,k,p)) = last(S(n,k,p))
 
 
-def GEN0_even(n: int, k: int) -> Generator:
+def gen0_even(n: int, k: int) -> Generator:
     """S(n,k,0) even k
 
-    The function `GEN0_even` generates a sequence of tuples that satisfy certain conditions based on the
+    The function `gen0_even` generates a sequence of tuples that satisfy certain conditions based on the
     values of `n` and `k`.
 
     :param n: The parameter `n` represents the total number of elements in a sequence. It is an integer
@@ -136,17 +136,17 @@ def GEN0_even(n: int, k: int) -> Generator:
     :type k: int
     """
     if k > 2:
-        yield from GEN0_odd(n - 1, k - 1)
+        yield from gen0_odd(n - 1, k - 1)
     yield (n - 1, k - 1)
     if k < n - 1:
-        yield from GEN1_even(n - 1, k)
+        yield from gen1_even(n - 1, k)
         yield (n, k - 2)
-        yield from NEG1_even(n - 1, k)
+        yield from neg1_even(n - 1, k)
         for i in range(k - 3, 0, -2):
             yield (n, i)
-            yield from GEN1_even(n - 1, k)
+            yield from gen1_even(n - 1, k)
             yield (n, i - 1)
-            yield from NEG1_even(n - 1, k)
+            yield from neg1_even(n - 1, k)
     else:
         yield (n, k - 2)
         for i in range(k - 3, 0, -2):
@@ -154,10 +154,10 @@ def GEN0_even(n: int, k: int) -> Generator:
             yield (n, i - 1)
 
 
-def NEG0_even(n: int, k: int) -> Generator:
+def neg0_even(n: int, k: int) -> Generator:
     """S'(n,k,0) even k
 
-    The function `NEG0_even` generates a sequence of tuples that satisfy certain conditions based on the
+    The function `neg0_even` generates a sequence of tuples that satisfy certain conditions based on the
     input parameters `n` and `k`.
 
     :param n: The parameter `n` represents the total number of elements in a sequence or set. It is an
@@ -170,13 +170,13 @@ def NEG0_even(n: int, k: int) -> Generator:
     # make sure that k > 0 and k < n
     if k < n - 1:
         for i in range(1, k - 2, 2):
-            yield from GEN1_even(n - 1, k)
+            yield from gen1_even(n - 1, k)
             yield (n, i)
-            yield from NEG1_even(n - 1, k)
+            yield from neg1_even(n - 1, k)
             yield (n, i + 1)
-        yield from GEN1_even(n - 1, k)
+        yield from gen1_even(n - 1, k)
         yield (n, k - 1)
-        yield from NEG1_even(n - 1, k)
+        yield from neg1_even(n - 1, k)
     else:
         for i in range(1, k - 2, 2):
             yield (n, i)
@@ -184,31 +184,34 @@ def NEG0_even(n: int, k: int) -> Generator:
         yield (n, k - 1)
     yield (n - 1, 0)
     if k > 3:
-        yield from NEG0_odd(n - 1, k - 1)
+        yield from neg0_odd(n - 1, k - 1)
 
 
-def GEN1_even(n: int, k: int) -> Generator:
+def gen1_even(n: int, k: int) -> Generator:
     """S(n,k,1) even k
 
-    Args:
-        n (int): [description]
-        k (int): [description]
+    The function `gen1_even` generates a sequence of tuples that satisfy certain conditions based on the
+    input parameters `n` and `k`.
 
-    Yields:
-        [type]: [description]
+    :param n: The parameter `n` represents the total number of elements in a sequence or set. It is an
+    integer value
+    :type n: int
+    :param k: The parameter `k` represents the number of elements to be selected from a set of `n`
+    elements. It is used to control the iteration and recursion in the function
+    :type k: int
     """
     if k > 3:
-        yield from GEN1_odd(n - 1, k - 1)
+        yield from gen1_odd(n - 1, k - 1)
     yield (k, k - 1)
     if k < n - 1:
-        yield from NEG1_even(n - 1, k)
+        yield from neg1_even(n - 1, k)
         yield (n, k - 2)
-        yield from GEN1_even(n - 1, k)
+        yield from gen1_even(n - 1, k)
         for i in range(k - 3, 0, -2):
             yield (n, i)
-            yield from NEG1_even(n - 1, k)
+            yield from neg1_even(n - 1, k)
             yield (n, i - 1)
-            yield from GEN1_even(n - 1, k)
+            yield from gen1_even(n - 1, k)
     else:
         yield (n, k - 2)
         for i in range(k - 3, 0, -2):
@@ -216,25 +219,28 @@ def GEN1_even(n: int, k: int) -> Generator:
             yield (n, i - 1)
 
 
-def NEG1_even(n: int, k: int) -> Generator:
+def neg1_even(n: int, k: int) -> Generator:
     """S'(n,k,1) even k
 
-    Args:
-        n (int): [description]
-        k (int): [description]
+    The function `neg1_even` generates a sequence of tuples that satisfy certain conditions based on the
+    input parameters `n` and `k`.
 
-    Yields:
-        [type]: [description]
+    :param n: The parameter `n` represents the total number of elements in a sequence or set. It is an
+    integer value
+    :type n: int
+    :param k: The parameter `k` represents the number of elements to be selected from a set of `n`
+    elements. It is used to control the iteration and recursion in the function
+    :type k: int
     """
     if k < n - 1:
         for i in range(1, k - 2, 2):
-            yield from NEG1_even(n - 1, k)
+            yield from neg1_even(n - 1, k)
             yield (n, i)
-            yield from GEN1_even(n - 1, k)
+            yield from gen1_even(n - 1, k)
             yield (n, i + 1)
-        yield from NEG1_even(n - 1, k)
+        yield from neg1_even(n - 1, k)
         yield (n, k - 1)
-        yield from GEN1_even(n - 1, k)
+        yield from gen1_even(n - 1, k)
     else:
         for i in range(1, k - 2, 2):
             yield (n, i)
@@ -242,121 +248,133 @@ def NEG1_even(n: int, k: int) -> Generator:
         yield (n, k - 1)
     yield (k, 0)
     if k > 3:
-        yield from NEG1_odd(n - 1, k - 1)
+        yield from neg1_odd(n - 1, k - 1)
 
 
-def GEN0_odd(n: int, k: int) -> Generator:
+def gen0_odd(n: int, k: int) -> Generator:
     """S(n,k,0) odd k
 
-    Args:
-        n (int): [description]
-        k (int): [description]
+    The function `gen0_odd` generates a sequence of tuples that satisfy certain conditions based on the
+    input parameters `n` and `k`.
 
-    Yields:
-        [type]: [description]
+    :param n: The parameter `n` represents the total number of elements in a sequence or set. It is an
+    integer value
+    :type n: int
+    :param k: The parameter `k` represents the number of elements to be selected from a set of `n`
+    elements. It is used to control the iteration and recursion in the function
+    :type k: int
     """
-    yield from GEN1_even(n - 1, k - 1)
+    yield from gen1_even(n - 1, k - 1)
     yield (k, k - 1)
     if k < n - 1:
-        yield from NEG1_odd(n - 1, k)
+        yield from neg1_odd(n - 1, k)
         for i in range(k - 2, 0, -2):
             yield (n, i)
-            yield from GEN1_odd(n - 1, k)
+            yield from gen1_odd(n - 1, k)
             yield (n, i - 1)
-            yield from NEG1_odd(n - 1, k)
+            yield from neg1_odd(n - 1, k)
     else:
         for i in range(k - 2, 0, -2):
             yield (n, i)
             yield (n, i - 1)
 
 
-# def GEN0_odd(n: int, k: int) -> Generator:
+# def gen0_odd(n: int, k: int) -> Generator:
 #     ''' S(n,k,0) odd k '''
 #     if k > 1 and k < n:
-#         yield from GEN1_even(n-1, k-1)
+#         yield from gen1_even(n-1, k-1)
 #         yield (k, k-1)
 #         even = False
 #         for i in range(k-2, -1, -1):
-#             yield from GEN1_odd(n-1, k) if even \
-#                   else NEG1_odd(n-1, k)
+#             yield from gen1_odd(n-1, k) if even \
+#                   else neg1_odd(n-1, k)
 #             yield (n, i)
 #             even = ~even
-#         yield from NEG1_odd(n-1, k)
+#         yield from neg1_odd(n-1, k)
 
 
-def NEG0_odd(n: int, k: int) -> Generator:
+def neg0_odd(n: int, k: int) -> Generator:
     """S'(n,k,0) odd k
 
-    Args:
-        n (int): [description]
-        k (int): [description]
+    The function `neg0_odd` generates a sequence of tuples that satisfy certain conditions based on the
+    input parameters `n` and `k`.
 
-    Yields:
-        [type]: [description]
+    :param n: The parameter `n` represents the total number of elements in a sequence or set. It is an
+    integer value
+    :type n: int
+    :param k: The parameter `k` represents the number of elements to be selected from a set of `n`
+    elements. It is used to control the iteration and recursion in the function
+    :type k: int
     """
     if k < n - 1:
         for i in range(1, k - 1, 2):
-            yield from GEN1_odd(n - 1, k)
+            yield from gen1_odd(n - 1, k)
             yield (n, i)
-            yield from NEG1_odd(n - 1, k)
+            yield from neg1_odd(n - 1, k)
             yield (n, i + 1)
-        yield from GEN1_odd(n - 1, k)
+        yield from gen1_odd(n - 1, k)
     else:
         for i in range(1, k - 1, 2):
             yield (n, i)
             yield (n, i + 1)
     yield (k, 0)
-    yield from NEG1_even(n - 1, k - 1)
+    yield from neg1_even(n - 1, k - 1)
 
 
-def GEN1_odd(n: int, k: int) -> Generator:
+def gen1_odd(n: int, k: int) -> Generator:
     """S(n,k,1) odd k
 
-    Args:
-        n (int): [description]
-        k (int): [description]
+    The function `gen1_odd` generates a sequence of tuples that satisfy certain conditions based on the
+    input parameters `n` and `k`.
 
-    Yields:
-        [type]: [description]
+    :param n: The parameter `n` represents the total number of elements in a sequence or set. It is an
+    integer value
+    :type n: int
+    :param k: The parameter `k` represents the number of elements to be selected from a set of `n`
+    elements. It is used to control the iteration and recursion in the function
+    :type k: int
     """
-    yield from GEN0_even(n - 1, k - 1)
+    yield from gen0_even(n - 1, k - 1)
     yield (n - 1, k - 1)
     if k < n - 1:
-        yield from GEN1_odd(n - 1, k)
+        yield from gen1_odd(n - 1, k)
         for i in range(k - 2, 0, -2):
             yield (n, i)
-            yield from NEG1_odd(n - 1, k)
+            yield from neg1_odd(n - 1, k)
             yield (n, i - 1)
-            yield from GEN1_odd(n - 1, k)
+            yield from gen1_odd(n - 1, k)
     else:
         for i in range(k - 2, 0, -2):
             yield (n, i)
             yield (n, i - 1)
 
 
-def NEG1_odd(n: int, k: int) -> Generator:
+def neg1_odd(n: int, k: int) -> Generator:
     """S'(n,k,1) odd k
 
-    Args:
-        n (int): [description]
-        k (int): [description]
+    The function `neg1_odd` generates a sequence of tuples that satisfy certain conditions based on the
+    input parameters `n` and `k`.
 
-    Yields:
-        [type]: [description]
+    :param n: The parameter `n` represents the total number of elements in a sequence or set. It is an
+    integer value
+    :type n: int
+    :param k: The parameter `k` represents the number of elements to be selected from a set of `n`
+    elements. It is used to control the iteration and recursion in the function
+    :type k: int
     """
     if k < n - 1:
         for i in range(1, k - 1, 2):
-            yield from NEG1_odd(n - 1, k)
+            yield from neg1_odd(n - 1, k)
             yield (n, i)
-            yield from GEN1_odd(n - 1, k)
+            yield from gen1_odd(n - 1, k)
             yield (n, i + 1)
-        yield from NEG1_odd(n - 1, k)
+        yield from neg1_odd(n - 1, k)
     else:
         for i in range(1, k - 1, 2):
             yield (n, i)
             yield (n, i + 1)
     yield (n - 1, 0)
-    yield from NEG0_even(n - 1, k - 1)
+    yield from neg0_even(n - 1, k - 1)
 
 
 if __name__ == "__main__":

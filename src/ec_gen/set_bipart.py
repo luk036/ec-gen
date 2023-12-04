@@ -35,13 +35,13 @@ from typing import Generator
 
 
 def stirling2nd2(n: int) -> int:
-    """Stirling number of second kind (k = 2)
-
-    Args:
-        n (int): [description]
-
-    Returns:
-        int: [description]
+    """
+    The `stirling2nd2` function calculates the Stirling number of the second kind for a given integer
+    `n` (k = 2) using a recursive approach.
+    
+    :param n: The parameter `n` represents the number of elements in a set
+    :type n: int
+    :return: the Stirling number of the second kind for the given input n.
 
     Examples:
         >>> stirling2nd2(5)
@@ -53,13 +53,12 @@ def stirling2nd2(n: int) -> int:
 
 
 def set_bipart(n: int) -> Generator:
-    """[summary]
-
-    Args:
-        n (int): [description]
-
-    Yields:
-        [type]: [description]
+    """
+    The function `set_bipart` generates a sequence of moves that partitions a set of size `n` into two
+    subsets.
+    
+    :param n: The parameter `n` represents the number of elements in the bi-partition
+    :type n: int
 
     Examples:
         >>> n = 5
@@ -86,7 +85,7 @@ def set_bipart(n: int) -> Generator:
         [0, 1, 0, 1, 0] : Move 3 from B1 to B0
         [0, 0, 0, 1, 0] : Move 2 from B1 to B0
     """
-    yield from GEN0(n)
+    yield from gen0(n)
 
 
 # The lists S(n,k,0) and S(n,k,1) satisfy the following properties.
@@ -97,54 +96,54 @@ def set_bipart(n: int) -> Generator:
 # Note that first(S'(n,k,p)) = last(S(n,k,p))
 
 
-def GEN0(n: int) -> Generator:
+def gen0(n: int) -> Generator:
     """S(n,k,0) even k
 
-    Args:
-        n (int): [description]
-
-    Yields:
-        [type]: [description]
+    The function `gen0` generates a sequence of numbers that satisfy a specific condition.
+    
+    :param n: The parameter `n` represents an integer value
+    :type n: int
+    :return: a generator object.
     """
     if n < 3:
         return
     yield n - 1
-    yield from GEN1(n - 1)
+    yield from gen1(n - 1)
     yield n
-    yield from NEG1(n - 1)
+    yield from neg1(n - 1)
 
 
-def GEN1(n: int) -> Generator:
+def gen1(n: int) -> Generator:
     """S(n,k,1) even k
 
-    Args:
-        n (int): [description]
-
-    Yields:
-        [type]: [description]
+    The function `gen1` generates a sequence of numbers that satisfy a specific condition.
+    
+    :param n: The parameter `n` represents an integer value
+    :type n: int
+    :return: a generator object.
     """
     if n < 3:
         return
     yield 2
-    yield from NEG1(n - 1)
+    yield from neg1(n - 1)
     yield n
-    yield from GEN1(n - 1)
+    yield from gen1(n - 1)
 
 
-def NEG1(n: int) -> Generator:
+def neg1(n: int) -> Generator:
     """S'(n,k,1) even k
 
-    Args:
-        n (int): [description]
-
-    Yields:
-        [type]: [description]
+    The function `neg1` generates a sequence of numbers that satisfy a specific condition.
+    
+    :param n: The parameter `n` represents an integer value
+    :type n: int
+    :return: a generator object.
     """
     if n < 3:
         return
-    yield from NEG1(n - 1)
+    yield from neg1(n - 1)
     yield n
-    yield from GEN1(n - 1)
+    yield from gen1(n - 1)
     yield 2
 
 

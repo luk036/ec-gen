@@ -94,9 +94,9 @@ def set_partition(n: int, k: int) -> Generator:
         [0, 0, 0, 1, 0] : Move 2 from block 1 to 0
     """
     if k % 2 == 0:
-        yield from GEN0_even(n, k)
+        yield from gen0_even(n, k)
     else:
-        yield from GEN0_odd(n, k)
+        yield from gen0_odd(n, k)
 
 
 # The lists S(n,k,0) and S(n,k,1) satisfy the following properties.
@@ -107,10 +107,10 @@ def set_partition(n: int, k: int) -> Generator:
 # Note that first(S'(n,k,p)) = last(S(n,k,p))
 
 
-def GEN0_even(n: int, k: int) -> Generator:
+def gen0_even(n: int, k: int) -> Generator:
     """S(n,k,0) even k
 
-    The function `GEN0_even` generates a sequence of tuples that satisfy certain conditions based on the
+    The function `gen0_even` generates a sequence of tuples that satisfy certain conditions based on the
     values of `n` and `k`.
 
     :param n: The parameter `n` represents the total number of elements in a sequence. It is an integer
@@ -121,22 +121,22 @@ def GEN0_even(n: int, k: int) -> Generator:
     :type k: int
     """
     if k > 0 and k < n:
-        yield from GEN0_odd(n - 1, k - 1)
+        yield from gen0_odd(n - 1, k - 1)
         yield (n - 1, k - 1)
-        yield from GEN1_even(n - 1, k)
+        yield from gen1_even(n - 1, k)
         yield (n, k - 2)
-        yield from NEG1_even(n - 1, k)
+        yield from neg1_even(n - 1, k)
         for i in range(k - 3, 0, -2):
             yield (n, i)
-            yield from GEN1_even(n - 1, k)
+            yield from gen1_even(n - 1, k)
             yield (n, i - 1)
-            yield from NEG1_even(n - 1, k)
+            yield from neg1_even(n - 1, k)
 
 
-def NEG0_even(n: int, k: int) -> Generator:
+def neg0_even(n: int, k: int) -> Generator:
     """S'(n,k,0) even k
 
-    The function `NEG0_even` generates a sequence of tuples that satisfy certain conditions based on the
+    The function `neg0_even` generates a sequence of tuples that satisfy certain conditions based on the
     input parameters `n` and `k`.
 
     :param n: The parameter `n` represents the total number of elements in a sequence or set. It is an
@@ -148,18 +148,18 @@ def NEG0_even(n: int, k: int) -> Generator:
     """
     if k > 0 and k < n:
         for i in range(1, k - 2, 2):
-            yield from GEN1_even(n - 1, k)
+            yield from gen1_even(n - 1, k)
             yield (n, i)
-            yield from NEG1_even(n - 1, k)
+            yield from neg1_even(n - 1, k)
             yield (n, i + 1)
-        yield from GEN1_even(n - 1, k)
+        yield from gen1_even(n - 1, k)
         yield (n, k - 1)
-        yield from NEG1_even(n - 1, k)
+        yield from neg1_even(n - 1, k)
         yield (n - 1, 0)
-        yield from NEG0_odd(n - 1, k - 1)
+        yield from neg0_odd(n - 1, k - 1)
 
 
-def GEN1_even(n: int, k: int) -> Generator:
+def gen1_even(n: int, k: int) -> Generator:
     """S(n,k,1) even k
 
     Args:
@@ -170,19 +170,19 @@ def GEN1_even(n: int, k: int) -> Generator:
         [type]: [description]
     """
     if k > 1 and k < n:
-        yield from GEN1_odd(n - 1, k - 1)
+        yield from gen1_odd(n - 1, k - 1)
         yield (k, k - 1)
-        yield from NEG1_even(n - 1, k)
+        yield from neg1_even(n - 1, k)
         yield (n, k - 2)
-        yield from GEN1_even(n - 1, k)
+        yield from gen1_even(n - 1, k)
         for i in range(k - 3, 0, -2):
             yield (n, i)
-            yield from NEG1_even(n - 1, k)
+            yield from neg1_even(n - 1, k)
             yield (n, i - 1)
-            yield from GEN1_even(n - 1, k)
+            yield from gen1_even(n - 1, k)
 
 
-def NEG1_even(n: int, k: int) -> Generator:
+def neg1_even(n: int, k: int) -> Generator:
     """S'(n,k,1) even k
 
     Args:
@@ -194,18 +194,18 @@ def NEG1_even(n: int, k: int) -> Generator:
     """
     if k > 1 and k < n:
         for i in range(1, k - 2, 2):
-            yield from NEG1_even(n - 1, k)
+            yield from neg1_even(n - 1, k)
             yield (n, i)
-            yield from GEN1_even(n - 1, k)
+            yield from gen1_even(n - 1, k)
             yield (n, i + 1)
-        yield from NEG1_even(n - 1, k)
+        yield from neg1_even(n - 1, k)
         yield (n, k - 1)
-        yield from GEN1_even(n - 1, k)
+        yield from gen1_even(n - 1, k)
         yield (k, 0)
-        yield from NEG1_odd(n - 1, k - 1)
+        yield from neg1_odd(n - 1, k - 1)
 
 
-def GEN0_odd(n: int, k: int) -> Generator:
+def gen0_odd(n: int, k: int) -> Generator:
     """S(n,k,0) odd k
 
     Args:
@@ -216,31 +216,31 @@ def GEN0_odd(n: int, k: int) -> Generator:
         [type]: [description]
     """
     if k > 2 and k < n:
-        yield from GEN1_even(n - 1, k - 1)
+        yield from gen1_even(n - 1, k - 1)
         yield (k, k - 1)
-        yield from NEG1_odd(n - 1, k)
+        yield from neg1_odd(n - 1, k)
         for i in range(k - 2, 0, -2):
             yield (n, i)
-            yield from GEN1_odd(n - 1, k)
+            yield from gen1_odd(n - 1, k)
             yield (n, i - 1)
-            yield from NEG1_odd(n - 1, k)
+            yield from neg1_odd(n - 1, k)
 
 
-# def GEN0_odd(n: int, k: int) -> Generator:
+# def gen0_odd(n: int, k: int) -> Generator:
 #     ''' S(n,k,0) odd k '''
 #     if k > 1 and k < n:
-#         yield from GEN1_even(n-1, k-1)
+#         yield from gen1_even(n-1, k-1)
 #         yield (k, k-1)
 #         even = False
 #         for i in range(k-2, -1, -1):
-#             yield from GEN1_odd(n-1, k) if even \
-#                   else NEG1_odd(n-1, k)
+#             yield from gen1_odd(n-1, k) if even \
+#                   else neg1_odd(n-1, k)
 #             yield (n, i)
 #             even = ~even
-#         yield from NEG1_odd(n-1, k)
+#         yield from neg1_odd(n-1, k)
 
 
-def NEG0_odd(n: int, k: int) -> Generator:
+def neg0_odd(n: int, k: int) -> Generator:
     """S'(n,k,0) odd k
 
     Args:
@@ -252,16 +252,16 @@ def NEG0_odd(n: int, k: int) -> Generator:
     """
     if k > 2 and k < n:
         for i in range(1, k - 1, 2):
-            yield from GEN1_odd(n - 1, k)
+            yield from gen1_odd(n - 1, k)
             yield (n, i)
-            yield from NEG1_odd(n - 1, k)
+            yield from neg1_odd(n - 1, k)
             yield (n, i + 1)
-        yield from GEN1_odd(n - 1, k)
+        yield from gen1_odd(n - 1, k)
         yield (k, 0)
-        yield from NEG1_even(n - 1, k - 1)
+        yield from neg1_even(n - 1, k - 1)
 
 
-def GEN1_odd(n: int, k: int) -> Generator:
+def gen1_odd(n: int, k: int) -> Generator:
     """S(n,k,1) odd k
 
     Args:
@@ -272,17 +272,17 @@ def GEN1_odd(n: int, k: int) -> Generator:
         [type]: [description]
     """
     if k > 2 and k < n:
-        yield from GEN0_even(n - 1, k - 1)
+        yield from gen0_even(n - 1, k - 1)
         yield (n - 1, k - 1)
-        yield from GEN1_odd(n - 1, k)
+        yield from gen1_odd(n - 1, k)
         for i in range(k - 2, 0, -2):
             yield (n, i)
-            yield from NEG1_odd(n - 1, k)
+            yield from neg1_odd(n - 1, k)
             yield (n, i - 1)
-            yield from GEN1_odd(n - 1, k)
+            yield from gen1_odd(n - 1, k)
 
 
-def NEG1_odd(n: int, k: int) -> Generator:
+def neg1_odd(n: int, k: int) -> Generator:
     """S'(n,k,1) odd k
 
     Args:
@@ -294,13 +294,13 @@ def NEG1_odd(n: int, k: int) -> Generator:
     """
     if k > 2 and k < n:
         for i in range(1, k - 1, 2):
-            yield from NEG1_odd(n - 1, k)
+            yield from neg1_odd(n - 1, k)
             yield (n, i)
-            yield from GEN1_odd(n - 1, k)
+            yield from gen1_odd(n - 1, k)
             yield (n, i + 1)
-        yield from NEG1_odd(n - 1, k)
+        yield from neg1_odd(n - 1, k)
         yield (n - 1, 0)
-        yield from NEG0_even(n - 1, k - 1)
+        yield from neg0_even(n - 1, k - 1)
 
 
 if __name__ == "__main__":

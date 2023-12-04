@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 
-from ec_gen.sjt import PlainChanges, SJT_gen
-from ec_gen.sjt_list import SJT2
+from ec_gen.sjt import PlainChanges, sjt_gen
+from ec_gen.sjt_list import sjt2
 
 
 def run_sjt_new(n):
     alphabets = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     cnt = 0
-    for x in SJT_gen(n):
+    for x in sjt_gen(n):
         cnt += 1
         alphabets[x], alphabets[x + 1] = alphabets[x + 1], alphabets[x]
     return cnt
@@ -17,7 +17,7 @@ def run_sjt_new(n):
 def run_sjt_old(n):
     alphabets = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     cnt = 0
-    for perm in SJT2(n):
+    for perm in sjt2(n):
         _ = list(alphabets[i] for i in perm)
         cnt += 1
     return cnt
