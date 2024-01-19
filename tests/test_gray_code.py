@@ -1,4 +1,4 @@
-from ec_gen.combin import emk, emk_comb_gen, comb
+from ec_gen.combin import comb, emk, emk_comb_gen
 from ec_gen.gray_code import brgc, brgc_gen
 
 

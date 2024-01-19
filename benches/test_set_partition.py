@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 
-from ec_gen.set_partition import set_partition, stirling2nd
 import ec_gen.set_partition_old as old
+from ec_gen.set_partition import set_partition, stirling2nd
 
 
 def run_set_partition_new(n, k):

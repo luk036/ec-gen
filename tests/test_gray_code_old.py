@@ -1,4 +1,4 @@
-from ec_gen.combin_old import emk, emk_gen, comb
+from ec_gen.combin_old import comb, emk, emk_gen
 
 
 def test_emk_gen_odd_odd():

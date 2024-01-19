@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 
-from ec_gen.combin import emk_comb_gen, comb
+from ec_gen.combin import comb, emk_comb_gen
 from ec_gen.combin_old import emk_gen
 
 

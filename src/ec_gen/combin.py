@@ -35,7 +35,7 @@ def comb_recur(n: int, k: int) -> int:
     """
     The function `comb_recur` calculates the number of combinations of `k` elements from a set of `n` elements
     using recursion and memoization.
-    
+
     :param n: The parameter `n` represents the total number of items to choose from
     :type n: int
     :param k: The parameter `k` represents the number of elements to be chosen from a set of `n`

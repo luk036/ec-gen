@@ -38,7 +38,7 @@ def stirling2nd2(n: int) -> int:
     """
     The `stirling2nd2` function calculates the Stirling number of the second kind for a given integer
     `n` (k = 2) using a recursive approach.
-    
+
     :param n: The parameter `n` represents the number of elements in a set
     :type n: int
     :return: the Stirling number of the second kind for the given input n.
@@ -56,7 +56,7 @@ def set_bipart(n: int) -> Generator:
     """
     The function `set_bipart` generates a sequence of moves that partitions a set of size `n` into two
     subsets.
-    
+
     :param n: The parameter `n` represents the number of elements in the bi-partition
     :type n: int
 
@@ -100,7 +100,7 @@ def gen0(n: int) -> Generator:
     """S(n,k,0) even k
 
     The function `gen0` generates a sequence of numbers that satisfy a specific condition.
-    
+
     :param n: The parameter `n` represents an integer value
     :type n: int
     :return: a generator object.
@@ -117,7 +117,7 @@ def gen1(n: int) -> Generator:
     """S(n,k,1) even k
 
     The function `gen1` generates a sequence of numbers that satisfy a specific condition.
-    
+
     :param n: The parameter `n` represents an integer value
     :type n: int
     :return: a generator object.
@@ -134,7 +134,7 @@ def neg1(n: int) -> Generator:
     """S'(n,k,1) even k
 
     The function `neg1` generates a sequence of numbers that satisfy a specific condition.
-    
+
     :param n: The parameter `n` represents an integer value
     :type n: int
     :return: a generator object.
