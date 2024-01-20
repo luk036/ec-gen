@@ -1,0 +1,6 @@
+name: ec-gen
+channels:
+  - conda-forge
+dependencies:
+  - pytest
+  - pytest-benchmark
