@@ -6,6 +6,7 @@
  is called a block. Below we show the partitions of [4]. The periods
  separtate the individual sets so that, for example, 1.23.4 is the
  partition {{1},{2,3},{4}}.
+
    1 block:  1234
    2 blocks: 123.4   124.3   134.2   1.234   12.34   13.24   14.23
    3 blocks: 1.2.34  1.24.3  14.2.3  13.2.4  12.3.4

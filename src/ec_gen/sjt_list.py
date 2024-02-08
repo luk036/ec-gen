@@ -9,8 +9,8 @@ def sjt2(n: int) -> Generator:
     :param n: The parameter `n` represents the number of elements in the permutation
     :type n: int
     :return: The function `sjt2` is a generator function, which means it yields values instead of
-    returning them. It generates all permutations of length `n` using the Steinhaus-Johnson-Trotter
-    algorithm. Each permutation is represented as a list of integers.
+             returning them. It generates all permutations of length `n` using the Steinhaus-Johnson-Trotter
+             algorithm. Each permutation is represented as a list of integers.
     """
     if n == 2:
         yield [0, 1]

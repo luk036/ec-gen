@@ -6,6 +6,7 @@
  is called a block. Below we show the partitions of [4]. The periods
  separtate the individual sets so that, for example, 1.23.4 is the
  partition {{1},{2,3},{4}}.
+
    1 block:  1234
    2 blocks: 123.4   124.3   134.2   1.234   12.34   13.24   14.23
    3 blocks: 1.2.34  1.24.3  14.2.3  13.2.4  12.3.4
@@ -38,16 +39,14 @@ from typing import Generator
 @lru_cache
 def stirling2nd(n: int, k: int) -> int:
     """
-    The `stirling2nd` function calculates the Stirling number of the second kind for given values of `n`
-    and `k`.
+    The `stirling2nd` function calculates the Stirling number of the second kind for given values of `n` and `k`.
 
     :param n: The parameter `n` represents the total number of objects or elements in a set
     :type n: int
-    :param k: The parameter `k` represents the number of non-empty subsets that need to be formed from a
-    set of `n` elements
+    :param k: The parameter `k` represents the number of non-empty subsets that need to be formed from a set of `n` elements
     :type k: int
     :return: The function `stirling2nd` returns an integer, which is the Stirling number of the second
-    kind for the given values of `n` and `k`.
+             kind for the given values of `n` and `k`.
 
     Examples:
         >>> stirling2nd(5, 2)
@@ -60,8 +59,7 @@ def stirling2nd(n: int, k: int) -> int:
 
 def set_partition(n: int, k: int) -> Generator:
     """
-    The `set_partition` function generates all possible set partitions of a set of size `n` into `k`
-    blocks.
+    The `set_partition` function generates all possible set partitions of a set of size `n` into `k` blocks.
 
     :param n: The parameter `n` represents the total number of elements in the set
     :type n: int
@@ -113,11 +111,10 @@ def gen0_even(n: int, k: int) -> Generator:
     The function `gen0_even` generates a sequence of tuples that satisfy certain conditions based on the
     values of `n` and `k`.
 
-    :param n: The parameter `n` represents the total number of elements in a sequence. It is an integer
-    value
+    :param n: The parameter `n` represents the total number of elements in a sequence. It is an integer value
     :type n: int
     :param k: The parameter `k` represents the number of elements to be selected from a set of `n`
-    elements. It is used in the context of generating even-sized subsets of a set
+              elements. It is used in the context of generating even-sized subsets of a set
     :type k: int
     """
     if k > 0 and k < n:
@@ -139,11 +136,10 @@ def neg0_even(n: int, k: int) -> Generator:
     The function `neg0_even` generates a sequence of tuples that satisfy certain conditions based on the
     input parameters `n` and `k`.
 
-    :param n: The parameter `n` represents the total number of elements in a sequence or set. It is an
-    integer value
+    :param n: The parameter `n` represents the total number of elements in a sequence or set. It is an integer value
     :type n: int
     :param k: The parameter `k` represents the number of elements to be selected from a set of `n`
-    elements. It is used to control the iteration and recursion in the function
+              elements. It is used to control the iteration and recursion in the function
     :type k: int
     """
     if k > 0 and k < n:
