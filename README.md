@@ -12,7 +12,7 @@
 
 [![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
 [![Documentation Status](https://readthedocs.org/projects/ec-gen/badge/?version=latest)](https://ec-gen.readthedocs.io/en/latest/?badge=latest)
-[![Coveralls](https://img.shields.io/coveralls/github/luk036/ec-gen/main.svg)](https://coveralls.io/r/luk036/ec-gen)
+[![codecov](https://codecov.io/gh/luk036/ec-gen/graph/badge.svg?token=cyjmMhoBnw)](https://codecov.io/gh/luk036/ec-gen)
 
 # 🔢 ec-gen
 
