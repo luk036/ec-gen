@@ -32,6 +32,7 @@
  201-208. Also downloadable from
  http://webhome.cs.uvic.ca/~ruskey/Publications/SimpleGray/SimpleGray.html
 """
+
 from typing import Generator
 
 
