@@ -42,7 +42,6 @@ def ehr_gen(n: int) -> Generator:
         swap 0 and 2
         swap 0 and 1
         swap 0 and 2
-        swap 0 and 3
     """
     b = list(range(n))  # b[0] is never used
     c = [0] * (n + 1)  # c[0] is never used
@@ -55,7 +54,6 @@ def ehr_gen(n: int) -> Generator:
             if c[k] < k:
                 break
         if k == n:
-            yield b[n - 1]
             break
         c[k] += 1
         yield b[k]

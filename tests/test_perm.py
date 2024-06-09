@@ -28,35 +28,31 @@ def test_sjt():
 
 
 def test_ehr_gen_odd():
-    cnt = 0
+    cnt = 1
     for _ in ehr_gen(5):
         cnt += 1
     assert cnt == factorial(5)
 
 
 def test_ehr_gen_even():
-    cnt = 0
+    cnt = 1
     for _ in ehr_gen(6):
         cnt += 1
     assert cnt == factorial(6)
 
 
 def test_ehr4():
-    fruits = list("🍉🍌🍇🍏")
-    perm = fruits.copy()
+    perm = list("🍉🍌🍇🍏")
     for x in ehr_gen(4):
         perm[0], perm[x] = perm[x], perm[0]
-    # perm[0], perm[3] = perm[3], perm[0]  # return to the original
-    assert perm == fruits
+    assert perm == list("🍏🍌🍇🍉")
 
 
 def test_ehr5():
-    fruits = list("🍉🍌🍇🍏🍑")
-    perm = fruits.copy()
-    for x in ehr_gen(4):
+    perm = list("🍉🍌🍇🍏🍑")
+    for x in ehr_gen(5):
         perm[0], perm[x] = perm[x], perm[0]
-    # perm[0], perm[3] = perm[3], perm[0]  # return to the original
-    assert perm == fruits
+    assert perm == list("🍑🍏🍌🍇🍉")
 
 
 def test_sjt2_odd():
