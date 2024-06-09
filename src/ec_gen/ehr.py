@@ -42,6 +42,7 @@ def ehr_gen(n: int) -> Generator:
         swap 0 and 2
         swap 0 and 1
         swap 0 and 2
+        swap 0 and 3
     """
     b = list(range(n))  # b[0] is never used
     c = [0] * (n + 1)  # c[0] is never used
@@ -54,53 +55,11 @@ def ehr_gen(n: int) -> Generator:
             if c[k] < k:
                 break
         if k == n:
+            yield b[n - 1]
             break
         c[k] += 1
         yield b[k]
         b[1:k] = b[k - 1 : 0 : -1]
-
-
-def ehr(n: int) -> Generator:
-    """
-    The function `ehr` generates all permutations of a given length using the EHR algorithm.
-
-    :param n: The parameter `n` represents the number of elements in the permutation
-    :type n: int
-
-    Examples:
-        >>> fruits = list("🍉🍌🍇🍏")
-        >>> for lst in ehr(4):
-        ...     mylst = list(fruits[i] for i in lst)
-        ...     print("".join(mylst))
-        ...
-        🍉🍌🍇🍏
-        🍌🍉🍇🍏
-        🍇🍉🍌🍏
-        🍉🍇🍌🍏
-        🍌🍇🍉🍏
-        🍇🍌🍉🍏
-        🍏🍌🍉🍇
-        🍉🍌🍏🍇
-        🍌🍉🍏🍇
-        🍏🍉🍌🍇
-        🍉🍏🍌🍇
-        🍌🍏🍉🍇
-        🍇🍏🍉🍌
-        🍏🍇🍉🍌
-        🍉🍇🍏🍌
-        🍇🍉🍏🍌
-        🍏🍉🍇🍌
-        🍉🍏🍇🍌
-        🍌🍏🍇🍉
-        🍇🍏🍌🍉
-        🍏🍇🍌🍉
-        🍌🍇🍏🍉
-        🍇🍌🍏🍉
-    """
-    perm = list(range(n))
-    for x in ehr_gen(n):
-        yield perm
-        perm[0], perm[x] = perm[x], perm[0]
 
 
 if __name__ == "__main__":

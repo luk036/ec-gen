@@ -1,7 +1,7 @@
 from math import factorial
 
-from ec_gen.ehr import ehr, ehr_gen
-from ec_gen.sjt import PlainChanges, sjt, sjt_gen
+from ec_gen.ehr import ehr_gen
+from ec_gen.sjt import PlainChanges, sjt_gen
 from ec_gen.sjt_list import sjt2
 
 
@@ -19,46 +19,44 @@ def test_sjt_gen_even():
     assert cnt == factorial(6)
 
 
-def test_sjt_odd():
-    cnt = 0  # start from 0
-    for _ in sjt(5):
-        cnt += 1
-    assert cnt == factorial(5)
-
-
-def test_sjt_even():
-    cnt = 0  # start from 0
-    for _ in sjt(6):
-        cnt += 1
-    assert cnt == factorial(6)
+def test_sjt():
+    fruits = list("🍉🍌🍇🍏")
+    perm = fruits.copy()
+    for x in sjt_gen(4):
+        perm[x], perm[x + 1] = perm[x + 1], perm[x]
+    assert perm == fruits
 
 
 def test_ehr_gen_odd():
-    cnt = 1
+    cnt = 0
     for _ in ehr_gen(5):
         cnt += 1
     assert cnt == factorial(5)
 
 
 def test_ehr_gen_even():
-    cnt = 1
+    cnt = 0
     for _ in ehr_gen(6):
         cnt += 1
     assert cnt == factorial(6)
 
 
-def test_ehr_odd():
-    cnt = 1
-    for _ in ehr(5):
-        cnt += 1
-    assert cnt == factorial(5)
+def test_ehr4():
+    fruits = list("🍉🍌🍇🍏")
+    perm = fruits.copy()
+    for x in ehr_gen(4):
+        perm[0], perm[x] = perm[x], perm[0]
+    # perm[0], perm[3] = perm[3], perm[0]  # return to the original
+    assert perm == fruits
 
 
-def test_ehr_even():
-    cnt = 1
-    for _ in ehr(6):
-        cnt += 1
-    assert cnt == factorial(6)
+def test_ehr5():
+    fruits = list("🍉🍌🍇🍏🍑")
+    perm = fruits.copy()
+    for x in ehr_gen(4):
+        perm[0], perm[x] = perm[x], perm[0]
+    # perm[0], perm[3] = perm[3], perm[0]  # return to the original
+    assert perm == fruits
 
 
 def test_sjt2_odd():
