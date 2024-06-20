@@ -1,4 +1,4 @@
-""" Steinhaus-Johnson-Trotter algorithm """
+"""Steinhaus-Johnson-Trotter algorithm"""
 
 from typing import Generator
 
