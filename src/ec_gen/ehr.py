@@ -59,6 +59,9 @@ def ehr_gen(n: int) -> Generator:
         swap 0 and 1
         swap 0 and 2
     """
+    if n < 2:
+        return
+
     b = list(range(n))  # b[0] is never used
     c = [0] * (n + 1)  # c[0] is never used
     while True:
