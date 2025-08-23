@@ -83,3 +83,15 @@ def test_plain_changes_even():
     for _ in PlainChanges(6):
         cnt += 1
     assert cnt == factorial(6)
+
+def test_sjt_gen_3():
+    gen = sjt_gen(3)
+    assert list(gen) == [1, 0, 1, 0, 1, 0]
+
+def test_plain_changes_3():
+    gen = PlainChanges(3)
+    assert list(gen) == [1, 0, 1, 0, 1]
+
+def test_sjt2():
+    p = list(sjt2(3))
+    assert p == [[0, 1, 2], [0, 2, 1], [2, 0, 1], [2, 1, 0], [1, 2, 0], [1, 0, 2]]
