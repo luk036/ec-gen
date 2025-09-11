@@ -1,5 +1,5 @@
-
 from ec_gen.sjt_list import sjt2
+
 
 def test_sjt2():
     p = list(sjt2(3))
