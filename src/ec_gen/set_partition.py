@@ -63,14 +63,6 @@ def stirling2nd_recur(n: int, k: int) -> int:
     return a + k * b
 
 
-# def stirling2nd_recur_a(n: int, k: int) -> int:
-#     return 1 if k == 1 else stirling2nd_recur(n, k)
-#
-#
-# def stirling2nd_recur_b(n: int, k: int) -> int:
-#     return 1 if k == n else stirling2nd_recur(n, k)
-
-
 def set_partition(n: int, k: int) -> Generator:
     """
     The `set_partition` function generates all possible set partitions of a set of size `n` into `k` blocks.
@@ -271,20 +263,6 @@ def gen0_odd(n: int, k: int) -> Generator:
         for i in range(k - 2, 0, -2):
             yield (n, i)
             yield (n, i - 1)
-
-
-# def gen0_odd(n: int, k: int) -> Generator:
-#     ''' S(n,k,0) odd k '''
-#     if k > 1 and k < n:
-#         yield from gen1_even(n-1, k-1)
-#         yield (k, k-1)
-#         even = False
-#         for i in range(k-2, -1, -1):
-#             yield from gen1_odd(n-1, k) if even \
-#                   else neg1_odd(n-1, k)
-#             yield (n, i)
-#             even = ~even
-#         yield from neg1_odd(n-1, k)
 
 
 def neg0_odd(n: int, k: int) -> Generator:

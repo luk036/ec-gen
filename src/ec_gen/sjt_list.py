@@ -27,15 +27,3 @@ def sjt2(n: int) -> Generator:
         pi = next(gen)
         for i in up:  # upward
             yield pi[:i] + [n - 1] + pi[i:]
-
-
-# def main():
-#     fruits = list("🍉🍌🍇🍏")
-#     print(" 0 1 2 3")
-#     for lst in sjt2(4):
-#         mylst = list(fruits[i] for i in lst)
-#         print("".join(mylst))
-#
-#
-# if __name__ == "__main__":
-#     main()
