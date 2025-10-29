@@ -1,43 +1,32 @@
+import pytest
+
 from ec_gen.combin_old import comb, emk, emk_gen
 
 
-def test_emk_gen_odd_odd():
+@pytest.mark.parametrize(
+    "n, k, expected_comb",
+    [
+        (15, 5, comb(15, 5)),
+        (16, 5, comb(16, 5)),
+        (15, 6, comb(15, 6)),
+        (16, 6, comb(16, 6)),
+    ],
+)
+def test_emk_gen(n, k, expected_comb):
     cnt = 1
-    for _ in emk_gen(15, 5):
+    for _ in emk_gen(n, k):
         cnt += 1
-    assert cnt == comb(15, 5)
+    assert cnt == expected_comb
 
-
-def test_emk_gen_even_odd():
-    cnt = 1
-    for _ in emk_gen(16, 5):
-        cnt += 1
-    assert cnt == comb(16, 5)
-
-
-def test_emk_gen_odd_even():
-    cnt = 1
-    for _ in emk_gen(15, 6):
-        cnt += 1
-    assert cnt == comb(15, 6)
-
-
-def test_emk_gen_even_even():
-    cnt = 1
-    for _ in emk_gen(16, 6):
-        cnt += 1
-    assert cnt == comb(16, 6)
-
-
-def test_emk_odd():
+@pytest.mark.parametrize(
+    "n, k, expected_comb",
+    [
+        (5, 2, comb(5, 2)),
+        (6, 2, comb(6, 2)),
+    ],
+)
+def test_emk(n, k, expected_comb):
     cnt = 0
-    for _ in emk(5, 2):
+    for _ in emk(n, k):
         cnt += 1
-    assert cnt == comb(5, 2)
-
-
-def test_emk_even():
-    cnt = 0
-    for _ in emk(6, 2):
-        cnt += 1
-    assert cnt == comb(6, 2)
+    assert cnt == expected_comb
