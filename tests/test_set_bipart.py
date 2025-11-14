@@ -1,5 +1,3 @@
-import pytest
-
 from ec_gen.set_bipart import set_bipart, stirling2nd2
 
 
