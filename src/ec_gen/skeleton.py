@@ -48,6 +48,10 @@ def fib(n):
 
     Returns:
       int: n-th Fibonacci number
+
+    Examples:
+        >>> fib(5)
+        5
     """
     assert n > 0
     a, b = 1, 1
@@ -146,4 +150,7 @@ if __name__ == "__main__":
     #
     #     python -m ec_gen.skeleton 42
     #
+    import doctest
+
+    doctest.testmod()
     run()

@@ -11,6 +11,16 @@ def sjt2(n: int) -> Generator:
     :return: The function `sjt2` is a generator function, which means it yields values instead of
              returning them. It generates all permutations of length `n` using the Steinhaus-Johnson-Trotter
              algorithm. Each permutation is represented as a list of integers.
+
+    Examples:
+        >>> for p in sjt2(3):
+        ...     print(p)
+        [0, 1, 2]
+        [0, 2, 1]
+        [2, 0, 1]
+        [2, 1, 0]
+        [1, 2, 0]
+        [1, 0, 2]
     """
     if n == 2:
         yield [0, 1]
@@ -29,13 +39,7 @@ def sjt2(n: int) -> Generator:
             yield pi[:i] + [n - 1] + pi[i:]
 
 
-# def main():
-#     fruits = list("🍉🍌🍇🍏")
-#     print(" 0 1 2 3")
-#     for lst in sjt2(4):
-#         mylst = list(fruits[i] for i in lst)
-#         print("".join(mylst))
-#
-#
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
