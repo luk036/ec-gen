@@ -27,13 +27,3 @@ def test_set_partition_special():
     for _ in set_partition(5, 5):
         cnt += 1
     assert cnt == 1
-
-
-def test_set_partition_special():
-    cnt = 1
-    for _ in set_partition(6, 6):
-        cnt += 1
-    assert cnt == 1
-    for _ in set_partition(5, 5):
-        cnt += 1
-    assert cnt == 1
