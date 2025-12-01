@@ -19,7 +19,7 @@ def run_set_partition_old(n, k):
     return cnt
 
 
-def test_set_partition_new(benchmark):
+def test_set_partition_new(benchmark) -> None:
     """[summary]
 
     Arguments:
@@ -31,7 +31,7 @@ def test_set_partition_new(benchmark):
     assert cnt == stirling2nd(n, k)
 
 
-def test_set_partition_old(benchmark):
+def test_set_partition_old(benchmark) -> None:
     """[summary]
 
     Arguments:

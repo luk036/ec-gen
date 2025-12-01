@@ -34,7 +34,7 @@ def comb(n: int, k: int) -> int:
     return comb(n - 1, k - 1) + comb(n - 1, k)
 
 
-def emk_gen(n: int, k: int) -> Generator:
+def emk_gen(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """Generate all combinations by homogeneous revoling-door
 
     The `emk_gen` function generates combinations (by swapping pairs of integers) using the emk algorithm.
@@ -83,7 +83,7 @@ def emk_gen(n: int, k: int) -> Generator:
         yield from emk_gen(n - 2, k - 2)
 
 
-def emk_neg(n: int, k: int) -> Generator:
+def emk_neg(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """
     The `emk_neg` function generates combinations (by swapping pairs of integers in reverse order)
     using the emk algorithm.
@@ -108,7 +108,9 @@ def emk_neg(n: int, k: int) -> Generator:
         yield from emk_neg(n - 1, k)
 
 
-def emk(n: int, k: int, Zero=0, One=1):
+def emk(
+    n: int, k: int, Zero: int = 0, One: int = 1
+) -> Generator[list[int], None, None]:
     """
     The emk function generates combinations by swapping pairs of integers using the emk algorithm.
 

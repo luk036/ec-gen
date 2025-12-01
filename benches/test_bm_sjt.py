@@ -32,7 +32,7 @@ def run_plain_changes(n):
     return cnt
 
 
-def test_sjt_new(benchmark):
+def test_sjt_new(benchmark) -> None:
     """[summary]
 
     Arguments:
@@ -42,7 +42,7 @@ def test_sjt_new(benchmark):
     assert cnt == 40320
 
 
-def test_sjt_old(benchmark):
+def test_sjt_old(benchmark) -> None:
     """[summary]
 
     Arguments:
@@ -52,7 +52,7 @@ def test_sjt_old(benchmark):
     assert cnt == 40320
 
 
-def test_plain_changes(benchmark):
+def test_plain_changes(benchmark) -> None:
     """[summary]
 
     Arguments:

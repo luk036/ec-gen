@@ -12,14 +12,14 @@ from ec_gen.set_partition_old import set_partition, stirling2nd
         (10, 6, stirling2nd(10, 6)),
     ],
 )
-def test_set_partition(n, k, expected_stirling):
+def test_set_partition(n: int, k: int, expected_stirling: int) -> None:
     cnt = 1
     for _ in set_partition(n, k):
         cnt += 1
     assert cnt == expected_stirling
 
 
-def test_set_partition_special():
+def test_set_partition_special() -> None:
     cnt = 1
     for _ in set_partition(6, 6):
         cnt += 1

@@ -66,7 +66,7 @@ def comb_recur(n: int, k: int) -> int:
     return a + b
 
 
-def emk_comb_gen(n: int, k: int) -> Generator:
+def emk_comb_gen(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """Generate all combinations by homogeneous revoling-door
 
     The `emk_comb_gen` function generates combinations (by swapping pairs of integers) using the emk algorithm.
@@ -114,7 +114,7 @@ def emk_comb_gen(n: int, k: int) -> Generator:
         yield from emk_gen_odd(n, k)
 
 
-def emk_gen_even(n: int, k: int) -> Generator:
+def emk_gen_even(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """Generate all combinations by homogeneous revoling-door
 
     The `emk_gen_even` function generates combinations (by swapping pairs of integers) using the emk algorithm.
@@ -141,7 +141,7 @@ def emk_gen_even(n: int, k: int) -> Generator:
         yield from emk_gen_even(n - 2, k - 2)
 
 
-def emk_gen_odd(n: int, k: int) -> Generator:
+def emk_gen_odd(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """Generate all combinations by homogeneous revoling-door
 
     The `emk_gen_odd` function generates combinations (by swapping pairs of integers) using the emk algorithm.
@@ -167,7 +167,7 @@ def emk_gen_odd(n: int, k: int) -> Generator:
         yield from emk_gen_odd(n - 2, k - 2)
 
 
-def emk_neg_even(n: int, k: int) -> Generator:
+def emk_neg_even(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """
     The `emk_neg_even` function generates combinations (by swapping pairs of integers in reverse order)
     using the emk algorithm.
@@ -194,7 +194,7 @@ def emk_neg_even(n: int, k: int) -> Generator:
         yield (n - 1, n - 2)
 
 
-def emk_neg_odd(n: int, k: int) -> Generator:
+def emk_neg_odd(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """
     The `emk_neg_odd` function generates combinations (by swapping pairs of integers in reverse order)
     using the emk algorithm.
@@ -222,7 +222,7 @@ def emk_neg_odd(n: int, k: int) -> Generator:
         yield from emk_neg_odd(n - 1, k)
 
 
-def emk(n: int, k: int, zero=0, one=1):
+def emk(n: int, k: int, zero: int = 0, one: int = 1) -> Generator[list, None, None]:
     """
     The emk function generates combinations by swapping pairs of integers using the emk algorithm.
 

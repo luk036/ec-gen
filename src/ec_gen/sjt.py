@@ -21,7 +21,7 @@ In summary, this code provides a tool for generating all permutations of a list 
 from typing import Generator
 
 
-def sjt_gen(n: int) -> Generator:
+def sjt_gen(n: int) -> Generator[int, None, None]:
     """
     The function `sjt_gen` generates all permutations of length `n` using the Steinhaus-Johnson-Trotter
     algorithm.
@@ -85,7 +85,7 @@ def sjt_gen(n: int) -> Generator:
         yield next(gen)  # tricky part
 
 
-def PlainChanges(n) -> Generator:
+def PlainChanges(n: int) -> Generator[int, None, None]:
     """Generate the swaps for the Steinhaus-Johnson-Trotter algorithm (original method).
 
     :param n: The parameter `n` represents the number of elements in the permutation

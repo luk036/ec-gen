@@ -12,7 +12,7 @@ from ec_gen.combin_old import comb, emk, emk_gen
         (16, 6, comb(16, 6)),
     ],
 )
-def test_emk_gen(n, k, expected_comb):
+def test_emk_gen(n: int, k: int, expected_comb: int) -> None:
     cnt = 1
     for _ in emk_gen(n, k):
         cnt += 1
@@ -26,7 +26,7 @@ def test_emk_gen(n, k, expected_comb):
         (6, 2, comb(6, 2)),
     ],
 )
-def test_emk(n, k, expected_comb):
+def test_emk(n: int, k: int, expected_comb: int) -> None:
     cnt = 0
     for _ in emk(n, k):
         cnt += 1

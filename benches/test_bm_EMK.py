@@ -19,7 +19,7 @@ def run_emk_old(n, k):
     return cnt
 
 
-def test_emk_new(benchmark):
+def test_emk_new(benchmark) -> None:
     """[summary]
 
     Arguments:
@@ -31,7 +31,7 @@ def test_emk_new(benchmark):
     assert cnt == comb(n, k)
 
 
-def test_emk_old(benchmark):
+def test_emk_old(benchmark) -> None:
     """[summary]
 
     Arguments:
