@@ -18,6 +18,7 @@ def test_emk_gen(n, k, expected_comb):
         cnt += 1
     assert cnt == expected_comb
 
+
 @pytest.mark.parametrize(
     "n, k, expected_comb",
     [

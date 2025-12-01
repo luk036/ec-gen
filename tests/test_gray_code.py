@@ -27,4 +27,3 @@ def test_brgc_even():
     for _ in brgc(6):
         cnt += 1
     assert cnt == 2**6
-
