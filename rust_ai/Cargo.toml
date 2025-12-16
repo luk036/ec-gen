@@ -1,7 +1,16 @@
 [package]
 name = "rust_ai"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+authors = ["Wai-Shing Luk <luk036@gmail.com>"]
+description = "Rust implementation of combinatorial generation algorithms using genawaiter"
+license = "MIT"
+repository = "https://github.com/luk036/ec-gen"
+readme = "README.md"
 
 [dependencies]
-lazy_static = "1.4.0"
+genawaiter = { version = "0.99", features = ["proc_macro"] }
+lazy_static = "1.4"
+
+[dev-dependencies]
+criterion = "0.5"

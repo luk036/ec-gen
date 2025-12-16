@@ -1,27 +1,46 @@
-//! Basic example of using the ec-gen Rust library
+//! Basic example demonstrating the use of combinatorial generation algorithms.
 
-use rust_ai::combin::comb;
+use rust_ai::combin::emk;
+use rust_ai::ehr::ehr_gen;
 use rust_ai::gray_code::brgc;
+use rust_ai::sjt::sjt_gen;
 use rust_ai::skeleton::fib;
 
 fn main() {
-    println!("=== Basic Examples ===\n");
-    
-    // Combinations
-    println!("Combinations C(6,3) = {}", comb(6, 3));
-    println!("Combinations C(5,2) = {}", comb(5, 2));
-    
-    // Fibonacci
-    println!("\nFibonacci numbers:");
-    for i in 1..=10 {
-        println!("  fib({}) = {}", i, fib(i));
+    println!("=== Fibonacci Example ===");
+    println!("fib(10) = {}", fib(10));
+    println!();
+
+    println!("=== Combinations (EMK algorithm) ===");
+    println!("All combinations of 6 choose 3:");
+    for (i, combination) in emk(6, 3, 0, 1).enumerate() {
+        println!("  {}: {:?}", i + 1, combination);
     }
-    
-    // Gray codes for n=3
-    println!("\nGray codes for n=3:");
+    println!();
+
+    println!("=== Gray Codes ===");
+    println!("Binary Reflected Gray Code for 3 bits:");
     for (i, code) in brgc(3).enumerate() {
-        println!("  {}: {:?}", i, code);
+        println!("  {}: {:?}", i + 1, code);
     }
-    
-    println!("\n=== Done ===");
+    println!();
+
+    println!("=== Permutations (EHR algorithm) ===");
+    println!("Generating permutations of 4 elements:");
+    let mut perm = vec![0, 1, 2, 3];
+    println!("  Start: {:?}", perm);
+    for (i, swap_idx) in ehr_gen(4).enumerate() {
+        perm.swap(0, swap_idx as usize);
+        println!("  {}: swap 0 with {} -> {:?}", i + 1, swap_idx, perm);
+    }
+    println!();
+
+    println!("=== Permutations (SJT algorithm) ===");
+    println!("Generating permutations of 3 elements with adjacent swaps:");
+    let mut perm = vec!["A", "B", "C"];
+    println!("  Start: {:?}", perm);
+    for (i, swap_idx) in sjt_gen(3).enumerate() {
+        perm.swap(swap_idx as usize, swap_idx as usize + 1);
+        println!("  {}: swap {} with {} -> {:?}", i + 1, swap_idx, swap_idx + 1, perm);
+    }
 }

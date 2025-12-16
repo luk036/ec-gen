@@ -1,25 +1,18 @@
-# Rust AI - Enumerative Combinatoric Generation
+# Rust AI - Combinatorial Generation Algorithms
 
-A Rust port of the Python `ec-gen` library for generating combinatorial objects.
+Rust implementation of combinatorial generation algorithms using `genawaiter` for async/await-style generators.
 
-## Overview
+This is a Rust port of the Python `ec-gen` library, providing efficient combinatorial generation algorithms.
 
-This library provides Rust implementations of algorithms for generating:
-- Combinations (using EMK algorithm)
-- Gray codes (Binary Reflected Gray Code)
-- Permutations (Steinhaus-Johnson-Trotter and EHR algorithms)
-- Set partitions and bipartitions
-- Stirling numbers of the second kind
+## Algorithms Implemented
 
-## Modules
-
-- `combin`: Combinations generation
-- `gray_code`: Binary reflected Gray code generation
-- `sjt`: Steinhaus-Johnson-Trotter permutation algorithm
-- `ehr`: Ehrlich-Hopcroft-Reingold permutation algorithm
-- `set_partition`: Set partition generation
-- `set_bipart`: Set bipartition generation
-- `skeleton`: Example functions (Fibonacci)
+1. **Combinations Generator** (`combin.rs`) - EMK algorithm for generating combinations
+2. **Ehrlich-Hopcroft-Reingold Algorithm** (`ehr.rs`) - Permutation generation
+3. **Binary Reflected Gray Code** (`gray_code.rs`) - Gray code generation
+4. **Set Bipartition** (`set_bipart.rs`) - Set bipartition generation
+5. **Set Partition** (`set_partition.rs`) - Set partition generation
+6. **Steinhaus-Johnson-Trotter Algorithm** (`sjt.rs`) - Permutation generation
+7. **Skeleton** (`skeleton.rs`) - Example and utility functions
 
 ## Usage
 
@@ -27,36 +20,37 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-rust_ai = { path = "./rust_ai" }
+rust_ai = { git = "https://github.com/luk036/ec-gen" }
 ```
 
-Example:
+Example usage:
 
 ```rust
-use rust_ai::combin::comb;
-use rust_ai::gray_code::brgc;
+use rust_ai::combin::emk;
 
-// Calculate combinations
-let c = comb(6, 3); // 20
-
-// Generate Gray codes
-for code in brgc(3) {
-    println!("{:?}", code);
+fn main() {
+    for combination in emk(6, 3, 0, 1) {
+        println!("{:?}", combination);
+    }
 }
 ```
 
-## Status
+## Features
 
-This is a work-in-progress conversion from Python to Rust. Some algorithms are fully implemented while others are simplified placeholders.
+- **Async/await style generators** using `genawaiter`
+- **Zero-cost abstractions** - Rust's performance advantages
+- **Memory efficient** - Generates sequences lazily
+- **Type safe** - Compile-time guarantees
+- **Thread safe** - Can be used in concurrent contexts
 
-## Building
+## Benchmarks
+
+Run benchmarks with:
 
 ```bash
-cd rust_ai
-cargo build
-cargo test
+cargo bench
 ```
 
 ## License
 
-MIT
+MIT License - see LICENSE file for details.

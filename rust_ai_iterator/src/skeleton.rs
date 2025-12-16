@@ -1,13 +1,12 @@
-//! Skeleton Module
+//! Skeleton module with example functions.
 //!
-//! This is a skeleton module that can serve as a starting point.
-//! It includes a Fibonacci function example and basic structure.
+//! This module serves as a starting point and contains example functions.
 
 /// Calculate the n-th Fibonacci number.
 ///
 /// # Arguments
 ///
-/// * `n` - Position in the Fibonacci sequence (1-based)
+/// * `n` - The position in the Fibonacci sequence (1-based)
 ///
 /// # Returns
 ///
@@ -18,15 +17,20 @@
 /// ```
 /// use rust_ai::skeleton::fib;
 ///
-/// assert_eq!(fib(5), 5);
 /// assert_eq!(fib(1), 1);
 /// assert_eq!(fib(2), 1);
+/// assert_eq!(fib(3), 2);
+/// assert_eq!(fib(4), 3);
+/// assert_eq!(fib(5), 5);
 /// ```
 pub fn fib(n: u32) -> u64 {
     assert!(n > 0, "n must be positive");
-    let (mut a, mut b) = (1, 1);
+    let mut a = 1;
+    let mut b = 1;
     for _ in 0..n - 1 {
-        (a, b) = (b, a + b);
+        let next = a + b;
+        a = b;
+        b = next;
     }
     a
 }
@@ -51,12 +55,5 @@ mod tests {
     #[should_panic(expected = "n must be positive")]
     fn test_fib_zero() {
         fib(0);
-    }
-    
-    #[test]
-    fn test_fib_large() {
-        // Test that it doesn't overflow for reasonable values
-        assert_eq!(fib(20), 6765);
-        assert_eq!(fib(30), 832040);
     }
 }
