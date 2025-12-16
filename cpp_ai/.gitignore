@@ -1,0 +1,78 @@
+# Build directories
+build/
+build_test/
+out/
+x64/
+x86/
+Debug/
+Release/
+*.sln
+*.vcxproj*
+*.vcxproj.filters
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Compiled files
+*.o
+*.obj
+*.pch
+*.pdb
+*.ilk
+*.exp
+*.idb
+*.ipdb
+*.iobj
+
+# xmake build artifacts
+.xmake/
+build_*/
+
+# Test artifacts
+*.gcda
+*.gcno
+*.gcov
+
+# Coverage reports
+coverage/
+*.lcov
+
+# Documentation
+docs/_build/
+docs/__pycache__/
+
+# Dependencies (downloaded by build systems)
+doctest/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.orig
+*.rej
+
+# Temporary files
+tmp/
+temp/
+
+# Log files
+*.log
+
+# Package files
+*.tar.gz
+*.zip

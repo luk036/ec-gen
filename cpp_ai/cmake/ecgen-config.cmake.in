@@ -1,0 +1,15 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# Find cppcoro if needed
+if(NOT @USE_SYSTEM_CPPCORO@)
+    # Assume cppcoro headers are bundled
+else()
+    find_dependency(cppcoro REQUIRED)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@-targets.cmake")
+
+# Check that targets exist
+check_required_components(@PROJECT_NAME@)
