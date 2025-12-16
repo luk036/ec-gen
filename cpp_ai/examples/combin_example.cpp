@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "ecgen/combin.hpp"
+#include "ecgen/set_partition.hpp"
 
 int main() {
     std::cout << "=== Combinations Example ===\n\n";

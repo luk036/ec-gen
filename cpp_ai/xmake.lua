@@ -1,23 +1,9 @@
--- xmake.lua for ecgen C++ library
-set_project("ecgen-cpp")
-set_version("0.1.0")
-
--- Set C++ standard
-set_languages("c++23")
-
--- Add rules
 add_rules("mode.debug", "mode.release")
-add_rules("plugin.vsxmake.autoupdate")
 
--- Options
-option("shared", {description = "Build shared library", default = false})
-option("tests", {description = "Build tests", default = true})
+set_languages("c++20")
 
--- Library target
 target("ecgen")
-    set_kind("$(kind)")
-    set_default(true)
-    
+    set_kind("static")
     -- Headers
     add_headerfiles("include/(ecgen/**.hpp)")
     
@@ -26,104 +12,56 @@ target("ecgen")
     
     -- Include directories
     add_includedirs("include", "include/cppcoro", {public = true})
-    
+
     -- C++ features
     add_cxxflags("/std:c++latest", {tools = {"msvc"}})
     add_cxxflags("-std=c++23", "-fcoroutines", {tools = {"gcc", "clang"}})
-    
-    -- Set kind based on option
-    if has_config("shared") then
-        set_kind("shared")
+
+    if is_mode("debug") then
+        add_defines("DEBUG")
+        add_cxxflags("-g", "-O0")
     else
-        set_kind("static")
+        add_cxxflags("-O3")
     end
 
--- Test targets
-if has_config("tests") then
-    -- Download doctest if not present
-    if not os.exists("doctest") then
-        os.exec("git clone --depth 1 --branch v2.4.11 https://github.com/doctest/doctest.git")
-    end
-    
-    add_includedirs("doctest", {public = false})
-    
-    -- Test executables
-    local test_targets = {
-        "test_combin",
-        "test_set_partition", 
-        "test_sjt",
-        "test_gray_code",
-        "test_ehr",
-        "test_set_bipart"
-    }
-    
-    for _, test_name in ipairs(test_targets) do
-        target(test_name)
-            set_kind("binary")
-            add_files("tests/" .. test_name .. ".cpp")
-            add_deps("ecgen")
-            add_includedirs("doctest")
-            
-            -- Run tests after build in debug mode
-            if is_mode("debug") then
-                after_build(function (target)
-                    os.exec(target:targetfile())
-                end)
-            end
-    end
-end
+-- target("test_ecgen")
+--     set_kind("binary")
+--     add_deps("ecgen")
+--     add_files("tests/**.cpp")
+--     add_includedirs("include")
+-- 
+--     -- Check if doctest exists, warn if not but don't download
+--     before_build(function (target)
+--         local doctest_path = path.join(target:scriptdir(), "tests", "doctest.h")
+--         if not os.isfile(doctest_path) then
+--             print("Warning: doctest.h not found. Tests will not compile.")
+--             print("You can download it manually from:")
+--             print("https://raw.githubusercontent.com/doctest/doctest/v2.4.11/doctest/doctest.h")
+--         end
+--     end)
 
--- Example targets
-target("example_combin")
+
+target("combin_example")
     set_kind("binary")
+    add_deps("ecgen")
     add_files("examples/combin_example.cpp")
-    add_deps("ecgen")
+    add_includedirs("include")
 
-target("example_permutations")
+target("permutations_example")
     set_kind("binary")
-    add_files("examples/permutations_example.cpp")
     add_deps("ecgen")
+    add_files("examples/permutations_example.cpp")
+    add_includedirs("include")
 
 -- Package configuration
-on_install(function (target)
-    -- Install headers
-    os.cp("include/ecgen", path.join(target:installdir(), "include"))
-    
-    -- Install library
-    if target:kind() == "shared" then
-        os.cp(target:targetfile(), path.join(target:installdir(), "lib"))
-    else
-        os.cp(target:targetfile(), path.join(target:installdir(), "lib"))
-    end
-    
-    -- Install cmake config
-    local cmake_config = [[
-# ecgen CMake config
-include(CMakeFindDependencyMacro)
+package("ecgen")
+    set_description("Low-Discrepancy Sequence Generator C++ Library")
+    set_license("MIT")
 
-if(NOT TARGET ecgen::ecgen)
-    add_library(ecgen::ecgen INTERFACE IMPORTED)
-    set_target_properties(ecgen::ecgen PROPERTIES
-        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_LIST_DIR}/../../include"
-        INTERFACE_COMPILE_FEATURES "cxx_std_23;cxx_concepts;cxx_coroutines"
-    )
-    
-    if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/ecgen.lib")
-        set_target_properties(ecgen::ecgen PROPERTIES
-            IMPORTED_LOCATION "${CMAKE_CURRENT_LIST_DIR}/ecgen.lib"
-        )
-    elseif(EXISTS "${CMAKE_CURRENT_LIST_DIR}/libecgen.a")
-        set_target_properties(ecgen::ecgen PROPERTIES
-            IMPORTED_LOCATION "${CMAKE_CURRENT_LIST_DIR}/libecgen.a"
-        )
-    endif()
-endif()
-]]
-    
-    os.writefile(path.join(target:installdir(), "lib/cmake/ecgen/ecgen-config.cmake"), cmake_config)
-end)
+    add_urls("https://github.com/luk036/ec-gen.git")
+    add_versions("1.0.0", "dcda260be4010b1509c1dcb9d5f3edcddba9cc51")
 
--- Clean command
-on_clean(function (target)
-    os.rm("doctest")
-end)
+    on_install(function (package)
+        import("package.tools.cmake").install(package)
+    end)
+

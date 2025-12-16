@@ -45,7 +45,7 @@ namespace ecgen {
             while (q < 0 || q == j + 1) {
                 if (q == j + 1) {
                     if (j == 0) {
-                        return; // All permutations generated
+                        co_return; // All permutations generated
                     }
                     s += 1;
                 }
