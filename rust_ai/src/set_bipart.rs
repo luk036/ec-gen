@@ -7,9 +7,9 @@
 //! bipartition differs by moving exactly one element from one block to the other.
 
 use genawaiter::{sync::gen, yield_};
+use lazy_static::lazy_static;
 use std::collections::HashMap;
 use std::sync::Mutex;
-use lazy_static::lazy_static;
 
 lazy_static! {
     static ref STIRLING_CACHE: Mutex<HashMap<i32, i32>> = Mutex::new(HashMap::new());
@@ -129,7 +129,7 @@ fn neg1(n: i32) -> impl Iterator<Item = i32> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_stirling2nd2() {
         assert_eq!(stirling2nd2(1), 1);
@@ -138,38 +138,38 @@ mod tests {
         assert_eq!(stirling2nd2(4), 7); // 1 + 2*3
         assert_eq!(stirling2nd2(5), 15); // 1 + 2*7
     }
-    
+
     #[test]
     fn test_set_bipart() {
         let n = 5;
         let moves: Vec<_> = set_bipart(n).collect();
-        
+
         // Should generate 2^n - 2 moves (all bipartitions except empty sets)
         // let expected_len = 2_i32.pow(n as u32) - 2;
         assert_eq!(moves.len() as i32, 14);
-        
+
         // Test that moves generate valid bipartitions
         let mut b = vec![0; (n + 1) as usize];
         b[n as usize] = 1;
         let mut bipartitions = vec![b[1..].to_vec()];
-        
+
         for &x in &moves {
             b[x as usize] = 1 - b[x as usize];
             bipartitions.push(b[1..].to_vec());
         }
-        
+
         // All bipartitions should be unique
         let mut sorted = bipartitions.clone();
         sorted.sort();
         sorted.dedup();
         assert_eq!(sorted.len(), bipartitions.len());
     }
-    
+
     #[test]
     fn test_set_bipart_small() {
         let moves: Vec<_> = set_bipart(2).collect();
         assert_eq!(moves.len(), 0); // 2^2 - 2 = 2, but n < 3 returns empty
-        
+
         let moves: Vec<_> = set_bipart(3).collect();
         assert_eq!(moves.len(), 2);
     }

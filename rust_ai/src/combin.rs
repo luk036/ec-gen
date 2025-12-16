@@ -14,9 +14,9 @@
 //! without having to store them all in memory at once.
 
 use genawaiter::{sync::gen, yield_};
+use lazy_static::lazy_static;
 use std::collections::HashMap;
 use std::sync::Mutex;
-use lazy_static::lazy_static;
 
 lazy_static! {
     static ref COMB_CACHE: Mutex<HashMap<(i32, i32), i32>> = Mutex::new(HashMap::new());
@@ -59,15 +59,13 @@ fn comb_recur(n: i32, k: i32) -> i32 {
             return value;
         }
     }
-    
-    let result = if k == 1 {
-        n
-    } else if k == n - 1 {
+
+    let result = if k == 1 || k == n - 1 {
         n
     } else {
         comb_recur(n - 1, k - 1) + comb_recur(n - 1, k)
     };
-    
+
     let mut cache = COMB_CACHE.lock().unwrap();
     cache.insert(key, result);
     result
@@ -259,7 +257,7 @@ pub fn emk<T: Clone>(n: i32, k: i32, zero: T, one: T) -> impl Iterator<Item = Ve
         let mut s = vec![one.clone(); k as usize];
         s.extend(vec![zero.clone(); (n - k) as usize]);
         yield_!(s.clone());
-        
+
         for (x, y) in emk_comb_gen(n, k) {
             s.swap(x as usize, y as usize);
             yield_!(s.clone());
@@ -271,7 +269,7 @@ pub fn emk<T: Clone>(n: i32, k: i32, zero: T, one: T) -> impl Iterator<Item = Ve
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_comb() {
         assert_eq!(comb(6, 3), 20);
@@ -279,26 +277,26 @@ mod tests {
         assert_eq!(comb(6, 5), comb(6, 1));
         assert_eq!(comb(6, 6), comb(6, 0));
     }
-    
+
     #[test]
     fn test_emk_comb_gen() {
         let pairs: Vec<_> = emk_comb_gen(6, 3).collect();
         assert_eq!(pairs.len(), 19); // C(6,3) - 1 swaps
-        
+
         // Check first few swaps
         assert_eq!(pairs[0], (2, 3));
         assert_eq!(pairs[1], (1, 2));
         assert_eq!(pairs[2], (0, 1));
     }
-    
+
     #[test]
     fn test_emk() {
         let combinations: Vec<_> = emk(6, 3, 0, 1).collect();
         assert_eq!(combinations.len(), 20); // C(6,3) combinations
-        
+
         // Check first combination
         assert_eq!(combinations[0], vec![1, 1, 1, 0, 0, 0]);
-        
+
         // Check last combination
         assert_eq!(combinations[19], vec![0, 0, 0, 1, 1, 1]);
     }

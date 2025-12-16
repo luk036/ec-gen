@@ -7,9 +7,9 @@
 //! partition differs by moving exactly one element from one block to another.
 
 use genawaiter::{sync::gen, yield_};
+use lazy_static::lazy_static;
 use std::collections::HashMap;
 use std::sync::Mutex;
-use lazy_static::lazy_static;
 
 lazy_static! {
     static ref STIRLING_CACHE: Mutex<HashMap<(i32, i32), i32>> = Mutex::new(HashMap::new());
@@ -49,17 +49,25 @@ fn stirling2nd_recur(n: i32, k: i32) -> i32 {
             return value;
         }
     }
-    
+
     let n_minus_1 = n - 1;
-    let a = if k == 2 { 1 } else { stirling2nd_recur(n_minus_1, k - 1) };
-    let b = if k == n_minus_1 { 1 } else { stirling2nd_recur(n_minus_1, k) };
+    let a = if k == 2 {
+        1
+    } else {
+        stirling2nd_recur(n_minus_1, k - 1)
+    };
+    let b = if k == n_minus_1 {
+        1
+    } else {
+        stirling2nd_recur(n_minus_1, k)
+    };
     let result = a + k * b;
-    
+
     {
         let mut cache = STIRLING_CACHE.lock().unwrap();
         cache.insert(key, result);
     }
-    
+
     result
 }
 
@@ -380,7 +388,7 @@ fn neg1_odd(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_stirling2nd() {
         assert_eq!(stirling2nd(5, 2), 15);
@@ -389,43 +397,43 @@ mod tests {
         assert_eq!(stirling2nd(2, 2), 1);
         assert_eq!(stirling2nd(1, 1), 1);
     }
-    
+
     #[test]
     fn test_set_partition_small() {
         let moves: Vec<_> = set_partition(5, 2).collect();
         assert_eq!(moves.len(), 14); // S(5,2) - 1 moves
-        
+
         // Test that moves generate valid partitions
         let (n, k) = (5, 2);
         let mut b = vec![0; (n - k + 1) as usize];
         b.extend((0..k).collect::<Vec<_>>());
         let mut partitions = vec![b[1..].to_vec()];
-        
+
         for &(x, y) in &moves {
             b[x as usize] = y;
             partitions.push(b[1..].to_vec());
         }
-        
+
         // Should generate S(5,2) = 15 partitions
         assert_eq!(partitions.len(), 15);
-        
+
         // All partitions should be unique
         let mut sorted = partitions.clone();
         sorted.sort();
         sorted.dedup();
         assert_eq!(sorted.len(), 15);
     }
-    
+
     #[test]
     fn test_set_partition_edge_cases() {
         // k >= n should return empty
         let moves: Vec<_> = set_partition(5, 5).collect();
         assert_eq!(moves.len(), 0);
-        
+
         // k <= 1 should return empty
         let moves: Vec<_> = set_partition(5, 1).collect();
         assert_eq!(moves.len(), 0);
-        
+
         // n < k should return empty
         let moves: Vec<_> = set_partition(3, 5).collect();
         assert_eq!(moves.len(), 0);

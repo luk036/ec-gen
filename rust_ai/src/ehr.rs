@@ -41,10 +41,10 @@ pub fn ehr_gen(n: i32) -> impl Iterator<Item = i32> {
         if n < 2 {
             return;
         }
-        
+
         let mut b: Vec<i32> = (0..n).collect(); // b[0] is never used
         let mut c: Vec<i32> = vec![0; (n + 1) as usize]; // c[0] is never used
-        
+
         loop {
             let mut k = 1;
             loop {
@@ -61,7 +61,7 @@ pub fn ehr_gen(n: i32) -> impl Iterator<Item = i32> {
             }
             c[k as usize] += 1;
             yield_!(b[k as usize]);
-            
+
             // Reverse b[1..k]
             let slice_len = k as usize;
             if slice_len > 1 {
@@ -81,44 +81,44 @@ pub fn ehr_gen(n: i32) -> impl Iterator<Item = i32> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_ehr_gen() {
         let swaps: Vec<_> = ehr_gen(4).collect();
         assert_eq!(swaps.len(), 23); // 4! - 1 swaps
-        
+
         // Check first few swaps
         assert_eq!(swaps[0], 1);
         assert_eq!(swaps[1], 2);
         assert_eq!(swaps[2], 1);
     }
-    
+
     #[test]
     fn test_ehr_gen_small() {
         let swaps: Vec<_> = ehr_gen(2).collect();
         assert_eq!(swaps, vec![1]);
-        
+
         let swaps: Vec<_> = ehr_gen(1).collect();
         assert_eq!(swaps.len(), 0);
-        
+
         let swaps: Vec<_> = ehr_gen(0).collect();
         assert_eq!(swaps.len(), 0);
     }
-    
+
     #[test]
     fn test_ehr_gen_permutations() {
         let n = 3;
         let mut perm: Vec<i32> = (0..n).collect();
         let mut permutations = vec![perm.clone()];
-        
+
         for swap_idx in ehr_gen(n) {
             perm.swap(0, swap_idx as usize);
             permutations.push(perm.clone());
         }
-        
+
         // Should generate n! permutations
         assert_eq!(permutations.len(), 6); // 3! = 6
-        
+
         // All permutations should be unique
         let mut sorted = permutations.clone();
         sorted.sort();

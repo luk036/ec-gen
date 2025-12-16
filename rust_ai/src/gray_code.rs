@@ -39,7 +39,7 @@ pub fn brgc_gen(n: i32) -> impl Iterator<Item = i32> {
             yield_!(0);
             return;
         }
-        
+
         for i in brgc_gen(n - 1) {
             yield_!(i);
         }
@@ -74,7 +74,7 @@ pub fn brgc(n: i32) -> impl Iterator<Item = Vec<i32>> {
     gen!({
         let mut lst = vec![0; n as usize];
         yield_!(lst.clone());
-        
+
         for i in brgc_gen(n) {
             lst[i as usize] = 1 - lst[i as usize]; // flip
             yield_!(lst.clone());
@@ -86,49 +86,49 @@ pub fn brgc(n: i32) -> impl Iterator<Item = Vec<i32>> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_brgc_gen() {
         let flips: Vec<_> = brgc_gen(4).collect();
         let expected = vec![0, 1, 0, 2, 0, 1, 0, 3, 0, 1, 0, 2, 0, 1, 0];
         assert_eq!(flips, expected);
     }
-    
+
     #[test]
     fn test_brgc_gen_small() {
         let flips: Vec<_> = brgc_gen(1).collect();
         assert_eq!(flips, vec![0]);
-        
+
         let flips: Vec<_> = brgc_gen(2).collect();
         assert_eq!(flips, vec![0, 1, 0]);
     }
-    
+
     #[test]
     fn test_brgc() {
         let codes: Vec<_> = brgc(3).collect();
         assert_eq!(codes.len(), 8); // 2^3 = 8
-        
+
         // Check first code
         assert_eq!(codes[0], vec![0, 0, 0]);
-        
+
         // Check second code (flip bit 0)
         assert_eq!(codes[1], vec![1, 0, 0]);
-        
+
         // Check third code (flip bit 1)
         assert_eq!(codes[2], vec![1, 1, 0]);
-        
+
         // Check all codes are unique
         let mut sorted = codes.clone();
         sorted.sort();
         sorted.dedup();
         assert_eq!(sorted.len(), 8);
     }
-    
+
     #[test]
     fn test_brgc_gray_code_property() {
         let n = 4;
         let codes: Vec<_> = brgc(n).collect();
-        
+
         // Check Gray code property: consecutive codes differ by exactly one bit
         for i in 0..codes.len() - 1 {
             let diff_count = codes[i]
@@ -136,7 +136,14 @@ mod tests {
                 .zip(codes[i + 1].iter())
                 .filter(|(a, b)| a != b)
                 .count();
-            assert_eq!(diff_count, 1, "Codes {} and {} differ by {} bits", i, i + 1, diff_count);
+            assert_eq!(
+                diff_count,
+                1,
+                "Codes {} and {} differ by {} bits",
+                i,
+                i + 1,
+                diff_count
+            );
         }
     }
 }

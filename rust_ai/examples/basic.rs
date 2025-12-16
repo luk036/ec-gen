@@ -41,6 +41,12 @@ fn main() {
     println!("  Start: {:?}", perm);
     for (i, swap_idx) in sjt_gen(3).enumerate() {
         perm.swap(swap_idx as usize, swap_idx as usize + 1);
-        println!("  {}: swap {} with {} -> {:?}", i + 1, swap_idx, swap_idx + 1, perm);
+        println!(
+            "  {}: swap {} with {} -> {:?}",
+            i + 1,
+            swap_idx,
+            swap_idx + 1,
+            perm
+        );
     }
 }
