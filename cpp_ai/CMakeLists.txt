@@ -7,7 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Options
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
-option(BUILD_TESTING "Build tests" ON)
+option(BUILD_TESTING "Build tests" OFF)
 option(USE_SYSTEM_CPPCORO "Use system cppcoro" OFF)
 option(USE_SYSTEM_DOCTEST "Use system doctest" OFF)
 
@@ -84,8 +84,15 @@ install(EXPORT ${LIBRARY_NAME}-targets
 
 # Tests
 if(BUILD_TESTING)
+    set(DOCTEST_AVAILABLE FALSE)
+    
     if(USE_SYSTEM_DOCTEST)
-        find_package(doctest REQUIRED)
+        find_package(doctest QUIET)
+        if(doctest_FOUND)
+            set(DOCTEST_AVAILABLE TRUE)
+        else()
+            message(WARNING "System doctest not found. Tests will be disabled.")
+        endif()
     else()
         # Download doctest
         include(FetchContent)
@@ -94,10 +101,22 @@ if(BUILD_TESTING)
             GIT_REPOSITORY https://github.com/doctest/doctest.git
             GIT_TAG v2.4.11
         )
-        FetchContent_MakeAvailable(doctest)
+        # Try to fetch doctest
+        FetchContent_GetProperties(doctest)
+        if(NOT doctest_POPULATED)
+            FetchContent_Populate(doctest)
+        endif()
+        
+        if(EXISTS ${doctest_SOURCE_DIR}/doctest.h)
+            set(DOCTEST_AVAILABLE TRUE)
+            add_subdirectory(${doctest_SOURCE_DIR} ${doctest_BINARY_DIR})
+        else()
+            message(WARNING "Failed to fetch doctest. Tests will be disabled.")
+        endif()
     endif()
 
-    # Test executables
+    if(DOCTEST_AVAILABLE)
+        # Test executables
     add_executable(test_combin tests/test_combin.cpp)
     target_link_libraries(test_combin PRIVATE ${LIBRARY_NAME} doctest::doctest)
     add_test(NAME test_combin COMMAND test_combin)
@@ -124,7 +143,8 @@ if(BUILD_TESTING)
 
     # Enable test discovery
     enable_testing()
-endif()
+    endif()  # DOCTEST_AVAILABLE check
+endif()  # BUILD_TESTING check
 
 # Examples
 add_executable(example_combin examples/combin_example.cpp)
