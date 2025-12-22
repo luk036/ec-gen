@@ -73,15 +73,15 @@ def sjt_gen(n: int) -> Generator[int, None, None]:
         yield 0  # tricky part: return to the origin
         return
 
-    up = range(n - 1)
-    down = range(n - 2, -1, -1)
+    up_range = range(n - 1)
+    down_range = range(n - 2, -1, -1)
     gen = sjt_gen(n - 1)
-    for x in gen:
-        for i in down:  # downward
-            yield i
-        yield x + 1
-        for i in up:  # upward
-            yield i
+    for pos in gen:
+        for idx in down_range:  # downward
+            yield idx
+        yield pos + 1
+        for idx in up_range:  # upward
+            yield idx
         yield next(gen)  # tricky part
 
 
@@ -127,16 +127,16 @@ def PlainChanges(n: int) -> Generator[int, None, None]:
     """
     if n < 1:
         return
-    up = range(n - 1)
-    down = range(n - 2, -1, -1)
+    up_range = range(n - 1)
+    down_range = range(n - 2, -1, -1)
     recur = PlainChanges(n - 1)
     try:
         while True:
-            for x in down:
-                yield x
+            for pos in down_range:
+                yield pos
             yield next(recur) + 1
-            for x in up:
-                yield x
+            for pos in up_range:
+                yield pos
             yield next(recur)
     except StopIteration:
         pass

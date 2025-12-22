@@ -36,41 +36,41 @@ http://webhome.cs.uvic.ca/~ruskey/Publications/SimpleGray/SimpleGray.html
 from typing import Generator
 
 
-def stirling2nd2(n: int) -> int:
+def stirling2nd2(num: int) -> int:
     """
     The `stirling2nd2` function calculates the Stirling number of the second kind for a given integer
-    `n` (k = 2) using a recursive approach.
+    `num` (k = 2) using a recursive approach.
 
-    :param n: The parameter `n` represents the number of elements in a set
-    :type n: int
-    :return: the Stirling number of the second kind for the given input n.
+    :param num: The parameter `num` represents the number of elements in a set
+    :type num: int
+    :return: the Stirling number of the second kind for the given input num.
 
     Examples:
         >>> stirling2nd2(5)
         15
     """
-    if n < 3:
+    if num < 3:
         return 1
-    return 1 + 2 * stirling2nd2(n - 1)
+    return 1 + 2 * stirling2nd2(num - 1)
 
 
-def set_bipart(n: int) -> Generator:
+def set_bipart(num: int) -> Generator:
     """
-    The function `set_bipart` generates a sequence of moves that partitions a set of size `n` into two
+    The function `set_bipart` generates a sequence of moves that partitions a set of size `num` into two
     subsets.
 
-    :param n: The parameter `n` represents the number of elements in the bi-partition
-    :type n: int
+    :param num: The parameter `num` represents the number of elements in the bi-partition
+    :type num: int
 
     Examples:
-        >>> n = 5
-        >>> b = [0] * n + [1]
-        >>> print(b[1:])
+        >>> num = 5
+        >>> blocks = [0] * num + [1]
+        >>> print(blocks[1:])
         [0, 0, 0, 0, 1]
-        >>> for x in set_bipart(n):
-        ...     old = b[x]
-        ...     b[x] = 1 - b[x]
-        ...     print(b[1:], ": Move {} from B{} to B{}".format(x, old, b[x]))
+        >>> for idx in set_bipart(num):
+        ...     old_val = blocks[idx]
+        ...     blocks[idx] = 1 - blocks[idx]
+        ...     print(blocks[1:], ": Move {} from B{} to B{}".format(idx, old_val, blocks[idx]))
         ...
         [0, 0, 0, 1, 1] : Move 4 from B0 to B1
         [0, 1, 0, 1, 1] : Move 2 from B0 to B1
@@ -87,7 +87,7 @@ def set_bipart(n: int) -> Generator:
         [0, 1, 0, 1, 0] : Move 3 from B1 to B0
         [0, 0, 0, 1, 0] : Move 2 from B1 to B0
     """
-    yield from gen0(n)
+    yield from gen0(num)
 
 
 # The lists S(n,k,0) and S(n,k,1) satisfy the following properties.
@@ -98,54 +98,54 @@ def set_bipart(n: int) -> Generator:
 # Note that first(S'(n,k,p)) = last(S(n,k,p))
 
 
-def gen0(n: int) -> Generator:
-    """S(n,k,0) even k
+def gen0(num: int) -> Generator:
+    """S(num,k,0) even k
 
     The function `gen0` generates a sequence of numbers that satisfy a specific condition.
 
-    :param n: The parameter `n` represents an integer value
-    :type n: int
+    :param num: The parameter `num` represents an integer value
+    :type num: int
     :return: a generator object.
     """
-    if n < 3:
+    if num < 3:
         return
-    yield n - 1
-    yield from gen1(n - 1)
-    yield n
-    yield from neg1(n - 1)
+    yield num - 1
+    yield from gen1(num - 1)
+    yield num
+    yield from neg1(num - 1)
 
 
-def gen1(n: int) -> Generator:
-    """S(n,k,1) even k
+def gen1(num: int) -> Generator:
+    """S(num,k,1) even k
 
     The function `gen1` generates a sequence of numbers that satisfy a specific condition.
 
-    :param n: The parameter `n` represents an integer value
-    :type n: int
+    :param num: The parameter `num` represents an integer value
+    :type num: int
     :return: a generator object.
     """
-    if n < 3:
+    if num < 3:
         return
     yield 2
-    yield from neg1(n - 1)
-    yield n
-    yield from gen1(n - 1)
+    yield from neg1(num - 1)
+    yield num
+    yield from gen1(num - 1)
 
 
-def neg1(n: int) -> Generator:
-    """S'(n,k,1) even k
+def neg1(num: int) -> Generator:
+    """S'(num,k,1) even k
 
     The function `neg1` generates a sequence of numbers that satisfy a specific condition.
 
-    :param n: The parameter `n` represents an integer value
-    :type n: int
+    :param num: The parameter `num` represents an integer value
+    :type num: int
     :return: a generator object.
     """
-    if n < 3:
+    if num < 3:
         return
-    yield from neg1(n - 1)
-    yield n
-    yield from gen1(n - 1)
+    yield from neg1(num - 1)
+    yield num
+    yield from gen1(num - 1)
     yield 2
 
 

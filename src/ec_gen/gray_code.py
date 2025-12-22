@@ -84,11 +84,11 @@ def brgc(n: int) -> Generator:
         ◽◾◾◽
         ◾◾◾◽
     """
-    lst = list(0 for _ in range(n))
-    yield lst
-    for i in brgc_gen(n):
-        lst[i] = 1 - lst[i]  # flip
-        yield lst
+    bits = list(0 for _ in range(n))
+    yield bits
+    for idx in brgc_gen(n):
+        bits[idx] = 1 - bits[idx]  # flip
+        yield bits
 
 
 if __name__ == "__main__":

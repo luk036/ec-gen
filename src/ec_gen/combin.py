@@ -58,12 +58,12 @@ def comb_recur(n: int, k: int) -> int:
               elements. It is used in the calculation of the binomial coefficient, which is the number of ways to
               choose `k` elements from a set of `n` elements
     :type k: int
-    :return: The function `comb_recur` returns the sum of two values, `a` and `b`.
+    :return: The function `comb_recur` returns the sum of two values, `val_a` and `val_b`.
     """
     n -= 1
-    a = 1 if k == 1 else comb_recur(n, k - 1)
-    b = 1 if k == n else comb_recur(n, k)
-    return a + b
+    val_a = 1 if k == 1 else comb_recur(n, k - 1)
+    val_b = 1 if k == n else comb_recur(n, k)
+    return val_a + val_b
 
 
 def emk_comb_gen(n: int, k: int) -> Generator[tuple[int, int], None, None]:
@@ -261,11 +261,11 @@ def emk(n: int, k: int, zero: int = 0, one: int = 1) -> Generator[list, None, No
         ◾◾◽◾◽◽
         ◾◾◾◽◽◽
     """
-    s = [one] * k + [zero] * (n - k)
-    yield s
-    for x, y in emk_comb_gen(n, k):
-        s[x], s[y] = s[y], s[x]
-        yield s
+    seq = [one] * k + [zero] * (n - k)
+    yield seq
+    for pos_x, pos_y in emk_comb_gen(n, k):
+        seq[pos_x], seq[pos_y] = seq[pos_y], seq[pos_x]
+        yield seq
 
 
 if __name__ == "__main__":

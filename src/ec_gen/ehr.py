@@ -23,9 +23,9 @@ def ehr_gen(n: int) -> Generator:
 
     The `ehr_gen` function is a generator that generates all permutations of length `n` using the ehr
     algorithm. It yields the indices of the elements to be swapped with the first element (index 0) in
-    each permutation. The algorithm works by maintaining two lists, `b` and `c`, where `b` represents
-    the current permutation and `c` keeps track of the state of the algorithm. The algorithm iterates
-    through the elements of `c` and updates the elements of `b` accordingly to generate all possible
+    each permutation. The algorithm works by maintaining two lists, `perm` and `state`, where `perm` represents
+    the current permutation and `state` keeps track of the state of the algorithm. The algorithm iterates
+    through the elements of `state` and updates the elements of `perm` accordingly to generate all possible
     permutations.
 
     :param n: The parameter `n` represents the number of elements in the permutation
@@ -62,21 +62,21 @@ def ehr_gen(n: int) -> Generator:
     if n < 2:
         return
 
-    b = list(range(n))  # b[0] is never used
-    c = [0] * (n + 1)  # c[0] is never used
+    perm = list(range(n))  # perm[0] is never used
+    state = [0] * (n + 1)  # state[0] is never used
     while True:
-        k = 1
+        idx = 1
         while True:
-            if c[k] == k:
-                c[k] = 0
-                k += 1
-            if c[k] < k:
+            if state[idx] == idx:
+                state[idx] = 0
+                idx += 1
+            if state[idx] < idx:
                 break
-        if k == n:
+        if idx == n:
             break
-        c[k] += 1
-        yield b[k]
-        b[1:k] = b[k - 1 : 0 : -1]
+        state[idx] += 1
+        yield perm[idx]
+        perm[1:idx] = perm[idx - 1 : 0 : -1]
 
 
 if __name__ == "__main__":

@@ -58,9 +58,9 @@ def stirling2nd(n: int, k: int) -> int:
 @lru_cache
 def stirling2nd_recur(n: int, k: int) -> int:
     n -= 1
-    a = 1 if k == 2 else stirling2nd_recur(n, k - 1)
-    b = 1 if k == n else stirling2nd_recur(n, k)
-    return a + k * b
+    val_a = 1 if k == 2 else stirling2nd_recur(n, k - 1)
+    val_b = 1 if k == n else stirling2nd_recur(n, k)
+    return val_a + k * val_b
 
 
 def set_partition(n: int, k: int) -> Generator:
@@ -132,16 +132,16 @@ def gen0_even(n: int, k: int) -> Generator:
         yield from gen1_even(n - 1, k)
         yield (n, k - 2)
         yield from neg1_even(n - 1, k)
-        for i in range(k - 3, 0, -2):
-            yield (n, i)
+        for idx in range(k - 3, 0, -2):
+            yield (n, idx)
             yield from gen1_even(n - 1, k)
-            yield (n, i - 1)
+            yield (n, idx - 1)
             yield from neg1_even(n - 1, k)
     else:
         yield (n, k - 2)
-        for i in range(k - 3, 0, -2):
-            yield (n, i)
-            yield (n, i - 1)
+        for idx in range(k - 3, 0, -2):
+            yield (n, idx)
+            yield (n, idx - 1)
 
 
 def neg0_even(n: int, k: int) -> Generator:
@@ -158,18 +158,18 @@ def neg0_even(n: int, k: int) -> Generator:
     """
     # make sure that k > 0 and k < n
     if k < n - 1:
-        for i in range(1, k - 2, 2):
+        for idx in range(1, k - 2, 2):
             yield from gen1_even(n - 1, k)
-            yield (n, i)
+            yield (n, idx)
             yield from neg1_even(n - 1, k)
-            yield (n, i + 1)
+            yield (n, idx + 1)
         yield from gen1_even(n - 1, k)
         yield (n, k - 1)
         yield from neg1_even(n - 1, k)
     else:
-        for i in range(1, k - 2, 2):
-            yield (n, i)
-            yield (n, i + 1)
+        for idx in range(1, k - 2, 2):
+            yield (n, idx)
+            yield (n, idx + 1)
         yield (n, k - 1)
     yield (n - 1, 0)
     if k > 3:
@@ -195,16 +195,16 @@ def gen1_even(n: int, k: int) -> Generator:
         yield from neg1_even(n - 1, k)
         yield (n, k - 2)
         yield from gen1_even(n - 1, k)
-        for i in range(k - 3, 0, -2):
-            yield (n, i)
+        for idx in range(k - 3, 0, -2):
+            yield (n, idx)
             yield from neg1_even(n - 1, k)
-            yield (n, i - 1)
+            yield (n, idx - 1)
             yield from gen1_even(n - 1, k)
     else:
         yield (n, k - 2)
-        for i in range(k - 3, 0, -2):
-            yield (n, i)
-            yield (n, i - 1)
+        for idx in range(k - 3, 0, -2):
+            yield (n, idx)
+            yield (n, idx - 1)
 
 
 def neg1_even(n: int, k: int) -> Generator:
@@ -220,18 +220,18 @@ def neg1_even(n: int, k: int) -> Generator:
     :type k: int
     """
     if k < n - 1:
-        for i in range(1, k - 2, 2):
+        for idx in range(1, k - 2, 2):
             yield from neg1_even(n - 1, k)
-            yield (n, i)
+            yield (n, idx)
             yield from gen1_even(n - 1, k)
-            yield (n, i + 1)
+            yield (n, idx + 1)
         yield from neg1_even(n - 1, k)
         yield (n, k - 1)
         yield from gen1_even(n - 1, k)
     else:
-        for i in range(1, k - 2, 2):
-            yield (n, i)
-            yield (n, i + 1)
+        for idx in range(1, k - 2, 2):
+            yield (n, idx)
+            yield (n, idx + 1)
         yield (n, k - 1)
     yield (k, 0)
     if k > 3:
@@ -254,15 +254,15 @@ def gen0_odd(n: int, k: int) -> Generator:
     yield (k, k - 1)
     if k < n - 1:
         yield from neg1_odd(n - 1, k)
-        for i in range(k - 2, 0, -2):
-            yield (n, i)
+        for idx in range(k - 2, 0, -2):
+            yield (n, idx)
             yield from gen1_odd(n - 1, k)
-            yield (n, i - 1)
+            yield (n, idx - 1)
             yield from neg1_odd(n - 1, k)
     else:
-        for i in range(k - 2, 0, -2):
-            yield (n, i)
-            yield (n, i - 1)
+        for idx in range(k - 2, 0, -2):
+            yield (n, idx)
+            yield (n, idx - 1)
 
 
 def neg0_odd(n: int, k: int) -> Generator:
@@ -278,16 +278,16 @@ def neg0_odd(n: int, k: int) -> Generator:
     :type k: int
     """
     if k < n - 1:
-        for i in range(1, k - 1, 2):
+        for idx in range(1, k - 1, 2):
             yield from gen1_odd(n - 1, k)
-            yield (n, i)
+            yield (n, idx)
             yield from neg1_odd(n - 1, k)
-            yield (n, i + 1)
+            yield (n, idx + 1)
         yield from gen1_odd(n - 1, k)
     else:
-        for i in range(1, k - 1, 2):
-            yield (n, i)
-            yield (n, i + 1)
+        for idx in range(1, k - 1, 2):
+            yield (n, idx)
+            yield (n, idx + 1)
     yield (k, 0)
     yield from neg1_even(n - 1, k - 1)
 
@@ -308,15 +308,15 @@ def gen1_odd(n: int, k: int) -> Generator:
     yield (n - 1, k - 1)
     if k < n - 1:
         yield from gen1_odd(n - 1, k)
-        for i in range(k - 2, 0, -2):
-            yield (n, i)
+        for idx in range(k - 2, 0, -2):
+            yield (n, idx)
             yield from neg1_odd(n - 1, k)
-            yield (n, i - 1)
+            yield (n, idx - 1)
             yield from gen1_odd(n - 1, k)
     else:
-        for i in range(k - 2, 0, -2):
-            yield (n, i)
-            yield (n, i - 1)
+        for idx in range(k - 2, 0, -2):
+            yield (n, idx)
+            yield (n, idx - 1)
 
 
 def neg1_odd(n: int, k: int) -> Generator:
@@ -332,16 +332,16 @@ def neg1_odd(n: int, k: int) -> Generator:
     :type k: int
     """
     if k < n - 1:
-        for i in range(1, k - 1, 2):
+        for idx in range(1, k - 1, 2):
             yield from neg1_odd(n - 1, k)
-            yield (n, i)
+            yield (n, idx)
             yield from gen1_odd(n - 1, k)
-            yield (n, i + 1)
+            yield (n, idx + 1)
         yield from neg1_odd(n - 1, k)
     else:
-        for i in range(1, k - 1, 2):
-            yield (n, i)
-            yield (n, i + 1)
+        for idx in range(1, k - 1, 2):
+            yield (n, idx)
+            yield (n, idx + 1)
     yield (n - 1, 0)
     yield from neg0_even(n - 1, k - 1)
 

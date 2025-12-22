@@ -54,10 +54,10 @@ def fib(n: int) -> int:
         5
     """
     assert n > 0
-    a, b = 1, 1
-    for _i in range(n - 1):
-        a, b = b, a + b
-    return a
+    val_a, val_b = 1, 1
+    for _idx in range(n - 1):
+        val_a, val_b = val_b, val_a + val_b
+    return val_a
 
 
 # ---- CLI ----
