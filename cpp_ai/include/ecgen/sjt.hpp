@@ -41,9 +41,9 @@ namespace ecgen {
      * @return Generator yielding reference to container after each swap
      */
     template<typename Container>
-    auto sjt_apply(int n, Container& container) -> cppcoro::generator<Container&> {
+    auto sjt_apply(int num, Container& container) -> cppcoro::generator<Container&> {
         co_yield container;
-        for (int swap_pos : sjt_gen(n)) {
+        for (int swap_pos : sjt_gen(num)) {
             std::swap(container[swap_pos], container[swap_pos + 1]);
             co_yield container;
         }
@@ -56,10 +56,10 @@ namespace ecgen {
      * @return constexpr std::size_t N!
      */
     template<std::integral T>
-    constexpr auto factorial(T n) -> std::size_t {
+    constexpr auto factorial(T num) -> std::size_t {
         std::size_t result = 1;
-        for (T i = 2; i <= n; ++i) {
-            result *= i;
+        for (T idx = 2; idx <= num; ++idx) {
+            result *= idx;
         }
         return result;
     }

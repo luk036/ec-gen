@@ -60,16 +60,16 @@ pub fn stirling2nd2(n: i32) -> i32 {
 /// b[n as usize] = 1;
 /// println!("{:?}", &b[1..]);
 ///
-/// for x in set_bipart(n) {
-///     let old = b[x as usize];
-///     b[x as usize] = 1 - b[x as usize];
-///     println!("{:?} : Move {} from B{} to B{}", &b[1..], x, old, b[x as usize]);
+/// for idx in set_bipart(n) {
+///     let old = b[idx as usize];
+///     b[idx as usize] = 1 - b[idx as usize];
+///     println!("{:?} : Move {} from B{} to B{}", &b[1..], idx, old, b[idx as usize]);
 /// }
 /// ```
 pub fn set_bipart(n: i32) -> impl Iterator<Item = i32> {
     gen!({
-        for x in gen0(n) {
-            yield_!(x);
+        for idx in gen0(n) {
+            yield_!(idx);
         }
     })
     .into_iter()
@@ -81,12 +81,12 @@ fn gen0(n: i32) -> impl Iterator<Item = i32> {
             return;
         }
         yield_!(n - 1);
-        for x in gen1(n - 1) {
-            yield_!(x);
+        for idx in gen1(n - 1) {
+            yield_!(idx);
         }
         yield_!(n);
-        for x in neg1(n - 1) {
-            yield_!(x);
+        for idx in neg1(n - 1) {
+            yield_!(idx);
         }
     })
     .into_iter()
@@ -98,12 +98,12 @@ fn gen1(n: i32) -> impl Iterator<Item = i32> {
             return;
         }
         yield_!(2);
-        for x in neg1(n - 1) {
-            yield_!(x);
+        for idx in neg1(n - 1) {
+            yield_!(idx);
         }
         yield_!(n);
-        for x in gen1(n - 1) {
-            yield_!(x);
+        for idx in gen1(n - 1) {
+            yield_!(idx);
         }
     })
     .into_iter()
@@ -114,12 +114,12 @@ fn neg1(n: i32) -> impl Iterator<Item = i32> {
         if n < 3 {
             return;
         }
-        for x in neg1(n - 1) {
-            yield_!(x);
+        for idx in neg1(n - 1) {
+            yield_!(idx);
         }
         yield_!(n);
-        for x in gen1(n - 1) {
-            yield_!(x);
+        for idx in gen1(n - 1) {
+            yield_!(idx);
         }
         yield_!(2);
     })
@@ -153,8 +153,8 @@ mod tests {
         b[n as usize] = 1;
         let mut bipartitions = vec![b[1..].to_vec()];
 
-        for &x in &moves {
-            b[x as usize] = 1 - b[x as usize];
+        for &idx in &moves {
+            b[idx as usize] = 1 - b[idx as usize];
             bipartitions.push(b[1..].to_vec());
         }
 

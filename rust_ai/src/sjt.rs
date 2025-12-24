@@ -44,16 +44,16 @@ pub fn sjt_gen(n: i32) -> impl Iterator<Item = i32> {
         let down: Vec<i32> = (0..n - 1).rev().collect();
         let mut gen = sjt_gen(n - 1);
 
-        while let Some(x) = gen.next() {
-            for &i in down.iter() {
-                yield_!(i);
+        while let Some(swap_pos) = gen.next() {
+            for &idx in down.iter() {
+                yield_!(idx);
             }
-            yield_!(x + 1);
-            for &i in up.iter() {
-                yield_!(i);
+            yield_!(swap_pos + 1);
+            for &idx in up.iter() {
+                yield_!(idx);
             }
-            if let Some(next_x) = gen.next() {
-                yield_!(next_x);
+            if let Some(next_swap) = gen.next() {
+                yield_!(next_swap);
             }
         }
     })
@@ -92,18 +92,18 @@ pub fn plain_changes(n: i32) -> impl Iterator<Item = i32> {
         let mut recur = plain_changes(n - 1);
 
         loop {
-            for &x in down.iter() {
-                yield_!(x);
+            for &swap_pos in down.iter() {
+                yield_!(swap_pos);
             }
             match recur.next() {
-                Some(x) => yield_!(x + 1),
+                Some(swap_pos) => yield_!(swap_pos + 1),
                 None => break,
             }
-            for &x in up.iter() {
-                yield_!(x);
+            for &swap_pos in up.iter() {
+                yield_!(swap_pos);
             }
             match recur.next() {
-                Some(x) => yield_!(x),
+                Some(swap_pos) => yield_!(swap_pos),
                 None => break,
             }
         }

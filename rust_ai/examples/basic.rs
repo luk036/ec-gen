@@ -13,15 +13,15 @@ fn main() {
 
     println!("=== Combinations (EMK algorithm) ===");
     println!("All combinations of 6 choose 3:");
-    for (i, combination) in emk(6, 3, 0, 1).enumerate() {
-        println!("  {}: {:?}", i + 1, combination);
+    for (idx, combination) in emk(6, 3, 0, 1).enumerate() {
+        println!("  {}: {:?}", idx + 1, combination);
     }
     println!();
 
     println!("=== Gray Codes ===");
     println!("Binary Reflected Gray Code for 3 bits:");
-    for (i, code) in brgc(3).enumerate() {
-        println!("  {}: {:?}", i + 1, code);
+    for (idx, code) in brgc(3).enumerate() {
+        println!("  {}: {:?}", idx + 1, code);
     }
     println!();
 
@@ -29,9 +29,9 @@ fn main() {
     println!("Generating permutations of 4 elements:");
     let mut perm = vec![0, 1, 2, 3];
     println!("  Start: {:?}", perm);
-    for (i, swap_idx) in ehr_gen(4).enumerate() {
+    for (idx, swap_idx) in ehr_gen(4).enumerate() {
         perm.swap(0, swap_idx as usize);
-        println!("  {}: swap 0 with {} -> {:?}", i + 1, swap_idx, perm);
+        println!("  {}: swap 0 with {} -> {:?}", idx + 1, swap_idx, perm);
     }
     println!();
 
@@ -39,11 +39,11 @@ fn main() {
     println!("Generating permutations of 3 elements with adjacent swaps:");
     let mut perm = vec!["A", "B", "C"];
     println!("  Start: {:?}", perm);
-    for (i, swap_idx) in sjt_gen(3).enumerate() {
+    for (idx, swap_idx) in sjt_gen(3).enumerate() {
         perm.swap(swap_idx as usize, swap_idx as usize + 1);
         println!(
             "  {}: swap {} with {} -> {:?}",
-            i + 1,
+            idx + 1,
             swap_idx,
             swap_idx + 1,
             perm

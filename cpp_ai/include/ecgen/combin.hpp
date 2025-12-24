@@ -51,13 +51,13 @@ namespace ecgen {
      * @returns A generator that yields each k-combination of lst in reverse
      * lexicographic order.
      */
-    template <typename Container> auto emk(int n, int k, Container &lst)
+    template <typename Container> auto emk(int num, int select, Container &lst)
         -> cppcoro::generator<Container &> {
         co_yield lst;
-        for (const auto &[x, y] : emk_comb_gen(n, k)) {
-            auto temp = lst[x];  // swap
-            lst[x] = lst[y];
-            lst[y] = temp;
+        for (const auto &[first, second] : emk_comb_gen(num, select)) {
+            auto temp = lst[first];  // swap
+            lst[first] = lst[second];
+            lst[second] = temp;
             co_yield lst;
         }
     }

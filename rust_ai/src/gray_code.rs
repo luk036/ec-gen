@@ -40,12 +40,12 @@ pub fn brgc_gen(n: i32) -> impl Iterator<Item = i32> {
             return;
         }
 
-        for i in brgc_gen(n - 1) {
-            yield_!(i);
+        for idx in brgc_gen(n - 1) {
+            yield_!(idx);
         }
         yield_!(n - 1);
-        for i in brgc_gen(n - 1) {
-            yield_!(i);
+        for idx in brgc_gen(n - 1) {
+            yield_!(idx);
         }
     })
     .into_iter()
@@ -75,8 +75,8 @@ pub fn brgc(n: i32) -> impl Iterator<Item = Vec<i32>> {
         let mut lst = vec![0; n as usize];
         yield_!(lst.clone());
 
-        for i in brgc_gen(n) {
-            lst[i as usize] = 1 - lst[i as usize]; // flip
+        for idx in brgc_gen(n) {
+            lst[idx as usize] = 1 - lst[idx as usize]; // flip
             yield_!(lst.clone());
         }
     })

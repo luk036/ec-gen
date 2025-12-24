@@ -3,42 +3,42 @@
 
 namespace ecgen {
 
-    auto ehr_gen(int n) -> cppcoro::generator<std::vector<int>> {
-        if (n <= 0) {
+    auto ehr_gen(int num) -> cppcoro::generator<std::vector<int>> {
+        if (num <= 0) {
             co_return;
         }
         
-        std::vector<int> perm(n);
-        for (int i = 0; i < n; ++i) {
-            perm[i] = i + 1;
+        std::vector<int> perm(num);
+        for (int idx = 0; idx < num; ++idx) {
+            perm[idx] = idx + 1;
         }
         
-        std::vector<int> c(n, 0);
-        std::vector<int> o(n, 1);
+        std::vector<int> c(num, 0);
+        std::vector<int> o(num, 1);
         
         co_yield perm;
         
         while (true) {
-            int j = n - 1;
-            int s = 0;
+            int pos = num - 1;
+            int sum = 0;
             
             // Determine next permutation
-            int q = c[j] + o[j];
-            while (q < 0 || q == j + 1) {
-                if (q == j + 1) {
-                    if (j == 0) {
+            int quot = c[pos] + o[pos];
+            while (quot < 0 || quot == pos + 1) {
+                if (quot == pos + 1) {
+                    if (pos == 0) {
                         co_return; // All permutations generated
                     }
-                    s += 1;
+                    sum += 1;
                 }
-                o[j] = -o[j];
-                j -= 1;
-                q = c[j] + o[j];
+                o[pos] = -o[pos];
+                pos -= 1;
+                quot = c[pos] + o[pos];
             }
             
             // Swap elements
-            std::swap(perm[j - c[j] + s], perm[j - q + s]);
-            c[j] = q;
+            std::swap(perm[pos - c[pos] + sum], perm[pos - quot + sum]);
+            c[pos] = quot;
             
             co_yield perm;
         }

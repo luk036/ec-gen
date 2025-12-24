@@ -20,23 +20,23 @@ namespace ecgen {
      * @return constexpr std::size_t Stirling number S(N,K)
      */
     template<std::integral T, std::integral U>
-    constexpr auto stirling2nd(T n, U k) -> std::size_t {
-        if (k == 0 || k > n) return 0;
-        if (k == 1 || k == n) return 1;
+    constexpr auto stirling2nd(T num, U select) -> std::size_t {
+        if (select == 0 || select > num) return 0;
+        if (select == 1 || select == num) return 1;
         
         // Use dynamic programming for runtime computation
-        std::vector<std::size_t> prev(k + 1, 0), curr(k + 1, 0);
+        std::vector<std::size_t> prev(select + 1, 0), curr(select + 1, 0);
         prev[1] = 1;
         
-        for (T i = 2; i <= n; ++i) {
+        for (T idx = 2; idx <= num; ++idx) {
             curr[1] = 1;
-            for (U j = 2; j <= k && j <= i; ++j) {
-                curr[j] = j * prev[j] + prev[j - 1];
+            for (U pos = 2; pos <= select && pos <= idx; ++pos) {
+                curr[pos] = pos * prev[pos] + prev[pos - 1];
             }
             std::swap(prev, curr);
         }
         
-        return prev[k];
+        return prev[select];
     }
 
     /**
@@ -48,20 +48,20 @@ namespace ecgen {
      * @return constexpr std::size_t Bell number B(N)
      */
     template<std::integral T>
-    constexpr auto bell(T n) -> std::size_t {
-        if (n == 0) return 1;
+    constexpr auto bell(T num) -> std::size_t {
+        if (num == 0) return 1;
         
-        std::vector<std::size_t> bell_numbers(n + 1, 0);
+        std::vector<std::size_t> bell_numbers(num + 1, 0);
         bell_numbers[0] = 1;
         
-        for (T i = 1; i <= n; ++i) {
-            bell_numbers[i] = 0;
-            for (T k = 0; k < i; ++k) {
-                bell_numbers[i] += comb(i - 1, k) * bell_numbers[k];
+        for (T idx = 1; idx <= num; ++idx) {
+            bell_numbers[idx] = 0;
+            for (T select = 0; select < idx; ++select) {
+                bell_numbers[idx] += comb(idx - 1, select) * bell_numbers[select];
             }
         }
         
-        return bell_numbers[n];
+        return bell_numbers[num];
     }
 
     /**
@@ -88,15 +88,15 @@ namespace ecgen {
      * @brief Helper function for combination calculation
      */
     template<std::integral T>
-    constexpr auto comb(T n, T k) -> std::size_t {
-        if (k > n) return 0;
-        if (k == 0 || k == n) return 1;
+    constexpr auto comb(T num, T select) -> std::size_t {
+        if (select > num) return 0;
+        if (select == 0 || select == num) return 1;
         
         std::size_t result = 1;
-        k = std::min(k, n - k);
+        select = std::min(select, num - select);
         
-        for (T i = 1; i <= k; ++i) {
-            result = result * (n - k + i) / i;
+        for (T idx = 1; idx <= select; ++idx) {
+            result = result * (num - select + idx) / idx;
         }
         
         return result;

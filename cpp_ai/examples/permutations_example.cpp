@@ -14,8 +14,8 @@ int main() {
     
     for (auto& perm : ecgen::sjt_apply(3, items_sjt)) {
         std::cout << ++count_sjt << ": ";
-        for (int x : items_sjt) {
-            std::cout << x << " ";
+        for (int elem : items_sjt) {
+            std::cout << elem << " ";
         }
         std::cout << "\n";
     }

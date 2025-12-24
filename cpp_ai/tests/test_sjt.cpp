@@ -24,14 +24,14 @@ TEST_CASE("SJT permutation generation") {
         CHECK(unique_permutations.size() == 6);
         
         // Check that each permutation differs from previous by one adjacent swap
-        for (size_t i = 1; i < permutations.size(); ++i) {
-            const auto& prev = permutations[i - 1];
-            const auto& curr = permutations[i];
+        for (size_t idx = 1; idx < permutations.size(); ++idx) {
+            const auto& prev = permutations[idx - 1];
+            const auto& curr = permutations[idx];
             
             // Count differences
             int diff_count = 0;
-            for (size_t j = 0; j < prev.size(); ++j) {
-                if (prev[j] != curr[j]) {
+            for (size_t pos = 0; pos < prev.size(); ++pos) {
+                if (prev[pos] != curr[pos]) {
                     ++diff_count;
                 }
             }
@@ -41,9 +41,9 @@ TEST_CASE("SJT permutation generation") {
             
             // The differing elements should be adjacent in one of the permutations
             bool adjacent_swap = false;
-            for (size_t j = 0; j < prev.size() - 1; ++j) {
-                if ((prev[j] == curr[j + 1] && prev[j + 1] == curr[j]) &&
-                    (prev[j] != curr[j] || prev[j + 1] != curr[j + 1])) {
+            for (size_t pos = 0; pos < prev.size() - 1; ++pos) {
+                if ((prev[pos] == curr[pos + 1] && prev[pos + 1] == curr[pos]) &&
+                    (prev[pos] != curr[pos] || prev[pos + 1] != curr[pos + 1])) {
                     adjacent_swap = true;
                     break;
                 }

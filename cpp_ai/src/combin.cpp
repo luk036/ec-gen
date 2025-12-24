@@ -9,77 +9,77 @@ namespace ecgen {
     static auto emk_comb_gen_odd(int n, int k) -> cppcoro::recursive_generator<std::pair<int, int>>;
     
     // Helper function for EMK combination generation
-    static auto emk_comb_gen_even(int n, int k) -> cppcoro::recursive_generator<std::pair<int, int>> {
-        if (k % 2 == 0) {
-            if (k == 0) {
+    static auto emk_comb_gen_even(int num, int select) -> cppcoro::recursive_generator<std::pair<int, int>> {
+        if (select % 2 == 0) {
+            if (select == 0) {
                 co_return;
             }
             
-            // Even k case
-            for (const auto& [x, y] : emk_comb_gen_even(n - 1, k - 1)) {
-                co_yield {x, y};
+            // Even select case
+            for (const auto& [first, second] : emk_comb_gen_even(num - 1, select - 1)) {
+                co_yield {first, second};
             }
-            co_yield {k - 1, n - 1};
+            co_yield {select - 1, num - 1};
             
-            for (const auto& [x, y] : emk_comb_gen_odd(n - 2, k - 2)) {
-                co_yield {x, y};
+            for (const auto& [first, second] : emk_comb_gen_odd(num - 2, select - 2)) {
+                co_yield {first, second};
             }
-            co_yield {0, k - 2};
+            co_yield {0, select - 2};
             
-            for (const auto& [x, y] : emk_comb_gen_even(n - 2, k - 2)) {
-                co_yield {x + 1, y + 1};
+            for (const auto& [first, second] : emk_comb_gen_even(num - 2, select - 2)) {
+                co_yield {first + 1, second + 1};
             }
-            co_yield {k - 2, n - 2};
+            co_yield {select - 2, num - 2};
             
-            for (const auto& [x, y] : emk_comb_gen_odd(n - 2, k)) {
-                co_yield {x + 1, y + 1};
+            for (const auto& [first, second] : emk_comb_gen_odd(num - 2, select)) {
+                co_yield {first + 1, second + 1};
             }
         }
     }
 
-    static auto emk_comb_gen_odd(int n, int k) -> cppcoro::recursive_generator<std::pair<int, int>> {
-        if (k % 2 == 1) {
-            if (k == 1) {
-                for (int i = 0; i < n - 1; ++i) {
-                    co_yield {0, i + 1};
+    static auto emk_comb_gen_odd(int num, int select) -> cppcoro::recursive_generator<std::pair<int, int>> {
+        if (select % 2 == 1) {
+            if (select == 1) {
+                for (int idx = 0; idx < num - 1; ++idx) {
+                    co_yield {0, idx + 1};
                 }
                 co_return;
             }
             
-            // Odd k case
-            for (const auto& [x, y] : emk_comb_gen_odd(n - 1, k - 1)) {
-                co_yield {x, y};
+            // Odd select case
+            for (const auto& [first, second] : emk_comb_gen_odd(num - 1, select - 1)) {
+                co_yield {first, second};
             }
-            co_yield {k - 1, n - 1};
+            co_yield {select - 1, num - 1};
             
-            for (const auto& [x, y] : emk_comb_gen_even(n - 2, k - 2)) {
-                co_yield {x, y};
+            for (const auto& [first, second] : emk_comb_gen_even(num - 2, select - 2)) {
+                co_yield {first, second};
             }
-            co_yield {0, k - 2};
+            co_yield {0, select - 2};
             
-            for (const auto& [x, y] : emk_comb_gen_odd(n - 2, k - 2)) {
-                co_yield {x + 1, y + 1};
+            for (const auto& [first, second] : emk_comb_gen_odd(num - 2, select - 2)) {
+                co_yield {first + 1, second + 1};
             }
-            co_yield {k - 2, n - 2};
+            co_yield {select - 2, num - 2};
             
-            for (const auto& [x, y] : emk_comb_gen_even(n - 2, k)) {
-                co_yield {x + 1, y + 1};
+            for (const auto& [first, second] : emk_comb_gen_even(num - 2, select)) {
+                co_yield {first + 1, second + 1};
             }
         }
     }
 
-    auto emk_comb_gen(int n, int k) -> cppcoro::recursive_generator<std::pair<int, int>> {
-        if (k <= 0 || k >= n) {
+    auto emk_comb_gen(int num, int select) -> cppcoro::recursive_generator<std::pair<int, int>> {
+        if (select <= 0 || select >= num) {
             co_return;
         }
         
-        if (k % 2 == 0) {
-            for (const auto& [x, y] : emk_comb_gen_even(n, k)) {
-                co_yield {x, y};
+        if (select % 2 == 0) {
+            for (const auto& [first, second] : emk_comb_gen_even(num, select)) {
+                co_yield {first, second};
             }
         } else {
-            for (const auto& [x, y] : emk_comb_gen_odd(n, k)) {
-                co_yield {x, y};
+            for (const auto& [first, second] : emk_comb_gen_odd(num, select)) {
+                co_yield {first, second};
             }
         }
     }

@@ -65,12 +65,12 @@ pub fn ehr_gen(n: i32) -> impl Iterator<Item = i32> {
             // Reverse b[1..k]
             let slice_len = k as usize;
             if slice_len > 1 {
-                let mut i = 1;
-                let mut j = slice_len - 1;
-                while i < j {
-                    b.swap(i, j);
-                    i += 1;
-                    j -= 1;
+                let mut left = 1;
+                let mut right = slice_len - 1;
+                while left < right {
+                    b.swap(left, right);
+                    left += 1;
+                    right -= 1;
                 }
             }
         }

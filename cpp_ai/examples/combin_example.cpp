@@ -19,8 +19,8 @@ int main() {
     
     for (auto& comb : ecgen::emk(5, 3, items)) {
         std::cout << ++count << ": ";
-        for (int i = 0; i < 3; ++i) {
-            std::cout << items[i] << " ";
+        for (int idx = 0; idx < 3; ++idx) {
+            std::cout << items[idx] << " ";
         }
         std::cout << "\n";
     }

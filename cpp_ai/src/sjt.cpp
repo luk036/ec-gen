@@ -4,8 +4,8 @@
 
 namespace ecgen {
 
-    auto sjt_gen(int n) -> cppcoro::generator<int> {
-        if (n <= 1) {
+    auto sjt_gen(int num) -> cppcoro::generator<int> {
+        if (num <= 1) {
             co_return;
         }
         
@@ -13,18 +13,18 @@ namespace ecgen {
         struct frame {
             int n;
             int dir;
-            int i;
+            int state;
         };
         
         std::stack<frame> stk;
-        stk.push({n, -1, 0});
+        stk.push({num, -1, 0});
         
         while (!stk.empty()) {
-            auto& f = stk.top();
+            auto& frame = stk.top();
             
-            if (f.i == 0) {
+            if (frame.state == 0) {
                 // First visit: setup for this level
-                if (f.n == 2) {
+                if (frame.n == 2) {
                     // Base case
                     co_yield 0;
                     stk.pop();
@@ -32,29 +32,29 @@ namespace ecgen {
                 }
                 
                 // Push recursive call for n-1
-                stk.push({f.n - 1, -1, 0});
-                f.i = 1;
-            } else if (f.i <= f.n - 1) {
+                stk.push({frame.n - 1, -1, 0});
+                frame.state = 1;
+            } else if (frame.state <= frame.n - 1) {
                 // Generate swaps for this level
-                if (f.dir < 0) {
+                if (frame.dir < 0) {
                     // Moving left to right
-                    for (int j = 0; j < f.n - 1; ++j) {
-                        co_yield j;
+                    for (int pos = 0; pos < frame.n - 1; ++pos) {
+                        co_yield pos;
                     }
                 } else {
                     // Moving right to left
-                    for (int j = f.n - 2; j >= 0; --j) {
-                        co_yield j;
+                    for (int pos = frame.n - 2; pos >= 0; --pos) {
+                        co_yield pos;
                     }
                 }
                 
                 // Swap direction for next iteration
-                f.dir = -f.dir;
-                ++f.i;
+                frame.dir = -frame.dir;
+                ++frame.state;
                 
-                if (f.i <= f.n - 1) {
+                if (frame.state <= frame.n - 1) {
                     // Push recursive call again
-                    stk.push({f.n - 1, -1, 0});
+                    stk.push({frame.n - 1, -1, 0});
                 }
             } else {
                 // Done with this level
@@ -63,8 +63,8 @@ namespace ecgen {
         }
     }
 
-    auto plain_changes(int n) -> cppcoro::generator<int> {
-        if (n <= 1) {
+    auto plain_changes(int num) -> cppcoro::generator<int> {
+        if (num <= 1) {
             co_return;
         }
         
@@ -75,15 +75,15 @@ namespace ecgen {
                 co_return;
             }
             
-            for (int i = 0; i < n - 1; ++i) {
+            for (int idx = 0; idx < n - 1; ++idx) {
                 for (int swap_pos : self(n - 1, -1, self)) {
                     co_yield swap_pos;
                 }
                 
                 if (dir < 0) {
-                    co_yield i;
+                    co_yield idx;
                 } else {
-                    co_yield n - 2 - i;
+                    co_yield n - 2 - idx;
                 }
             }
             
@@ -92,7 +92,7 @@ namespace ecgen {
             }
         };
         
-        for (int swap_pos : helper(n, -1, helper)) {
+        for (int swap_pos : helper(num, -1, helper)) {
             co_yield swap_pos;
         }
     }

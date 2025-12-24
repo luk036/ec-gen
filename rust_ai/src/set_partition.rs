@@ -93,10 +93,10 @@ fn stirling2nd_recur(n: i32, k: i32) -> i32 {
 /// b.extend((0..k).collect::<Vec<_>>());
 /// println!("{:?}", &b[1..]);
 ///
-/// for (x, y) in set_partition(n, k) {
-///     let old = b[x as usize];
-///     b[x as usize] = y;
-///     println!("{:?} : Move {} from block {} to {}", &b[1..], x, old, y);
+/// for (elem, block) in set_partition(n, k) {
+///     let old = b[elem as usize];
+///     b[elem as usize] = block;
+///     println!("{:?} : Move {} from block {} to {}", &b[1..], elem, old, block);
 /// }
 /// ```
 pub fn set_partition(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
@@ -133,21 +133,21 @@ fn gen0_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
             for pair in neg1_even(n - 1, k) {
                 yield_!(pair);
             }
-            for i in (1..=k - 3).rev().step_by(2) {
-                yield_!((n, i));
+            for idx in (1..=k - 3).rev().step_by(2) {
+                yield_!((n, idx));
                 for pair in gen1_even(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i - 1));
+                yield_!((n, idx - 1));
                 for pair in neg1_even(n - 1, k) {
                     yield_!(pair);
                 }
             }
         } else {
             yield_!((n, k - 2));
-            for i in (1..=k - 3).rev().step_by(2) {
-                yield_!((n, i));
-                yield_!((n, i - 1));
+            for idx in (1..=k - 3).rev().step_by(2) {
+                yield_!((n, idx));
+                yield_!((n, idx - 1));
             }
         }
     })
@@ -157,15 +157,15 @@ fn gen0_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
 fn neg0_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
     gen!({
         if k < n - 1 {
-            for i in (1..=k - 3).step_by(2) {
+            for idx in (1..=k - 3).step_by(2) {
                 for pair in gen1_even(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i));
+                yield_!((n, idx));
                 for pair in neg1_even(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i + 1));
+                yield_!((n, idx + 1));
             }
             for pair in gen1_even(n - 1, k) {
                 yield_!(pair);
@@ -175,9 +175,9 @@ fn neg0_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
                 yield_!(pair);
             }
         } else {
-            for i in (1..=k - 3).step_by(2) {
-                yield_!((n, i));
-                yield_!((n, i + 1));
+            for idx in (1..=k - 3).step_by(2) {
+                yield_!((n, idx));
+                yield_!((n, idx + 1));
             }
             yield_!((n, k - 1));
         }
@@ -207,21 +207,21 @@ fn gen1_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
             for pair in gen1_even(n - 1, k) {
                 yield_!(pair);
             }
-            for i in (1..=k - 3).rev().step_by(2) {
-                yield_!((n, i));
+            for idx in (1..=k - 3).rev().step_by(2) {
+                yield_!((n, idx));
                 for pair in neg1_even(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i - 1));
+                yield_!((n, idx - 1));
                 for pair in gen1_even(n - 1, k) {
                     yield_!(pair);
                 }
             }
         } else {
             yield_!((n, k - 2));
-            for i in (1..=k - 3).rev().step_by(2) {
-                yield_!((n, i));
-                yield_!((n, i - 1));
+            for idx in (1..=k - 3).rev().step_by(2) {
+                yield_!((n, idx));
+                yield_!((n, idx - 1));
             }
         }
     })
@@ -231,15 +231,15 @@ fn gen1_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
 fn neg1_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
     gen!({
         if k < n - 1 {
-            for i in (1..=k - 3).step_by(2) {
+            for idx in (1..=k - 3).step_by(2) {
                 for pair in neg1_even(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i));
+                yield_!((n, idx));
                 for pair in gen1_even(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i + 1));
+                yield_!((n, idx + 1));
             }
             for pair in neg1_even(n - 1, k) {
                 yield_!(pair);
@@ -249,9 +249,9 @@ fn neg1_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
                 yield_!(pair);
             }
         } else {
-            for i in (1..=k - 3).step_by(2) {
-                yield_!((n, i));
-                yield_!((n, i + 1));
+            for idx in (1..=k - 3).step_by(2) {
+                yield_!((n, idx));
+                yield_!((n, idx + 1));
             }
             yield_!((n, k - 1));
         }
@@ -275,20 +275,20 @@ fn gen0_odd(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
             for pair in neg1_odd(n - 1, k) {
                 yield_!(pair);
             }
-            for i in (2..=k - 2).rev().step_by(2) {
-                yield_!((n, i));
+            for idx in (2..=k - 2).rev().step_by(2) {
+                yield_!((n, idx));
                 for pair in gen1_odd(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i - 1));
+                yield_!((n, idx - 1));
                 for pair in neg1_odd(n - 1, k) {
                     yield_!(pair);
                 }
             }
         } else {
-            for i in (2..=k - 2).rev().step_by(2) {
-                yield_!((n, i));
-                yield_!((n, i - 1));
+            for idx in (2..=k - 2).rev().step_by(2) {
+                yield_!((n, idx));
+                yield_!((n, idx - 1));
             }
         }
     })
@@ -298,23 +298,23 @@ fn gen0_odd(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
 fn neg0_odd(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
     gen!({
         if k < n - 1 {
-            for i in (1..=k - 2).step_by(2) {
+            for idx in (1..=k - 2).step_by(2) {
                 for pair in gen1_odd(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i));
+                yield_!((n, idx));
                 for pair in neg1_odd(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i + 1));
+                yield_!((n, idx + 1));
             }
             for pair in gen1_odd(n - 1, k) {
                 yield_!(pair);
             }
         } else {
-            for i in (1..=k - 2).step_by(2) {
-                yield_!((n, i));
-                yield_!((n, i + 1));
+            for idx in (1..=k - 2).step_by(2) {
+                yield_!((n, idx));
+                yield_!((n, idx + 1));
             }
         }
         yield_!((k, 0));
@@ -335,20 +335,20 @@ fn gen1_odd(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
             for pair in gen1_odd(n - 1, k) {
                 yield_!(pair);
             }
-            for i in (2..=k - 2).rev().step_by(2) {
-                yield_!((n, i));
+            for idx in (2..=k - 2).rev().step_by(2) {
+                yield_!((n, idx));
                 for pair in neg1_odd(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i - 1));
+                yield_!((n, idx - 1));
                 for pair in gen1_odd(n - 1, k) {
                     yield_!(pair);
                 }
             }
         } else {
-            for i in (2..=k - 2).rev().step_by(2) {
-                yield_!((n, i));
-                yield_!((n, i - 1));
+            for idx in (2..=k - 2).rev().step_by(2) {
+                yield_!((n, idx));
+                yield_!((n, idx - 1));
             }
         }
     })
@@ -358,23 +358,23 @@ fn gen1_odd(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
 fn neg1_odd(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
     gen!({
         if k < n - 1 {
-            for i in (1..=k - 2).step_by(2) {
+            for idx in (1..=k - 2).step_by(2) {
                 for pair in neg1_odd(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i));
+                yield_!((n, idx));
                 for pair in gen1_odd(n - 1, k) {
                     yield_!(pair);
                 }
-                yield_!((n, i + 1));
+                yield_!((n, idx + 1));
             }
             for pair in neg1_odd(n - 1, k) {
                 yield_!(pair);
             }
         } else {
-            for i in (1..=k - 2).step_by(2) {
-                yield_!((n, i));
-                yield_!((n, i + 1));
+            for idx in (1..=k - 2).step_by(2) {
+                yield_!((n, idx));
+                yield_!((n, idx + 1));
             }
         }
         yield_!((n - 1, 0));
@@ -409,8 +409,8 @@ mod tests {
         b.extend((0..k).collect::<Vec<_>>());
         let mut partitions = vec![b[1..].to_vec()];
 
-        for &(x, y) in &moves {
-            b[x as usize] = y;
+        for &(elem, block) in &moves {
+            b[elem as usize] = block;
             partitions.push(b[1..].to_vec());
         }
 

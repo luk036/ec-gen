@@ -30,33 +30,33 @@ namespace ecgen {
      */
     template<typename Container>
     auto ehr_apply(Container& container) -> cppcoro::generator<Container&> {
-        int n = std::size(container);
-        std::vector<int> c(n, 0);
-        std::vector<int> o(n, 1);
+        int num = std::size(container);
+        std::vector<int> c(num, 0);
+        std::vector<int> o(num, 1);
         
         co_yield container;
         
         while (true) {
-            int j = n - 1;
-            int s = 0;
+            int pos = num - 1;
+            int sum = 0;
             
             // Determine next permutation
-            int q = c[j] + o[j];
-            while (q < 0 || q == j + 1) {
-                if (q == j + 1) {
-                    if (j == 0) {
+            int quot = c[pos] + o[pos];
+            while (quot < 0 || quot == pos + 1) {
+                if (quot == pos + 1) {
+                    if (pos == 0) {
                         co_return; // All permutations generated
                     }
-                    s += 1;
+                    sum += 1;
                 }
-                o[j] = -o[j];
-                j -= 1;
-                q = c[j] + o[j];
+                o[pos] = -o[pos];
+                pos -= 1;
+                quot = c[pos] + o[pos];
             }
             
             // Swap elements
-            std::swap(container[j - c[j] + s], container[j - q + s]);
-            c[j] = q;
+            std::swap(container[pos - c[pos] + sum], container[pos - quot + sum]);
+            c[pos] = quot;
             
             co_yield container;
         }
@@ -68,10 +68,10 @@ namespace ecgen {
      * @param n Length of permutation
      * @return Number of permutations (n!)
      */
-    constexpr auto ehr_count(int n) -> std::size_t {
+    constexpr auto ehr_count(int num) -> std::size_t {
         std::size_t result = 1;
-        for (int i = 2; i <= n; ++i) {
-            result *= i;
+        for (int idx = 2; idx <= num; ++idx) {
+            result *= idx;
         }
         return result;
     }

@@ -58,12 +58,12 @@ namespace ecgen {
      */
     template<typename Container>
     auto gray_code_subsets(const Container& container) -> cppcoro::generator<std::vector<typename Container::value_type>> {
-        int n = std::size(container);
+        int num = std::size(container);
         std::vector<typename Container::value_type> current;
         
         co_yield current; // Empty set
         
-        for (std::uint64_t gray = 1; gray < (1ULL << n); ++gray) {
+        for (std::uint64_t gray = 1; gray < (1ULL << num); ++gray) {
             // Find which bit changed
             std::uint64_t changed = gray ^ (gray - 1);
             int bit_pos = std::countr_zero(changed);

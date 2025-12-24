@@ -4,92 +4,92 @@
 
 namespace ecgen {
 
-    auto set_partition_gen(int n) -> cppcoro::generator<std::vector<int>> {
-        if (n <= 0) {
+    auto set_partition_gen(int num) -> cppcoro::generator<std::vector<int>> {
+        if (num <= 0) {
             co_return;
         }
         
-        std::vector<int> a(n, 0);  // RG string
-        std::vector<int> b(n, 1);  // Maximum block index + 1
-        std::vector<int> m(n + 1, 0);  // Helper array
+        std::vector<int> a(num, 0);  // RG string
+        std::vector<int> b(num, 1);  // Maximum block index + 1
+        std::vector<int> m(num + 1, 0);  // Helper array
         
         // Initial partition: all elements in block 0
         co_yield a;
         
-        int j = n - 1;
-        while (j > 0) {
-            int v = b[j] + a[j];
+        int pos = num - 1;
+        while (pos > 0) {
+            int val = b[pos] + a[pos];
             
-            if (v <= m[j]) {
-                a[j] = v;
+            if (val <= m[pos]) {
+                a[pos] = val;
                 
-                if (v == m[j]) {
-                    m[j + 1] = std::max(m[j], v + 1);
+                if (val == m[pos]) {
+                    m[pos + 1] = std::max(m[pos], val + 1);
                 } else {
-                    m[j + 1] = m[j];
+                    m[pos + 1] = m[pos];
                 }
                 
-                if (a[j] == b[j]) {
-                    b[j + 1] = b[j] + 1;
+                if (a[pos] == b[pos]) {
+                    b[pos + 1] = b[pos] + 1;
                 } else {
-                    b[j + 1] = b[j];
+                    b[pos + 1] = b[pos];
                 }
                 
-                j = n - 1;
+                pos = num - 1;
                 co_yield a;
             } else {
-                --j;
+                --pos;
             }
         }
     }
 
-    auto set_partition_k_gen(int n, int k) -> cppcoro::generator<std::vector<int>> {
-        if (k <= 0 || k > n) {
+    auto set_partition_k_gen(int num, int select) -> cppcoro::generator<std::vector<int>> {
+        if (select <= 0 || select > num) {
             co_return;
         }
         
-        std::vector<int> a(n, 0);  // RG string
-        std::vector<int> b(n, 1);  // Maximum block index + 1
-        std::vector<int> m(n + 1, 0);  // Helper array
+        std::vector<int> a(num, 0);  // RG string
+        std::vector<int> b(num, 1);  // Maximum block index + 1
+        std::vector<int> m(num + 1, 0);  // Helper array
         
-        // Initialize for exactly k blocks
-        for (int i = 0; i < k; ++i) {
-            a[i] = i;
-            b[i] = i + 1;
-            m[i] = i;
+        // Initialize for exactly select blocks
+        for (int idx = 0; idx < select; ++idx) {
+            a[idx] = idx;
+            b[idx] = idx + 1;
+            m[idx] = idx;
         }
-        for (int i = k; i < n; ++i) {
-            a[i] = k - 1;
-            b[i] = k;
-            m[i] = k - 1;
+        for (int idx = select; idx < num; ++idx) {
+            a[idx] = select - 1;
+            b[idx] = select;
+            m[idx] = select - 1;
         }
-        m[n] = k - 1;
+        m[num] = select - 1;
         
         co_yield a;
         
-        int j = n - 1;
-        while (j > 0) {
-            int v = b[j] + a[j];
+        int pos = num - 1;
+        while (pos > 0) {
+            int val = b[pos] + a[pos];
             
-            if (v <= m[j] && v < k) {
-                a[j] = v;
+            if (val <= m[pos] && val < select) {
+                a[pos] = val;
                 
-                if (v == m[j]) {
-                    m[j + 1] = std::max(m[j], v + 1);
+                if (val == m[pos]) {
+                    m[pos + 1] = std::max(m[pos], val + 1);
                 } else {
-                    m[j + 1] = m[j];
+                    m[pos + 1] = m[pos];
                 }
                 
-                if (a[j] == b[j]) {
-                    b[j + 1] = b[j] + 1;
+                if (a[pos] == b[pos]) {
+                    b[pos + 1] = b[pos] + 1;
                 } else {
-                    b[j + 1] = b[j];
+                    b[pos + 1] = b[pos];
                 }
                 
-                j = n - 1;
+                pos = num - 1;
                 co_yield a;
             } else {
-                --j;
+                --pos;
             }
         }
     }

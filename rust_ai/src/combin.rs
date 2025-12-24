@@ -100,8 +100,8 @@ pub fn emk_comb_gen(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
             return;
         }
         if k == 1 {
-            for i in 0..(n - 1) {
-                yield_!((i, i + 1));
+            for idx in 0..(n - 1) {
+                yield_!((idx, idx + 1));
             }
             return;
         }
@@ -128,8 +128,8 @@ fn emk_gen_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
             }
             yield_!((n - 2, n - 1));
             if k == 2 {
-                for i in (0..=(n - 4)).rev() {
-                    yield_!((i, i + 1));
+                for idx in (0..=(n - 4)).rev() {
+                    yield_!((idx, idx + 1));
                 }
             } else {
                 for pair in emk_neg_odd(n - 2, k - 1) {
@@ -162,8 +162,8 @@ fn emk_gen_odd(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
         }
         yield_!((k - 2, n - 2));
         if k == 3 {
-            for i in 0..(n - 3) {
-                yield_!((i, i + 1));
+            for idx in 0..(n - 3) {
+                yield_!((idx, idx + 1));
             }
         } else {
             for pair in emk_gen_odd(n - 2, k - 2) {
@@ -188,8 +188,8 @@ fn emk_neg_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
                     yield_!(pair);
                 }
             } else {
-                for i in 0..(n - 3) {
-                    yield_!((i, i + 1));
+                for idx in 0..(n - 3) {
+                    yield_!((idx, idx + 1));
                 }
             }
             yield_!((n - 1, n - 2));
@@ -206,8 +206,8 @@ fn emk_neg_even(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
 fn emk_neg_odd(n: i32, k: i32) -> impl Iterator<Item = (i32, i32)> {
     gen!({
         if k == 3 {
-            for i in (0..=(n - 4)).rev() {
-                yield_!((i + 1, i));
+            for idx in (0..=(n - 4)).rev() {
+                yield_!((idx + 1, idx));
             }
         } else {
             for pair in emk_neg_odd(n - 2, k - 2) {
@@ -258,8 +258,8 @@ pub fn emk<T: Clone>(n: i32, k: i32, zero: T, one: T) -> impl Iterator<Item = Ve
         s.extend(vec![zero.clone(); (n - k) as usize]);
         yield_!(s.clone());
 
-        for (x, y) in emk_comb_gen(n, k) {
-            s.swap(x as usize, y as usize);
+        for (first, second) in emk_comb_gen(n, k) {
+            s.swap(first as usize, second as usize);
             yield_!(s.clone());
         }
     })
