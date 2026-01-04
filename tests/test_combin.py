@@ -85,3 +85,30 @@ def test_emk_even() -> None:
     for _ in emk(6, 2):
         cnt += 1
     assert cnt == comb(6, 2)
+
+
+def test_emk_comb_gen_edge_cases() -> None:
+    """Test edge cases for emk_comb_gen function"""
+    # Test k >= n (should return empty generator)
+    gen = emk_comb_gen(5, 5)
+    assert list(gen) == []
+
+    gen = emk_comb_gen(5, 6)
+    assert list(gen) == []
+
+    # Test k <= 0 (should return empty generator)
+    gen = emk_comb_gen(5, 0)
+    assert list(gen) == []
+
+    gen = emk_comb_gen(5, -1)
+    assert list(gen) == []
+
+    # Test k == 1 (should yield adjacent pairs)
+    gen = emk_comb_gen(5, 1)
+    expected = [(0, 1), (1, 2), (2, 3), (3, 4)]
+    assert list(gen) == expected
+
+    # Test k == 1 with n=2 (minimal case)
+    gen = emk_comb_gen(2, 1)
+    expected = [(0, 1)]
+    assert list(gen) == expected
