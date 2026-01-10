@@ -38,7 +38,7 @@ pub fn fib(n: u32) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_fib() {
         assert_eq!(fib(1), 1);
@@ -50,7 +50,7 @@ mod tests {
         assert_eq!(fib(7), 13);
         assert_eq!(fib(8), 21);
     }
-    
+
     #[test]
     #[should_panic(expected = "n must be positive")]
     fn test_fib_zero() {

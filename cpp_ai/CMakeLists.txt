@@ -85,7 +85,7 @@ install(EXPORT ${LIBRARY_NAME}-targets
 # Tests
 if(BUILD_TESTING)
     set(DOCTEST_AVAILABLE FALSE)
-    
+
     if(USE_SYSTEM_DOCTEST)
         find_package(doctest QUIET)
         if(doctest_FOUND)
@@ -106,7 +106,7 @@ if(BUILD_TESTING)
         if(NOT doctest_POPULATED)
             FetchContent_Populate(doctest)
         endif()
-        
+
         if(EXISTS ${doctest_SOURCE_DIR}/doctest.h)
             set(DOCTEST_AVAILABLE TRUE)
             add_subdirectory(${doctest_SOURCE_DIR} ${doctest_BINARY_DIR})

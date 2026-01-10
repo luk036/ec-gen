@@ -44,17 +44,17 @@ fn stirling2nd_recur(n: u32, k: u32) -> u64 {
             return value;
         }
     }
-    
+
     let n_minus_1 = n - 1;
     let a = if k == 2 { 1 } else { stirling2nd_recur(n_minus_1, k - 1) };
     let b = if k == n_minus_1 { 1 } else { stirling2nd_recur(n_minus_1, k) };
     let result = a + (k as u64) * b;
-    
+
     {
         let mut cache = STIRLING_CACHE.lock().unwrap();
         cache.insert(key, result);
     }
-    
+
     result
 }
 
@@ -104,7 +104,7 @@ impl SetPartition {
 
 impl Iterator for SetPartition {
     type Item = (u32, u32);
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         match &mut self.state {
             SetPartitionState::Start => {
@@ -125,7 +125,7 @@ impl Iterator for SetPartition {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_stirling2nd() {
         assert_eq!(stirling2nd(5, 2), 15);
@@ -136,7 +136,7 @@ mod tests {
         assert_eq!(stirling2nd(5, 5), 1);
         assert_eq!(stirling2nd(5, 6), 1); // k >= n
     }
-    
+
     #[test]
     fn test_stirling2nd_symmetry() {
         // S(n,1) = 1 for all n >= 1
@@ -144,15 +144,15 @@ mod tests {
         assert_eq!(stirling2nd(10, 1), 1);
         assert_eq!(stirling2nd(1, 1), 1);
     }
-    
+
     #[test]
     fn test_set_partition_invalid() {
         let moves: Vec<(u32, u32)> = set_partition(5, 1).collect();
         assert_eq!(moves.len(), 0);
-        
+
         let moves: Vec<(u32, u32)> = set_partition(5, 5).collect();
         assert_eq!(moves.len(), 0);
-        
+
         let moves: Vec<(u32, u32)> = set_partition(5, 6).collect();
         assert_eq!(moves.len(), 0);
     }

@@ -8,7 +8,7 @@ namespace ecgen {
         if (num <= 0) {
             co_return;
         }
-        
+
         std::uint64_t total = 1ULL << num;
         for (std::uint64_t idx = 0; idx < total; ++idx) {
             co_yield binary_to_gray(idx);
@@ -19,14 +19,14 @@ namespace ecgen {
         if (select <= 0 || select > num) {
             co_return;
         }
-        
+
         // Start with first combination: lowest select bits set
         std::uint64_t comb = (1ULL << select) - 1;
         std::uint64_t limit = 1ULL << num;
-        
+
         while (comb < limit) {
             co_yield comb;
-            
+
             // Compute next combination using Gosper's hack
             std::uint64_t temp = comb & -comb;
             std::uint64_t next_val = comb + temp;

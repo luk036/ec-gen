@@ -64,52 +64,52 @@ pub fn plain_changes(_n: u32) -> impl Iterator<Item = u32> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_sjt_gen_2() {
         let swaps: Vec<u32> = sjt_gen(2).collect();
         // Simple test
         assert_eq!(swaps.len(), 0);
     }
-    
+
     #[test]
     fn test_sjt_gen_3() {
         let swaps: Vec<u32> = sjt_gen(3).collect();
         // Simple test
         assert_eq!(swaps.len(), 0);
     }
-    
+
     #[test]
     fn test_apply_sjt_gen() {
         let perm = vec!["🍉", "🍌", "🍇", "🍏"];
         let original = perm.clone();
         let mut count = 0;
-        
+
         for _ in sjt_gen(4) {
             count += 1;
         }
-        
+
         // Simple test
         assert_eq!(count, 0);
         assert_eq!(perm, original);
     }
-    
+
     #[test]
     fn test_plain_changes_2() {
         let swaps: Vec<u32> = plain_changes(2).collect();
         // Simple test
         assert_eq!(swaps.len(), 0);
     }
-    
+
     #[test]
     fn test_apply_plain_changes() {
         let _perm = vec!["🍉", "🍌", "🍇", "🍏"];
         let mut count = 0;
-        
+
         for _ in plain_changes(4) {
             count += 1;
         }
-        
+
         // Simple test
         assert_eq!(count, 0);
     }

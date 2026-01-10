@@ -42,11 +42,11 @@
 graph TD
     A[Function] --> B[Execute once]
     A --> C[Return result]
-    
+
     D[Coroutine] --> E[Suspend & Resume]
     D --> F[Yield multiple values]
     D --> G[Maintain state]
-    
+
     H[Key Benefits] --> I[Memory efficient]
     H --> J[Non-blocking]
     H --> K[Clean async code]
@@ -99,7 +99,7 @@ for value in simple_generator():
 ```python
 def emk_comb_gen(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """Generate all combinations by homogeneous revolving-door
-    
+
     From: src/ec_gen/combin.py:48
     """
     if k >= n or k <= 0:
@@ -125,7 +125,7 @@ graph LR
     A[Callbacks] --> B[Promises/Futures]
     B --> C[Generators]
     C --> D[Async/Await]
-    
+
     style D fill:#90EE90
 ```
 
@@ -156,7 +156,7 @@ asyncio.run(main())
 ```python
 def sjt_gen(n: int) -> Generator[int, None, None]:
     """Generate all permutations using SJT algorithm
-    
+
     From: src/ec_gen/sjt.py:25
     """
     if n == 2:
@@ -217,7 +217,7 @@ graph TB
     A[Rust Compiler] --> B[Compile-time checks]
     A --> C[Zero-cost abstractions]
     A --> D[Memory safety]
-    
+
     E[Benefits] --> F[No runtime overhead]
     E --> G[Thread-safe by default]
     E --> H[No garbage collection]
@@ -268,7 +268,7 @@ From: `rust_ai/src/ehr.rs:18`
 
 ```rust
 // Type-safe generator with lifetime management
-pub fn emk<T: Clone>(n: i32, k: i32, zero: T, one: T) 
+pub fn emk<T: Clone>(n: i32, k: i32, zero: T, one: T)
     -> impl Iterator<Item = Vec<T>> {
     gen!({
         let mut s = vec![one.clone(); k as usize];
@@ -301,17 +301,17 @@ auto sjt_gen(int n) -> cppcoro::generator<int> {
     if (n <= 1) {
         co_return;
     }
-    
+
     // Stack-based recursion simulation
     struct frame {
         int n;
         int dir;
         int i;
     };
-    
+
     std::stack<frame> stk;
     stk.push({n, -1, 0});
-    
+
     while (!stk.empty()) {
         auto& f = stk.top();
         // ... coroutine logic
@@ -331,7 +331,7 @@ From: `cpp_ai/src/sjt.cpp`
 ### Compile-Time Computation
 
 ```cpp
-template <int N, int K> 
+template <int N, int K>
 constexpr auto Combination() {
     if constexpr (K >= N || K == 0) {
         return std::integral_constant<size_t, 1U>{};
@@ -348,7 +348,7 @@ From: `cpp_ai/include/ecgen/combin.hpp:70`
 
 ```cpp
 template<typename Container>
-auto sjt_apply(int n, Container& container) 
+auto sjt_apply(int n, Container& container)
     -> cppcoro::generator<Container&> {
     co_yield container;
     for (int swap_pos : sjt_gen(n)) {
@@ -367,15 +367,15 @@ gantt
     title Performance Characteristics
     dateFormat X
     axisFormat %s
-    
+
     section Python
     Generator overhead    :0, 10
     GIL limitations       :0, 8
-    
+
     section Rust
     Zero-cost abstractions :0, 2
     Memory safety          :0, 3
-    
+
     section C++
     Template metaprogramming :0, 4
     Manual optimization     :0, 3
@@ -401,14 +401,14 @@ graph TB
         A3[Heavy context switch]
         A4[Shared memory issues]
     end
-    
+
     subgraph "Coroutines"
         B1[Cooperative multitasking]
         B2[User-managed scheduling]
         B3[Lightweight suspension]
         B4[Structured concurrency]
     end
-    
+
     style B1 fill:#90EE90
     style B2 fill:#90EE90
     style B3 fill:#90EE90
@@ -547,7 +547,7 @@ pie title Library Ecosystem Maturity
 graph LR
     A[Producer] -->|yield| B[Coroutine]
     B -->|process| C[Consumer]
-    
+
     D[Benefits] --> E[Backpressure handling]
     D --> F[Memory efficiency]
     D --> G[Loose coupling]
@@ -590,7 +590,7 @@ graph TD
     A[Debugging Challenges] --> B[Stack traces]
     A --> C[State inspection]
     A --> D[Concurrency bugs]
-    
+
     E[Solutions] --> F[Logging middleware]
     E --> G[Debuggers support]
     E --> H[Static analysis]
@@ -645,11 +645,11 @@ graph LR
     A[2020] --> B[2025]
     A --> C[Current State]
     B --> D[Future Vision]
-    
+
     C --> E[Python: Async everywhere]
     C --> F[Rust: Async-first ecosystem]
     C --> G[C++: Coroutine standardization]
-    
+
     D --> H[Unified async patterns]
     D --> I[Better tooling]
     D --> J[Performance optimizations]
@@ -678,7 +678,7 @@ graph LR
 
 ### 🛠️ Our Codebase Examples
 - `src/ec_gen/` - Python generators
-- `rust_ai/src/` - Rust async implementations  
+- `rust_ai/src/` - Rust async implementations
 - `cpp_ai/src/` - C++20 coroutines
 
 ---

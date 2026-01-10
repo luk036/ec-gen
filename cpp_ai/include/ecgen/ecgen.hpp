@@ -5,9 +5,9 @@
  * @brief Main header for the Enumerative Combinatoric Generation library
  * @version 0.1.0
  * @date 2025-12-16
- * 
+ *
  * @copyright Copyright (c) 2025
- * 
+ *
  * This library provides C++23 implementations of combinatorial generation algorithms
  * including combinations, permutations, set partitions, Gray codes, and more.
  */

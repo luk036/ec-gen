@@ -54,7 +54,7 @@ pub fn set_bipart(_n: u32) -> impl Iterator<Item = u32> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_stirling2nd2() {
         assert_eq!(stirling2nd2(1), 1);
@@ -64,36 +64,36 @@ mod tests {
         assert_eq!(stirling2nd2(5), 15);
         assert_eq!(stirling2nd2(6), 31);
     }
-    
+
     #[test]
     fn test_set_bipart_3() {
         let moves: Vec<u32> = set_bipart(3).collect();
         // Simple test
         assert_eq!(moves.len(), 0);
     }
-    
+
     #[test]
     fn test_set_bipart_4() {
         let moves: Vec<u32> = set_bipart(4).collect();
         // Simple test
         assert_eq!(moves.len(), 0);
     }
-    
+
     #[test]
     fn test_set_bipart_5() {
         let moves: Vec<u32> = set_bipart(5).collect();
         // Simple test
         assert_eq!(moves.len(), 0);
     }
-    
+
     #[test]
     fn test_set_bipart_small() {
         let moves: Vec<u32> = set_bipart(2).collect();
         assert_eq!(moves.len(), 0);
-        
+
         let moves: Vec<u32> = set_bipart(1).collect();
         assert_eq!(moves.len(), 0);
-        
+
         let moves: Vec<u32> = set_bipart(0).collect();
         assert_eq!(moves.len(), 0);
     }

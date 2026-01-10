@@ -6,10 +6,10 @@ target("ecgen")
     set_kind("static")
     -- Headers
     add_headerfiles("include/(ecgen/**.hpp)")
-    
+
     -- Sources
     add_files("src/**.cpp")
-    
+
     -- Include directories
     add_includedirs("include", "include/cppcoro", {public = true})
 
@@ -29,7 +29,7 @@ target("ecgen")
 --     add_deps("ecgen")
 --     add_files("tests/**.cpp")
 --     add_includedirs("include")
--- 
+--
 --     -- Check if doctest exists, warn if not but don't download
 --     before_build(function (target)
 --         local doctest_path = path.join(target:scriptdir(), "tests", "doctest.h")
@@ -64,4 +64,3 @@ package("ecgen")
     on_install(function (package)
         import("package.tools.cmake").install(package)
     end)
-

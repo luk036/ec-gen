@@ -53,7 +53,7 @@ impl BrgcGen {
 
 impl Iterator for BrgcGen {
     type Item = u32;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         match &mut self.state {
             BrgcGenState::Start => {
@@ -130,13 +130,13 @@ impl Brgc {
 
 impl Iterator for Brgc {
     type Item = Vec<u8>;
-    
+
     fn next(&mut self) -> Option<Self::Item> {
         if !self.yielded_initial {
             self.yielded_initial = true;
             return Some(self.lst.clone());
         }
-        
+
         if let Some(i) = self.flips.next() {
             self.lst[i as usize] = 1 - self.lst[i as usize]; // flip
             Some(self.lst.clone())
@@ -149,37 +149,37 @@ impl Iterator for Brgc {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_brgc_gen() {
         let flips: Vec<u32> = brgc_gen(4).collect();
         let expected = vec![0, 1, 0, 2, 0, 1, 0, 3, 0, 1, 0, 2, 0, 1, 0];
         assert_eq!(flips, expected);
     }
-    
+
     #[test]
     fn test_brgc_gen_1() {
         let flips: Vec<u32> = brgc_gen(1).collect();
         assert_eq!(flips, vec![0]);
     }
-    
+
     #[test]
     fn test_brgc_gen_2() {
         let flips: Vec<u32> = brgc_gen(2).collect();
         assert_eq!(flips, vec![0, 1, 0]);
     }
-    
+
     #[test]
     fn test_brgc() {
         let codes: Vec<Vec<u8>> = brgc(3).collect();
         assert_eq!(codes.len(), 8); // 2^3 = 8 codes
-        
+
         // Check first few codes
         assert_eq!(codes[0], vec![0, 0, 0]);
         assert_eq!(codes[1], vec![1, 0, 0]);
         assert_eq!(codes[2], vec![1, 1, 0]);
         assert_eq!(codes[3], vec![0, 1, 0]);
-        
+
         // Verify Gray code property: consecutive codes differ by exactly one bit
         for i in 0..codes.len() - 1 {
             let diff_count = codes[i]
@@ -190,12 +190,12 @@ mod tests {
             assert_eq!(diff_count, 1, "Codes at positions {} and {} differ by {} bits", i, i + 1, diff_count);
         }
     }
-    
+
     #[test]
     fn test_brgc_4() {
         let codes: Vec<Vec<u8>> = brgc(4).collect();
         assert_eq!(codes.len(), 16); // 2^4 = 16 codes
-        
+
         // Verify all codes are unique
         let mut sorted = codes.clone();
         sorted.sort();

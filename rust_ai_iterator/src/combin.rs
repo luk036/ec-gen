@@ -50,7 +50,7 @@ fn comb_recur(n: u32, k: u32) -> u64 {
             return value;
         }
     }
-    
+
     let result = if k == 1 {
         n as u64
     } else if k == n - 1 {
@@ -58,7 +58,7 @@ fn comb_recur(n: u32, k: u32) -> u64 {
     } else {
         comb_recur(n - 1, k - 1) + comb_recur(n - 1, k)
     };
-    
+
     let mut cache = COMB_CACHE.lock().unwrap();
     cache.insert(key, result);
     result
@@ -118,14 +118,14 @@ pub fn emk<T: Clone>(n: u32, k: u32, zero: T, one: T) -> impl Iterator<Item = Ve
         .into_iter()
         .chain(vec![zero.clone(); (n - k) as usize])
         .collect::<Vec<T>>();
-    
+
     std::iter::once(s)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_comb() {
         assert_eq!(comb(6, 3), 20);
@@ -135,20 +135,20 @@ mod tests {
         assert_eq!(comb(5, 2), 10);
         assert_eq!(comb(5, 3), 10);
     }
-    
+
     #[test]
     fn test_emk_comb_gen_small() {
         let swaps: Vec<(u32, u32)> = emk_comb_gen(6, 3).collect();
         // Simple test - empty for now
         assert_eq!(swaps.len(), 0);
     }
-    
+
     #[test]
     fn test_emk() {
         let combinations: Vec<Vec<&str>> = emk(6, 3, "◾", "◽").collect();
         // Should generate at least one combination
         assert!(!combinations.is_empty());
-        
+
         // Check first combination has correct pattern
         assert_eq!(combinations[0].len(), 6);
         let ones = combinations[0].iter().filter(|&&x| x == "◽").count();

@@ -86,14 +86,14 @@ xmake run test_combin
 int main() {
     // Generate all 3-combinations of 5 elements
     std::vector<char> items = {'A', 'B', 'C', 'D', 'E'};
-    
+
     for (auto& comb : ecgen::emk(5, 3, items)) {
         for (int i = 0; i < 3; ++i) {
             std::cout << items[i] << " ";
         }
         std::cout << "\n";
     }
-    
+
     return 0;
 }
 ```
