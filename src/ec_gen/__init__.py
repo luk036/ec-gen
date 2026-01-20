@@ -18,23 +18,23 @@ finally:
 # Combinations
 from ec_gen.combin import comb, emk, emk_comb_gen
 
+# EHR permutations
+from ec_gen.ehr import ehr_gen
+
 # Gray codes
 from ec_gen.gray_code import brgc, brgc_gen
+
+# Set bipartitions
+from ec_gen.set_bipart import set_bipart, stirling2nd2
+
+# Set partitions
+from ec_gen.set_partition import set_partition, stirling2nd
 
 # Permutations
 from ec_gen.sjt import PlainChanges, sjt_gen
 
 # Permutations (list form)
 from ec_gen.sjt_list import sjt2
-
-# Set partitions
-from ec_gen.set_partition import set_partition, stirling2nd
-
-# Set bipartitions
-from ec_gen.set_bipart import set_bipart, stirling2nd2
-
-# EHR permutations
-from ec_gen.ehr import ehr_gen
 
 __all__ = [
     # Combinations
