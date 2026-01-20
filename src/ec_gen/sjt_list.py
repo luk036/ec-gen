@@ -1,7 +1,7 @@
 from typing import Generator
 
 
-def sjt2(n: int) -> Generator:
+def sjt2(n: int) -> Generator[list[int], None, None]:
     """
     The function `sjt2` generates all permutations of length `n` using the Steinhaus-Johnson-Trotter
     algorithm.

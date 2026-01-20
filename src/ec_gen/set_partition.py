@@ -63,7 +63,7 @@ def stirling2nd_recur(n: int, k: int) -> int:
     return val_a + k * val_b
 
 
-def set_partition(n: int, k: int) -> Generator:
+def set_partition(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """
     The `set_partition` function generates all possible set partitions of a set of size `n` into `k` blocks.
 
@@ -113,7 +113,7 @@ def set_partition(n: int, k: int) -> Generator:
 # Note that first(S'(n,k,p)) = last(S(n,k,p))
 
 
-def gen0_even(n: int, k: int) -> Generator:
+def gen0_even(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """S(n,k,0) even k
 
     The function `gen0_even` generates a sequence of tuples that satisfy certain conditions based on the
@@ -144,7 +144,7 @@ def gen0_even(n: int, k: int) -> Generator:
             yield (n, idx - 1)
 
 
-def neg0_even(n: int, k: int) -> Generator:
+def neg0_even(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """S'(n,k,0) even k
 
     The function `neg0_even` generates a sequence of tuples that satisfy certain conditions based on the
@@ -176,7 +176,7 @@ def neg0_even(n: int, k: int) -> Generator:
         yield from neg0_odd(n - 1, k - 1)
 
 
-def gen1_even(n: int, k: int) -> Generator:
+def gen1_even(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """S(n,k,1) even k
 
     The function `gen1_even` generates a sequence of tuples that satisfy certain conditions based on the
@@ -207,7 +207,7 @@ def gen1_even(n: int, k: int) -> Generator:
             yield (n, idx - 1)
 
 
-def neg1_even(n: int, k: int) -> Generator:
+def neg1_even(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """S'(n,k,1) even k
 
     The function `neg1_even` generates a sequence of tuples that satisfy certain conditions based on the
@@ -238,7 +238,7 @@ def neg1_even(n: int, k: int) -> Generator:
         yield from neg1_odd(n - 1, k - 1)
 
 
-def gen0_odd(n: int, k: int) -> Generator:
+def gen0_odd(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """S(n,k,0) odd k
 
     The function `gen0_odd` generates a sequence of tuples that satisfy certain conditions based on the
@@ -265,7 +265,7 @@ def gen0_odd(n: int, k: int) -> Generator:
             yield (n, idx - 1)
 
 
-def neg0_odd(n: int, k: int) -> Generator:
+def neg0_odd(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """S'(n,k,0) odd k
 
     The function `neg0_odd` generates a sequence of tuples that satisfy certain conditions based on the
@@ -292,7 +292,7 @@ def neg0_odd(n: int, k: int) -> Generator:
     yield from neg1_even(n - 1, k - 1)
 
 
-def gen1_odd(n: int, k: int) -> Generator:
+def gen1_odd(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """S(n,k,1) odd k
 
     The function `gen1_odd` generates a sequence of tuples that satisfy certain conditions based on the
@@ -319,7 +319,7 @@ def gen1_odd(n: int, k: int) -> Generator:
             yield (n, idx - 1)
 
 
-def neg1_odd(n: int, k: int) -> Generator:
+def neg1_odd(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     """S'(n,k,1) odd k
 
     The function `neg1_odd` generates a sequence of tuples that satisfy certain conditions based on the

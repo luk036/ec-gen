@@ -54,7 +54,7 @@ def stirling2nd2(num: int) -> int:
     return 1 + 2 * stirling2nd2(num - 1)
 
 
-def set_bipart(num: int) -> Generator:
+def set_bipart(num: int) -> Generator[int, None, None]:
     """
     The function `set_bipart` generates a sequence of moves that partitions a set of size `num` into two
     subsets.
@@ -98,7 +98,7 @@ def set_bipart(num: int) -> Generator:
 # Note that first(S'(n,k,p)) = last(S(n,k,p))
 
 
-def gen0(num: int) -> Generator:
+def gen0(num: int) -> Generator[int, None, None]:
     """S(num,k,0) even k
 
     The function `gen0` generates a sequence of numbers that satisfy a specific condition.
@@ -115,7 +115,7 @@ def gen0(num: int) -> Generator:
     yield from neg1(num - 1)
 
 
-def gen1(num: int) -> Generator:
+def gen1(num: int) -> Generator[int, None, None]:
     """S(num,k,1) even k
 
     The function `gen1` generates a sequence of numbers that satisfy a specific condition.
@@ -132,7 +132,7 @@ def gen1(num: int) -> Generator:
     yield from gen1(num - 1)
 
 
-def neg1(num: int) -> Generator:
+def neg1(num: int) -> Generator[int, None, None]:
     """S'(num,k,1) even k
 
     The function `neg1` generates a sequence of numbers that satisfy a specific condition.
