@@ -42,6 +42,7 @@ except FileNotFoundError:
 
 try:
     import sphinx
+    import re
 
     cmd_line = f"sphinx-apidoc --implicit-namespaces -f -o {output_dir} {module_dir}"
 
@@ -51,6 +52,28 @@ try:
         args = args[1:]
 
     apidoc.main(args)
+
+    # Post-process: Add :no-index: to set_bipart and set_partition modules
+    # to prevent duplicate object description warnings
+    ec_gen_rst = os.path.join(output_dir, "ec_gen.rst")
+    if os.path.exists(ec_gen_rst):
+        with open(ec_gen_rst, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        # Add :no-index: to set_bipart module using regex
+        # Match from the automodule directive to capture the whole block
+        pattern = r"(\.\. automodule:: ec_gen\.set_bipart\n   :members:\n   :show-inheritance:\n   :undoc-members:)"
+        replacement = r"\1\n   :no-index:"
+        content = re.sub(pattern, replacement, content)
+
+        # Add :no-index: to set_partition module using regex
+        pattern = r"(\.\. automodule:: ec_gen\.set_partition\n   :members:\n   :show-inheritance:\n   :undoc-members:)"
+        replacement = r"\1\n   :no-index:"
+        content = re.sub(pattern, replacement, content)
+
+        with open(ec_gen_rst, "w", encoding="utf-8") as f:
+            f.write(content)
+
 except Exception as e:
     print("Running `sphinx-apidoc` failed!\n{}".format(e))
 

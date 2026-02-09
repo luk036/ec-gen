@@ -13,8 +13,9 @@ Output varies depending on which function is used. Some functions return the tot
 number of possible combinations, while others generate the actual combinations.
 
 The code achieves its purpose through several different algorithms:
-- 'comb' uses recursion and memoization to calculate combinations
-- 'emk_comb_gen' uses the "homogeneous revolving-door" algorithm to generate
+
+* 'comb' uses recursion and memoization to calculate combinations
+* 'emk_comb_gen' uses the "homogeneous revolving-door" algorithm to generate
   all possible combinations by swapping pairs of elements
 
 An important logic flow is how it handles different cases. When generating
