@@ -1,3 +1,27 @@
+"""
+ec_gen - Enumerative Combinatorics Generation
+
+This package provides generators for various combinatorial structures including:
+
+- Combinations (via homogeneous revolving-door algorithm)
+- Permutations (via Steinhaus-Johnson-Trotter and Ehrlich-Hopcroft-Reingold algorithms)
+- Gray codes (binary reflected Gray code)
+- Set partitions (via restricted growth strings)
+
+Each module contains generator functions that yield successive elements of the
+combinatorial structure, allowing memory-efficient iteration over large collections.
+
+Example:
+    >>> from ec_gen import comb, emk, brgc
+    >>> comb(6, 3)  # Number of combinations
+    20
+    >>> for seq in emk(3, 1):
+    ...     print(seq)
+    [1, 0, 0]
+    [0, 1, 0]
+    [0, 0, 1]
+"""
+
 import sys
 
 if sys.version_info[:2] >= (3, 8):

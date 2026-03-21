@@ -1,3 +1,9 @@
+"""
+Tests for gray_code_old module.
+
+Note: This file tests the deprecated gray_code module for backwards compatibility.
+"""
+
 import pytest
 
 from ec_gen.combin_old import comb, emk, emk_gen

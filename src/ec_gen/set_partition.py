@@ -57,6 +57,18 @@ def stirling2nd(n: int, k: int) -> int:
 
 @lru_cache
 def stirling2nd_recur(n: int, k: int) -> int:
+    """
+    Recursive helper function for calculating Stirling numbers of the second kind.
+
+    Uses memoization via lru_cache for efficient computation of repeated subproblems.
+
+    :param n: The parameter `n` represents the total number of objects or elements in a set
+    :type n: int
+    :param k: The parameter `k` represents the number of non-empty subsets
+    :type k: int
+    :return: The Stirling number of the second kind for the given values of `n` and `k`
+    :rtype: int
+    """
     n -= 1
     val_a = 1 if k == 2 else stirling2nd_recur(n, k - 1)
     val_b = 1 if k == n else stirling2nd_recur(n, k)
