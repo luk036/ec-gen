@@ -1,3 +1,14 @@
+"""Steinhaus-Johnson-Trotter Algorithm (list-based)
+
+This module implements the Steinhaus-Johnson-Trotter algorithm for generating
+all permutations of a set in minimal-change order, returning permutations as
+lists rather than swap positions.
+
+The function `sjt2` recursively generates permutations by inserting the
+largest element at every possible position, alternating between upward and
+downward insertion directions.
+"""
+
 from typing import Generator
 
 

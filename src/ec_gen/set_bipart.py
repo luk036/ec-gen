@@ -1,30 +1,13 @@
 """
-Set Partition
+Set Bipartition
 
-A set partition of the set [n] = {1,2,3,...,n} is a collection B0,
-B1, ... Bj of disjoint subsets of [n] whose union is [n]. Each Bj
-is called a block. Below we show the partitions of [4]. The periods
-separtate the individual sets so that, for example, 1.23.4 is the
-partition {{1},{2,3},{4}}.
+A set bipartition of the set [n] = {1,2,3,...,n} is a partition into exactly
+two non-empty disjoint subsets B0 and B1 whose union is [n]. Each element is
+assigned to either block 0 or block 1.
 
-  1 block:  1234
-  2 blocks: 123.4   124.3   134.2   1.234   12.34   13.24   14.23
-  3 blocks: 1.2.34  1.24.3  14.2.3  13.2.4  12.3.4
-  4 blocks: 1.2.3.4
-
-Each partition above has its blocks listed in increasing order of
-smallest element; thus block 0 contains element 1, block1 contains
-the smallest element not in block 0, and so on. A Restricted Growth
-string (or RG string) is a sring a[1..n] where a[i] is the block in
-which element i occurs. Restricted Growth strings are often called
-restricted growth functions. Here are the RG strings corresponding
-to the partitions shown above.
-
-  1 block:  0000
-  2 blocks: 0001, 0010, 0100, 0111, 0011, 0101, 0110
-  3 blocks: 0122, 0121, 0112, 0120, 0102,
-
-...more
+This module generates all 2^{n-1} - 1 non-trivial bipartitions of an n-element
+set using a Gray code order where successive bipartitions differ by moving a
+single element from one block to the other.
 
 Reference:
 Frank Ruskey. Simple combinatorial Gray codes constructed by
@@ -90,22 +73,19 @@ def set_bipart(num: int) -> Generator[int, None, None]:
     yield from gen0(num)
 
 
-# The lists S(n,k,0) and S(n,k,1) satisfy the following properties.
-# 1. Successive RG sequences differ in exactly one position.
-# 2. first(S(n,k,0)) = first(S(n,k,1)) = 0^{n-k}0123...(k-1)
-# 3. last(S(n,k,0)) = 0^{n-k}12...(k-1)0
-# 4. last(S(n,k,1)) = 012...(k-1)0^{n-k}
-# Note that first(S'(n,k,p)) = last(S(n,k,p))
+# The lists S(num) and S'(num) satisfy the following properties:
+# 1. Successive bipartitions differ in exactly one element.
+# 2. first(S(num)) = 0^{num-1}1
+# 3. last(S(num)) = 0^{num-1}1
+# 4. first(S'(num)) = last(S(num))
 
 
 def gen0(num: int) -> Generator[int, None, None]:
-    """S(num,k,0) even k
+    """S(num) — forward generator for set bipartitions.
 
-    The function `gen0` generates a sequence of numbers that satisfy a specific condition.
-
-    :param num: The parameter `num` represents an integer value
+    :param num: The total number of elements in the set
     :type num: int
-    :return: a generator object.
+    :return: a generator yielding element indices to flip between blocks.
     """
     if num < 3:
         return
@@ -116,13 +96,11 @@ def gen0(num: int) -> Generator[int, None, None]:
 
 
 def gen1(num: int) -> Generator[int, None, None]:
-    """S(num,k,1) even k
+    """S'(num) — alternate forward generator for set bipartitions.
 
-    The function `gen1` generates a sequence of numbers that satisfy a specific condition.
-
-    :param num: The parameter `num` represents an integer value
+    :param num: The total number of elements in the set
     :type num: int
-    :return: a generator object.
+    :return: a generator yielding element indices to flip between blocks.
     """
     if num < 3:
         return
@@ -133,13 +111,11 @@ def gen1(num: int) -> Generator[int, None, None]:
 
 
 def neg1(num: int) -> Generator[int, None, None]:
-    """S'(num,k,1) even k
+    """S'(num) — reverse generator for set bipartitions.
 
-    The function `neg1` generates a sequence of numbers that satisfy a specific condition.
-
-    :param num: The parameter `num` represents an integer value
+    :param num: The total number of elements in the set
     :type num: int
-    :return: a generator object.
+    :return: a generator yielding element indices to flip between blocks.
     """
     if num < 3:
         return

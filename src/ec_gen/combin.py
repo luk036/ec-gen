@@ -1,35 +1,16 @@
 """Combinations Generator
 
-This code is a collection of functions that work with combinations in mathematics.
-A combination is a way of selecting items from a larger set where the order
-doesn't matter. The main purpose is to calculate the number of possible
-combinations and generate all possible combinations for a given set of elements.
+This module provides functions for computing and generating combinations:
 
-The code takes two main inputs: 'n' (total number of elements in a set) and
-'k' (how many elements we want to choose). For example, if we have 6
-items and want to choose 3 of them, n would be 6 and k would be 3.
-
-Output varies depending on which function is used. Some functions return the total
-number of possible combinations, while others generate the actual combinations.
-
-The code achieves its purpose through several different algorithms:
-
-* 'comb' uses recursion and memoization to calculate combinations
-* 'emk_comb_gen' uses the "homogeneous revolving-door" algorithm to generate
-  all possible combinations by swapping pairs of elements
-
-An important logic flow is how it handles different cases. When generating
-combinations, it treats even and odd numbers of elements differently, using
-separate functions for each case. This helps the algorithm work efficiently.
-
-The 'emk' function brings everything together. It generates all combinations by
-starting with 'k' ones followed by 'n-k' zeros, then repeatedly swapping
-elements based on pairs from 'emk_comb_gen'. This allows producing all
-possible combinations without storing them all in memory at once.
-
-Overall, this provides a comprehensive toolkit for working with combinations, from
-simple counting to generating all possibilities. It's designed to be efficient
-and flexible.
+- `comb` / `comb_recur`: Calculate binomial coefficients (number of ways to choose
+  k items from n) using recursion with memoization.
+- `emk_comb_gen`: Generate all k-combinations of n items as swap pairs (x, y) using
+  the homogeneous revolving-door algorithm (Eades-McKay).
+- `emk_gen_even`, `emk_gen_odd`, `emk_neg_even`, `emk_neg_odd`: Recursive helper
+  functions for the revolving-door algorithm, handling even/odd k and forward/reverse
+  traversal.
+- `emk`: Generate actual combination sequences (lists of 0s and 1s) by applying the
+  swap pairs from `emk_comb_gen` to an initial state vector.
 """
 
 from functools import lru_cache
@@ -101,7 +82,7 @@ def emk_comb_gen(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     :param k: The parameter `k` represents the number of elements to be
               selected in each combination
     :type k: int
-    :return: The function `emk_gen` returns a generator object that yields
+    :return: The function `emk_comb_gen` returns a generator object that yields
               pairs of integers `(x, y)`.
 
     Examples:
@@ -153,8 +134,8 @@ def emk_gen_even(n: int, k: int) -> Generator[tuple[int, int], None, None]:
     :param k: The parameter `k` represents the number of elements to be selected
               in each combination
     :type k: int
-    :return: The function `emk_gen` returns a generator object that yields pairs
-              of integers `(x, y)`.
+    :return: The function `emk_gen_even` returns a generator object that yields
+              pairs of integers `(x, y)`.
     """
     if k >= n - 1:
         yield (n - 2, n - 1)
