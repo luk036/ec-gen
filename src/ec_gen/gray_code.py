@@ -5,11 +5,12 @@ This module implements the binary reflected Gray code (BRGC), where
 successive binary sequences differ by exactly one bit flip.
 
 Two functions are provided:
-- `brgc_gen(n)`: Yields the bit positions to flip in Gray code order,
-  using a recursive mirrored construction: brgc(n-1), then flip bit n-1,
-  then brgc(n-1) again.
-- `brgc(n)`: Generates the full Gray code sequence as lists of bits,
-  starting from all zeros and applying the flips from brgc_gen.
+
+- ``brgc_gen(n)``: Yields the bit positions to flip in Gray code order,
+  using a recursive mirrored construction: ``brgc(n-1)``, then flip bit ``n-1``,
+  then ``brgc(n-1)`` again.
+- ``brgc(n)``: Generates the full Gray code sequence as lists of bits,
+  starting from all zeros and applying the flips from ``brgc_gen``.
 """
 
 from typing import Generator

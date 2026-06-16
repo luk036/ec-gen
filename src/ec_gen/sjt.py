@@ -5,13 +5,14 @@ This module implements the Steinhaus-Johnson-Trotter algorithm for generating
 all permutations of n elements in minimal-change (adjacent swap) order.
 
 Two variants are provided:
-- `sjt_gen`: Yields swap positions (indices of adjacent elements to swap),
+
+- ``sjt_gen``: Yields swap positions (indices of adjacent elements to swap),
   returning the list to its original order after all permutations.
-- `PlainChanges`: The original "plain changes" formulation, yielding
+- ``PlainChanges``: The original "plain changes" formulation, yielding
   swap positions without returning to the original order.
 
-Both functions work recursively: for each permutation of n-1 elements, the
-largest element n-1 is moved across all positions, alternating between
+Both functions work recursively: for each permutation of ``n-1`` elements, the
+largest element ``n-1`` is moved across all positions, alternating between
 upward (left-to-right) and downward (right-to-left) sweeps. Each yielded
 value is the index of the first element in the adjacent pair to swap.
 """
