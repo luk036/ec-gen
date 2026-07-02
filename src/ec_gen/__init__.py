@@ -3,6 +3,19 @@ ec_gen - Enumerative Combinatorics Generation
 
 This package provides generators for various combinatorial structures including:
 
+.. svgbob::
+   :align: center
+
+       {1,2,3} ──────► {1,2} {1,3} {2,3}
+          │                │
+          │                ▼
+          │          ┌──────────┐
+          └─────────►│ Permute  │
+                     │  123     │
+                     │  132     │
+                     │  213     │
+                     └──────────┘
+
 - Combinations (via homogeneous revolving-door algorithm)
 - Permutations (via Steinhaus-Johnson-Trotter and Ehrlich-Hopcroft-Reingold algorithms)
 - Gray codes (binary reflected Gray code)
