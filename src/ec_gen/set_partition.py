@@ -55,7 +55,7 @@ def stirling2nd(n: int, k: int) -> int:
     return 1 if k >= n or k <= 1 else stirling2nd_recur(n, k)
 
 
-@lru_cache
+@lru_cache(maxsize=2048)
 def stirling2nd_recur(n: int, k: int) -> int:
     """
     Recursive helper function for calculating Stirling numbers of the second kind.

@@ -46,7 +46,7 @@ def comb(n: int, k: int) -> int:
     return 1 if k >= n or k <= 0 else comb_recur(n, k)
 
 
-@lru_cache
+@lru_cache(maxsize=2048)
 def comb_recur(n: int, k: int) -> int:
     """
     The function `comb_recur` calculates the number of combinations of `k` elements
