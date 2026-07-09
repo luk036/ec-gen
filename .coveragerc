@@ -2,6 +2,7 @@
 [run]
 branch = True
 source = ec_gen
+omit = */skeleton.py
 # omit = bad_file.py
 
 [paths]
