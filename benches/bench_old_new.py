@@ -1,9 +1,11 @@
-import time
 import gc
-from ec_gen.combin import emk_comb_gen, comb
+import time
+
+from ec_gen.combin import comb, emk_comb_gen
 from ec_gen.combin_old import emk_gen
 from ec_gen.set_partition import set_partition, stirling2nd
 from ec_gen.set_partition_old import set_partition as set_partition_old
+
 
 def bench(name, fn, expected=None):
     gc.collect()
@@ -14,15 +16,16 @@ def bench(name, fn, expected=None):
     if expected is not None and cnt != expected:
         print(f"    WARNING: expected {expected}, got {cnt}")
 
+
 print("=== Python: Old vs New ===")
 
 # EMK with n=16,k=5 (same as C++ BM_EMK new)
-print(f"\nEMK combinations n=16,k=5  (C(16,5)={comb(16,5)})")
+print(f"\nEMK combinations n=16, k=5  (C(16,5)={comb(16, 5)})")
 bench("new (4-helper)", lambda: sum(1 for _ in emk_comb_gen(16, 5)) + 1, comb(16, 5))
 bench("old (2-helper)", lambda: sum(1 for _ in emk_gen(16, 5)) + 1, comb(16, 5))
 
 # EMK with n=18,k=7 (same as pytest benchmark)
-print(f"\nEMK combinations n=18,k=7  (C(18,7)={comb(18,7)})")
+print(f"\nEMK combinations n=18, k=7  (C(18,7)={comb(18, 7)})")
 bench("new (4-helper)", lambda: sum(1 for _ in emk_comb_gen(18, 7)) + 1, comb(18, 7))
 bench("old (2-helper)", lambda: sum(1 for _ in emk_gen(18, 7)) + 1, comb(18, 7))
 

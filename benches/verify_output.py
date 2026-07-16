@@ -1,15 +1,17 @@
 """Verify output sequences match across languages by dumping small cases."""
 from ec_gen.combin import emk_comb_gen
-from ec_gen.sjt import sjt_gen
 from ec_gen.ehr import ehr_gen
 from ec_gen.gray_code import brgc_gen
-from ec_gen.set_partition import set_partition
 from ec_gen.set_bipart import set_bipart
+from ec_gen.set_partition import set_partition
+from ec_gen.sjt import sjt_gen
+
 
 def dump(name, seq):
     items = list(seq)
     print(f"{name} ({len(items)} items): {items}")
     return items
+
 
 print("=== EMK combinations ===")
 dump("emk_comb_gen(5,2)", emk_comb_gen(5, 2))
