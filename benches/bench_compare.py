@@ -1,4 +1,5 @@
-import time, gc
+import time
+import gc
 from ec_gen.combin import emk_comb_gen, comb
 from ec_gen.sjt import sjt_gen
 from ec_gen.ehr import ehr_gen

@@ -1,4 +1,5 @@
-import time, gc
+import time
+import gc
 from ec_gen.combin import emk_comb_gen, comb
 from ec_gen.combin_old import emk_gen
 from ec_gen.set_partition import set_partition, stirling2nd
