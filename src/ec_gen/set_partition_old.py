@@ -229,20 +229,6 @@ def gen0_odd(n: int, k: int) -> Generator:
             yield from neg1_odd(n - 1, k)
 
 
-# def gen0_odd(n: int, k: int) -> Generator:
-#     ''' S(n,k,0) odd k '''
-#     if k > 1 and k < n:
-#         yield from gen1_even(n-1, k-1)
-#         yield (k, k-1)
-#         even = False
-#         for i in range(k-2, -1, -1):
-#             yield from gen1_odd(n-1, k) if even \
-#                   else neg1_odd(n-1, k)
-#             yield (n, i)
-#             even = ~even
-#         yield from neg1_odd(n-1, k)
-
-
 def neg0_odd(n: int, k: int) -> Generator:
     """S'(n,k,0) odd k
 
