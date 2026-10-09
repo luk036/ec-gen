@@ -1,5 +1,18 @@
 # Changelog
 
+## Version 0.4 (2026-10-09)
+
+### Bug Fixes
+- **mypy config**: Removed the duplicate `ignore_missing_imports` entry from `mypy.ini`. (#4d78b1a)
+
+### Code Cleanup
+- **Removed dead boilerplate**: Deleted the remaining PyScaffold `skeleton.py` (156 lines), the dead `set_partition_old.py`, and the stale `.bak` workflow files. (#482cf71)
+- **Removed AI slop**: Stripped boilerplate from docstrings and comments. (#bcd2afb)
+- **Formatting & imports**: Fixed flake8 E231 warnings, sorted imports, split multi-import statements per PEP 8, and formatted the benchmark files. (#ac134d4, #de1b19d)
+
+### Build & CI
+- **Updated GitHub Actions**: `checkout`→v4, `setup-python`→v5, `codecov-action`→v4. (#0590d55)
+
 ## Version 0.3 (2026-07-16)
 
 ### Documentation
