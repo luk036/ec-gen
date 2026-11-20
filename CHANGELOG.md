@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 0.5 (2026-11-20)
+
+### Maintenance
+- **Package metadata**: Replaced the PyScaffold placeholder fields in `setup.cfg`. (#b2ccad0)
+
 ## Version 0.4 (2026-10-09)
 
 ### Bug Fixes
